@@ -25,9 +25,9 @@ public class PlayerConfigActivity extends AppCompatActivity {
 
     private static HashMap<String, Integer> sprite2Int = new HashMap<String, Integer>(){
         {
-            put("Sprite1", 1);
-            put("Sprite2", 2);
-            put("Sprite3", 3);
+            put("Sprite 1", 1);
+            put("Sprite 2", 2);
+            put("Sprite 3", 3);
         }
     };
 
@@ -62,22 +62,16 @@ public class PlayerConfigActivity extends AppCompatActivity {
         RadioGroup difficultySelect = findViewById(R.id.radioGroupDifficultySelect);
         RadioGroup spriteSelect = findViewById(R.id.radioGroupSpriteSelect);
 
-        difficultySelect.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                RadioButton radioButton = findViewById(checkedId);
-                difficulty = any2int((String) radioButton.getText(), diffStr2Int);
-                revalidateInput();
-            }
+        difficultySelect.setOnCheckedChangeListener((group, checkedId) -> {
+            RadioButton radioButton = findViewById(checkedId);
+            difficulty = any2int((String) radioButton.getText(), diffStr2Int);
+            revalidateInput();
         });
 
-        spriteSelect.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                RadioButton radioButton = findViewById(checkedId);
+        spriteSelect.setOnCheckedChangeListener((group, checkedId) -> {
+            RadioButton radioButton = findViewById(checkedId);
                 playerSprite = any2int((String) radioButton.getText(), sprite2Int);
-                revalidateInput();
-            }
+            revalidateInput();
         });
 
         username.addTextChangedListener(new TextWatcher() {
