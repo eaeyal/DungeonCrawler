@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -25,9 +26,9 @@ public class PlayerConfigActivity extends AppCompatActivity {
 
     private static HashMap<String, Integer> sprite2Int = new HashMap<String, Integer>(){
         {
-            put("Sprite1", 1);
-            put("Sprite2", 2);
-            put("Sprite3", 3);
+            put("Sprite 1", 1);
+            put("Sprite 2", 2);
+            put("Sprite 3", 3);
         }
     };
 
@@ -42,11 +43,11 @@ public class PlayerConfigActivity extends AppCompatActivity {
     String playerName = null;
 
     protected void revalidateInput() {
-        if (difficulty != null && playerSprite != null &&
-            playerName != null && playerName.isEmpty() && playerName.trim().isEmpty()) {
+        if (difficulty != null && playerSprite != null && playerName != null &&
+                !playerName.isEmpty() && !playerName.trim().isEmpty()) {
             Button startGameButton = findViewById(R.id.btnStartGame);
 
-            startGameButton.setActivated(true);
+            startGameButton.setEnabled(true);
         }
     }
 
@@ -57,7 +58,7 @@ public class PlayerConfigActivity extends AppCompatActivity {
 
         EditText username = findViewById(R.id.playerNameLineEdit);
         Button startGameButton = findViewById(R.id.btnStartGame);
-        startGameButton.setActivated(false);
+        startGameButton.setEnabled(false);
 
         RadioGroup difficultySelect = findViewById(R.id.radioGroupDifficultySelect);
         RadioGroup spriteSelect = findViewById(R.id.radioGroupSpriteSelect);
@@ -74,6 +75,7 @@ public class PlayerConfigActivity extends AppCompatActivity {
         spriteSelect.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
+                Log.i("", "Check changed");
                 RadioButton radioButton = findViewById(checkedId);
                 playerSprite = any2int((String) radioButton.getText(), sprite2Int);
                 revalidateInput();
@@ -88,7 +90,7 @@ public class PlayerConfigActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-
+                Log.i("", s.toString());
             }
 
             @Override
