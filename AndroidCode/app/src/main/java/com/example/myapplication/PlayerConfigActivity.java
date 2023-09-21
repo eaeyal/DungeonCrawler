@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -42,11 +43,11 @@ public class PlayerConfigActivity extends AppCompatActivity {
     String playerName = null;
 
     protected void revalidateInput() {
-        if (difficulty != null && playerSprite != null &&
-            playerName != null && playerName.isEmpty() && playerName.trim().isEmpty()) {
+        if (difficulty != null && playerSprite != null && playerName != null &&
+                !playerName.isEmpty() && !playerName.trim().isEmpty()) {
             Button startGameButton = findViewById(R.id.btnStartGame);
 
-            startGameButton.setActivated(true);
+            startGameButton.setEnabled(true);
         }
     }
 
@@ -57,21 +58,28 @@ public class PlayerConfigActivity extends AppCompatActivity {
 
         EditText username = findViewById(R.id.playerNameLineEdit);
         Button startGameButton = findViewById(R.id.btnStartGame);
-        startGameButton.setActivated(false);
+        startGameButton.setEnabled(false);
 
         RadioGroup difficultySelect = findViewById(R.id.radioGroupDifficultySelect);
         RadioGroup spriteSelect = findViewById(R.id.radioGroupSpriteSelect);
 
-        difficultySelect.setOnCheckedChangeListener((group, checkedId) -> {
-            RadioButton radioButton = findViewById(checkedId);
-            difficulty = any2int((String) radioButton.getText(), diffStr2Int);
-            revalidateInput();
+        difficultySelect.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                RadioButton radioButton = findViewById(checkedId);
+                difficulty = any2int((String) radioButton.getText(), diffStr2Int);
+                revalidateInput();
+            }
         });
 
-        spriteSelect.setOnCheckedChangeListener((group, checkedId) -> {
-            RadioButton radioButton = findViewById(checkedId);
+        spriteSelect.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                Log.i("", "Check changed");
+                RadioButton radioButton = findViewById(checkedId);
                 playerSprite = any2int((String) radioButton.getText(), sprite2Int);
-            revalidateInput();
+                revalidateInput();
+            }
         });
 
         username.addTextChangedListener(new TextWatcher() {
@@ -82,7 +90,7 @@ public class PlayerConfigActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-
+                Log.i("", s.toString());
             }
 
             @Override
