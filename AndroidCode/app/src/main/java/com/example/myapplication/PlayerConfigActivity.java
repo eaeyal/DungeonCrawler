@@ -2,10 +2,12 @@ package com.example.myapplication;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
@@ -62,6 +64,27 @@ public class PlayerConfigActivity extends AppCompatActivity {
 
         RadioGroup difficultySelect = findViewById(R.id.radioGroupDifficultySelect);
         RadioGroup spriteSelect = findViewById(R.id.radioGroupSpriteSelect);
+
+        startGameButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Player player = new Player(
+                        playerName,
+                        difficulty,
+                        playerSprite.toString()
+                );
+
+                GameContxt.getInstance().setPlayer(player);
+                GameContxt.getInstance().setDifficulty(difficulty);
+                // to access player info and difficulty info in InitialGameScreen
+                // use
+                // GameContxt.getInstance().getPlayer();
+                // GameContxt.getInstance().getDifficulty();
+
+                Intent intent = new Intent(PlayerConfigActivity.this, InitialGameScreen.class);
+                startActivity(intent);
+            }
+        });
 
         difficultySelect.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
