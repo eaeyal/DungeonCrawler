@@ -13,12 +13,10 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
-import com.google.android.material.textfield.TextInputEditText;
-
 import java.util.HashMap;
 
 public class PlayerConfigActivity extends AppCompatActivity {
-    private static HashMap<String, Integer> diffStr2Int = new HashMap<String, Integer>(){
+    private static HashMap<String, Integer> diffStr2Int = new HashMap<String, Integer>() {
         {
             put("Easy", 1);
             put("Normal", 2);
@@ -26,7 +24,7 @@ public class PlayerConfigActivity extends AppCompatActivity {
         }
     };
 
-    private static HashMap<String, Integer> sprite2Int = new HashMap<String, Integer>(){
+    private static HashMap<String, Integer> sprite2Int = new HashMap<String, Integer>() {
         {
             put("Sprite 1", 1);
             put("Sprite 2", 2);
@@ -40,13 +38,13 @@ public class PlayerConfigActivity extends AppCompatActivity {
 
     // assuming the activity don't get recreated on re-render like flutter does
     // we can keep states here
-    Integer difficulty = null;
-    Integer playerSprite = null;
-    String playerName = null;
+    private Integer difficulty = null;
+    private Integer playerSprite = null;
+    private String playerName = null;
 
     protected void revalidateInput() {
-        if (difficulty != null && playerSprite != null && playerName != null &&
-                !playerName.isEmpty() && !playerName.trim().isEmpty()) {
+        if (difficulty != null && playerSprite != null && playerName != null
+                && !playerName.isEmpty() && !playerName.trim().isEmpty()) {
             Button startGameButton = findViewById(R.id.btnStartGame);
 
             startGameButton.setEnabled(true);
@@ -68,14 +66,9 @@ public class PlayerConfigActivity extends AppCompatActivity {
         startGameButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Player player = new Player(
-                        playerName,
-                        difficulty,
-                        playerSprite.toString()
-                );
-
-                GameContxt.getInstance().setPlayer(player);
-                GameContxt.getInstance().setDifficulty(difficulty);
+                GameContext.getInstance().setPlayerName(playerName);
+                GameContext.getInstance().setDifficulty(difficulty);
+                GameContext.getInstance().setPlayerSprite(playerSprite);
                 // to access player info and difficulty info in InitialGameScreen
                 // use
                 // GameContxt.getInstance().getPlayer();
