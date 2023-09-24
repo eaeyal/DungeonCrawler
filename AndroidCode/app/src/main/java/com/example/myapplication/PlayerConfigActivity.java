@@ -66,12 +66,6 @@ public class PlayerConfigActivity extends AppCompatActivity {
         startGameButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Player player = new Player(
-                        playerName,
-                        difficulty,
-                        playerSprite.toString()
-                );
-
                 GameContext.getInstance().setPlayerName(playerName);
                 GameContext.getInstance().setDifficulty(difficulty);
                 GameContext.getInstance().setPlayerSprite(playerSprite);
