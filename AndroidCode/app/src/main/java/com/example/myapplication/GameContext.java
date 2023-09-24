@@ -1,7 +1,5 @@
 package com.example.myapplication;
 
-import kotlin.text.UStringsKt;
-
 public class GameContext {
     private String playerName;
     private int difficulty;
@@ -37,12 +35,12 @@ public class GameContext {
         return difficulty;
     }
 
-    private static GameContext _instance = null;
+    private static GameContext instance = null;
     public static GameContext getInstance() {
-        if (_instance == null) {
-            _instance = new GameContext();
+        if (instance == null) {
+            instance = new GameContext();
         }
 
-        return _instance;
+        return instance;
     }
 }

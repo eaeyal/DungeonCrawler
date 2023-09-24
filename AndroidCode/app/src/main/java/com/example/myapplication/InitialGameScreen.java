@@ -31,8 +31,8 @@ public class InitialGameScreen extends AppCompatActivity {
         TextView playerName = findViewById(R.id.playerNameTextView);
         TextView playerHealth = findViewById(R.id.playerHealthTextView);
 
-        playerName.setText(String.format("Player: %s", player.name));
-        playerHealth.setText(String.format("Health: %d", player.healthPoints));
+        playerName.setText(String.format("Player: %s", player.getName()));
+        playerHealth.setText(String.format("Health: %d", player.getHealthPoints()));
 
         Button endGameButton = findViewById(R.id.btnToEndGame);
         endGameButton.setOnClickListener(v -> {
