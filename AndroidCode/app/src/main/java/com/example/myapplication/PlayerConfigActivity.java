@@ -13,8 +13,6 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
-import com.google.android.material.textfield.TextInputEditText;
-
 import java.util.HashMap;
 
 public class PlayerConfigActivity extends AppCompatActivity {
@@ -74,8 +72,8 @@ public class PlayerConfigActivity extends AppCompatActivity {
                         playerSprite.toString()
                 );
 
-                GameContxt.getInstance().setPlayer(player);
-                GameContxt.getInstance().setDifficulty(difficulty);
+                GameContext.getInstance().setPlayer(player);
+                GameContext.getInstance().setDifficulty(difficulty);
                 // to access player info and difficulty info in InitialGameScreen
                 // use
                 // GameContxt.getInstance().getPlayer();

@@ -1,12 +1,23 @@
 package com.example.myapplication;
 
-public class GameContxt {
+public class GameContext {
+    public static float DifficultyToHealthCoefficient(int difficulty) {
+        switch (difficulty) {
+            case 2:
+                return 0.65f;
+            case 3:
+                return 0.50f;
+            default:
+                return 0.75f;
+        }
+    }
+
     private Player player;
     private int difficulty;
 
     // we can store scores here etc.
 
-    private GameContxt() {
+    private GameContext() {
 
     }
 
@@ -26,10 +37,10 @@ public class GameContxt {
         return difficulty;
     }
 
-    private static GameContxt _instance = null;
-    public static GameContxt getInstance() {
+    private static GameContext _instance = null;
+    public static GameContext getInstance() {
         if (_instance == null) {
-            _instance = new GameContxt();
+            _instance = new GameContext();
         }
 
         return _instance;
