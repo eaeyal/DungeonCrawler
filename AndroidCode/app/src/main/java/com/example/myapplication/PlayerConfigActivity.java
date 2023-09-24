@@ -72,8 +72,9 @@ public class PlayerConfigActivity extends AppCompatActivity {
                         playerSprite.toString()
                 );
 
-                GameContext.getInstance().setPlayer(player);
+                GameContext.getInstance().setPlayerName(playerName);
                 GameContext.getInstance().setDifficulty(difficulty);
+                GameContext.getInstance().setPlayerSprite(playerSprite);
                 // to access player info and difficulty info in InitialGameScreen
                 // use
                 // GameContxt.getInstance().getPlayer();

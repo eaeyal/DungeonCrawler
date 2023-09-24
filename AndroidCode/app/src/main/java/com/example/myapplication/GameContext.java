@@ -1,19 +1,11 @@
 package com.example.myapplication;
 
-public class GameContext {
-    public static float DifficultyToHealthCoefficient(int difficulty) {
-        switch (difficulty) {
-            case 2:
-                return 0.65f;
-            case 3:
-                return 0.50f;
-            default:
-                return 0.75f;
-        }
-    }
+import kotlin.text.UStringsKt;
 
-    private Player player;
+public class GameContext {
+    private String playerName;
     private int difficulty;
+    private int playerSprite;
 
     // we can store scores here etc.
 
@@ -21,12 +13,20 @@ public class GameContext {
 
     }
 
-    public Player getPlayer() {
-        return player;
+    public String getPlayerName() {
+        return playerName;
     }
 
-    public void setPlayer(Player player) {
-        this.player = player;
+    public int getPlayerSprite() {
+        return playerSprite;
+    }
+
+    public void setPlayerSprite(int playerSprite) {
+        this.playerSprite = playerSprite;
+    }
+
+    public void setPlayerName(String playerName) {
+        this.playerName = playerName;
     }
 
     public void setDifficulty(int difficulty) {
