@@ -13,6 +13,15 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Button quitButton = findViewById(R.id.button2);
+        quitButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                finish();
+                System.exit(0);
+            }
+        });
+
         Button playerConfigButton = findViewById(R.id.button);
         playerConfigButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -20,5 +29,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+
     }
 }
