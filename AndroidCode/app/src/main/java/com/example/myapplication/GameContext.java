@@ -1,11 +1,18 @@
 package com.example.myapplication;
+import java.text.DateFormat;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 
 public class GameContext {
     private String playerName;
     private int difficulty;
     private int playerSprite;
+    private Leaderboard leaderboard = new Leaderboard();
 
-    // we can store scores here etc.
+    Date time = Calendar.getInstance().getTime();
+    String timeFormatted = DateFormat.getDateInstance().format(time);
 
     private GameContext() {
 
@@ -35,12 +42,23 @@ public class GameContext {
         return difficulty;
     }
 
+    public String getDateAndTime() {
+        return timeFormatted;
+    }
+
     private static GameContext instance = null;
     public static GameContext getInstance() {
         if (instance == null) {
             instance = new GameContext();
         }
-
         return instance;
     }
+
+    public Leaderboard getLeaderboard() {
+        return leaderboard = new Leaderboard();
+    }
+
+
+
+
 }

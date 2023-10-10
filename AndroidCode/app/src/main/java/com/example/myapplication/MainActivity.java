@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.view.View;
 import android.content.Intent;
+import android.widget.ListView;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -30,6 +31,20 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        Button endScreenButton = (Button) findViewById(R.id.button3);
+        endScreenButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openEndScreen();
 
+            }
+        });
+
+
+    }
+
+    public void openEndScreen() {
+        Intent intent = new Intent(this, EndScreen.class);
+        startActivity(intent);
     }
 }

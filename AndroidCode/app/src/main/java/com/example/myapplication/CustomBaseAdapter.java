@@ -1,2 +1,47 @@
-package com.example.myapplication;public class CustomBaseAdapter {
+package com.example.myapplication;
+
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.BaseAdapter;
+import android.content.Context;
+import android.view.LayoutInflater;
+import android.widget.TextView;
+import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class CustomBaseAdapter extends BaseAdapter {
+    Context context;
+
+    List<Score> leaderboardList = GameContext.getInstance().getLeaderboard().getScores();
+    LayoutInflater inflater;
+    public CustomBaseAdapter(Context ctx, List<Score> leaderboardList) {
+        this.context = ctx;
+        this.leaderboardList = leaderboardList;
+        inflater = LayoutInflater.from(ctx);
+
+    }
+    @Override
+    public int getCount() {
+        return leaderboardList.size();
+    }
+    @Override
+    public Object getItem(int position) {
+        return null;
+    }
+
+    @Override
+    public long getItemId(int i) {
+        return 0;
+    }
+
+    @Override
+    public View getView(int position, View convertView, ViewGroup viewGroup) {
+        convertView = inflater.inflate(R.layout.activity_custom_list_view, null);
+        TextView txtView = (TextView) convertView.findViewById(R.id.textView);
+        txtView.setText(leaderboardList.indexOf(position));
+        return convertView;
+
+    }
 }
