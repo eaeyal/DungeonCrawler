@@ -7,9 +7,9 @@ public class Score {
     int score;
     String time;
      public Score(String player, int score, String time) {
-        player = GameContext.getInstance().getPlayerName();
-        score = GameContext.getInstance().getScore();
-        time = GameContext.getInstance().getTimeFormatted();
+        this.player = player;
+        this.score = score;
+        this.time = time;
     }
 
     public String getPlayer() {

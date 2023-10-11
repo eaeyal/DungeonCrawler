@@ -13,7 +13,7 @@ import java.util.List;
 
 public class CustomBaseAdapter extends BaseAdapter {
     Context context;
-    String[] leaderboardList = GameContext.getInstance().getLeaderboard().getScores();
+    String[] leaderboardList = Leaderboard.getInstance().getScores();
     LayoutInflater inflater;
     public CustomBaseAdapter(Context ctx, String[] leaderboardList) {
         this.context = ctx;

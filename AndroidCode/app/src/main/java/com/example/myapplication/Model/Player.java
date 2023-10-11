@@ -9,7 +9,7 @@ public class Player {
     private int healthPoints; // 75 for easy, 65 for medium, 55 for hard
     private int image; // 1 for sprite_1, 2 for sprite_2, 3 for sprite_3
 
-    private ImageView playerSpriteRenderer;
+    private int score;
 
     private int x = 0;
     private int y = 0;
@@ -22,35 +22,47 @@ public class Player {
         return healthPoints;
     }
 
-    public Player(String name, int difficulty, int image, ImageView playerSprite) {
+    private Player() {
+        this.name = null;
+        this.healthPoints = -1;
+        this.image = -1;
+    }
+
+    private Player(String name, int difficulty, int image) {
         this.name = name;
         this.healthPoints = 75 - (difficulty - 1) * 10;
         this.image = image;
 
-        this.playerSpriteRenderer = playerSprite;
-
-        this.playerSpriteRenderer.setImageResource(getSpriteAsset());
         this.setCoordinates(x, y);
     }
 
     public void setCoordinates(int x, int y) {
         this.x = x;
         this.y = y;
-
-        this.playerSpriteRenderer.setX(x);
-        this.playerSpriteRenderer.setY(y);
     }
 
-    public int getSpriteAsset() {
-        switch (image) {
-        case 1:
-            return R.drawable.sprite_1;
-        case 2:
-            return R.drawable.sprite_2;
-        case 3:
-            return R.drawable.sprite_3;
-        default:
-            return R.drawable.sprite_1;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setHealthPoints(int healthPoints) {
+        this.healthPoints = healthPoints;
+    }
+
+    public void setScore(int score) {
+        this.score = score;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    private static Player instance = null;
+
+    public static Player getInstance() {
+        if (instance == null) {
+            instance = new Player();
         }
+        return instance;
     }
 }

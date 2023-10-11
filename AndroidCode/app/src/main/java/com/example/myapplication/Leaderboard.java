@@ -7,6 +7,7 @@ import java.util.Collections;
 import java.util.List;
 import android.app.Activity;
 
+import com.example.myapplication.Model.Player;
 import com.example.myapplication.Model.Score;
 
 /**
@@ -23,14 +24,25 @@ public class Leaderboard extends Activity {
     }
 
     public void addScore(String player, int score, String time, int position) {
-        String playerName = GameContext.getInstance().getPlayerName();
-        scoreEntry[position] = playerName + " " + score + " " +GameContext.getInstance().getTimeFormatted();
+        String playerName = Player.getInstance().getName();
+
+        Score scoreActual = new Score(playerName, score, time);
+
+        scoreEntry[position] = scoreActual.toString();
         position++;
     } //adding scores to list
 
     public String[] getScores() {
         Arrays.sort(scoreEntry, Collections.reverseOrder()); //sort in descending order
         return scoreEntry;
+    }
+
+    private static Leaderboard instance = null;
+    public static Leaderboard getInstance() {
+        if (instance == null) {
+            instance = new Leaderboard();
+        }
+        return instance;
     }
 }
 
