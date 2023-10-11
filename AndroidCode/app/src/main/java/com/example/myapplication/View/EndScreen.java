@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.myapplication.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,6 +7,12 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
+
+import com.example.myapplication.CustomBaseAdapter;
+import com.example.myapplication.GameContext;
+import com.example.myapplication.Leaderboard;
+import com.example.myapplication.R;
+import com.example.myapplication.Model.Score;
 
 import java.util.List;
 
@@ -29,7 +35,7 @@ public class EndScreen extends AppCompatActivity { //comment for pragya: like ma
                 leaderboardEntries);
         listView.setAdapter(customBaseAdapter);
 
-        
+
 
         Button restartButton = findViewById(R.id.restartButton);
         restartButton.setOnClickListener(new View.OnClickListener() {

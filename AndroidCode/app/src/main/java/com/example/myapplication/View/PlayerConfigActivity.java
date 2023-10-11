@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.myapplication.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -13,7 +13,8 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
-import com.example.myapplication.View.InitialGameScreen;
+import com.example.myapplication.GameContext;
+import com.example.myapplication.R;
 
 import java.util.HashMap;
 

@@ -1,2 +1,4 @@
-package com.example.myapplication.ViewModel;public class EndScreenViewModel {
+package com.example.myapplication.ViewModel;
+
+public class EndScreenViewModel {
 }

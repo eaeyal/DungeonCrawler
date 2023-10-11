@@ -1,2 +1,4 @@
-package com.example.myapplication.ViewModel;public class MainActivityViewModel {
+package com.example.myapplication.ViewModel;
+
+public class MainActivityViewModel {
 }

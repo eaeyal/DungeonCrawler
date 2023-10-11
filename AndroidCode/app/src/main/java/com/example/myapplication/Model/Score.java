@@ -1,4 +1,6 @@
-package com.example.myapplication;
+package com.example.myapplication.Model;
+
+import com.example.myapplication.GameContext;
 
 public class Score {
     String player;
@@ -7,7 +9,7 @@ public class Score {
      Score(String player, int score, String time) {
         player = GameContext.getInstance().getPlayerName();
         score = GameContext.getInstance().getScore();
-        time = GameContext.getInstance().timeFormatted;
+        time = GameContext.getInstance().getTimeFormatted();
     }
 
     public String getPlayer() {

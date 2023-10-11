@@ -1,2 +1,4 @@
-package com.example.myapplication.ViewModel;public class PlayerConfigActivityViewModel {
+package com.example.myapplication.ViewModel;
+
+public class PlayerConfigActivityViewModel {
 }

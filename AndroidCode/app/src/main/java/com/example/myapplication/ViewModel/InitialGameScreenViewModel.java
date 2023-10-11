@@ -1,2 +1,4 @@
-package com.example.myapplication.ViewModel;public class InitialGameScreenViewModel {
+package com.example.myapplication.ViewModel;
+
+public class InitialGameScreenViewModel {
 }

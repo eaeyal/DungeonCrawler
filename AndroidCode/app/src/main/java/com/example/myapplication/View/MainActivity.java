@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.myapplication.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,7 +7,7 @@ import android.widget.Button;
 import android.view.View;
 import android.content.Intent;
 
-import com.example.myapplication.View.EndScreen;
+import com.example.myapplication.R;
 
 public class MainActivity extends AppCompatActivity {
 

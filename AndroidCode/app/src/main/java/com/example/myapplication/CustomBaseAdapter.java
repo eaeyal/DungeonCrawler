@@ -6,9 +6,9 @@ import android.widget.BaseAdapter;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.widget.TextView;
-import android.widget.TextView;
 
-import java.util.ArrayList;
+import com.example.myapplication.Model.Score;
+
 import java.util.List;
 
 public class CustomBaseAdapter extends BaseAdapter {
