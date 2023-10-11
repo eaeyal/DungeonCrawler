@@ -4,12 +4,11 @@ import com.example.myapplication.Model.Player;
 
 public class InitialGameScreenViewModel {
     private Player player;
-    private int score = 100;
-
     private Runnable updatedCallback;
 
     public InitialGameScreenViewModel() {
         this.player = Player.getInstance();
+        this.player.setScore(100);
     }
 
     public Player getPlayer() {
@@ -17,14 +16,15 @@ public class InitialGameScreenViewModel {
     }
 
     public void updateScore() {
-        if (score > 0) {
-            score -= 5;
+        if (player.getScore() > 0) {
+            player.setScore(player.getScore() - 1);
         }
+
         onUpdated();
     }
 
     public int getScore() {
-        return score;
+        return player.getScore();
     }
 
     public void onUpdated() {

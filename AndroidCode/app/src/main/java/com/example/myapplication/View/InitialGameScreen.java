@@ -8,10 +8,12 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.myapplication.Leaderboard;
 import com.example.myapplication.Model.Player;
 import com.example.myapplication.R;
 import com.example.myapplication.ViewModel.InitialGameScreenViewModel;
 
+import java.util.Calendar;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -50,6 +52,7 @@ public class InitialGameScreen extends AppCompatActivity {
         Button endGameButton = findViewById(R.id.btnToEndGame);
         endGameButton.setOnClickListener(v -> {
             player.getScore();
+            Leaderboard.getInstance().addScore(player.getName(), player.getScore(), Calendar.getInstance().getTime().toString());
             // Adding score here and play name as parameters does nothing since called addScore will get it from GameContext
 
             //GameContext.getInstance().getLeaderboard().addScore(player.getName(), score, "Nov 5, 12:30");

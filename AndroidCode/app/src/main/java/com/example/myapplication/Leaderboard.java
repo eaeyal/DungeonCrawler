@@ -13,29 +13,22 @@ import com.example.myapplication.Model.Score;
 /**
  * Stores scores from the leaderboard in the a list, called scoreEntry
  */
-public class Leaderboard extends Activity {
+public class Leaderboard {
 
-    private String[] scoreEntry = new String[5]; //list to store scores
+    private ArrayList<Score> scoreEntry = new ArrayList<>(); //list to store scores
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_end_screen);
-    }
-
-    public void addScore(String player, int score, String time, int position) {
+    public void addScore(String player, int score, String time) {
         String playerName = Player.getInstance().getName();
 
         Score scoreActual = new Score(playerName, score, time);
 
-        scoreEntry[position] = scoreActual.toString();
-        position++;
+        scoreEntry.add(scoreActual);
     } //adding scores to list
 
-    public String[] getScores() {
-        Arrays.sort(scoreEntry, Collections.reverseOrder()); //sort in descending order
+    public ArrayList<Score> getScoresSorted() {
+        Collections.sort(scoreEntry);
         return scoreEntry;
-    }
+    } //sorting scores
 
     private static Leaderboard instance = null;
     public static Leaderboard getInstance() {

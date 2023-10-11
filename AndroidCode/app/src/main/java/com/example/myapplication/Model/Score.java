@@ -2,7 +2,7 @@ package com.example.myapplication.Model;
 
 import com.example.myapplication.GameContext;
 
-public class Score {
+public class Score implements Comparable<Score> {
     String player;
     int score;
     String time;
@@ -23,4 +23,14 @@ public class Score {
     public String getTime() { return time;}
 
 
+    @Override
+    public int compareTo(Score o) {
+        if (this.score > o.score) {
+            return -1;
+        } else if (this.score < o.score) {
+            return 1;
+        } else {
+            return 0;
+        }
+    }
 }
