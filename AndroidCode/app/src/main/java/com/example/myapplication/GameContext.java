@@ -12,8 +12,8 @@ public class GameContext {
     private Leaderboard leaderboard = new Leaderboard();
 
     private int score;
-    Date time = Calendar.getInstance().getTime();
-    String timeFormatted = DateFormat.getDateInstance().format(time);
+    private Date time = Calendar.getInstance().getTime();
+    private String timeFormatted = DateFormat.getDateInstance().format(time);
 
     private GameContext() {
 
@@ -63,4 +63,11 @@ public class GameContext {
     public int getScore() {return score;}
 
 
+    public String getTimeFormatted() {
+        return timeFormatted;
+    }
+
+    public Date getTime() {
+        return time;
+    }
 }

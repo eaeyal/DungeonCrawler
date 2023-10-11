@@ -21,16 +21,16 @@
             android:label="@string/title_activity_main2"
             android:theme="@style/Theme.MyApplication" />
         <activity
-            android:name=".EndScreen"
+            android:name=".View.EndScreen"
             android:exported="false" />
         <activity
-            android:name=".InitialGameScreen"
+            android:name=".View.InitialGameScreen"
             android:exported="false" />
         <activity
-            android:name=".PlayerConfigActivity"
+            android:name=".View.PlayerConfigActivity"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".View.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

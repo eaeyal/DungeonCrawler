@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.myapplication.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,6 +7,11 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.example.myapplication.GameContext;
+import com.example.myapplication.Model.Player;
+import com.example.myapplication.R;
+
 import java.util.Timer;
 import java.util.TimerTask;
 

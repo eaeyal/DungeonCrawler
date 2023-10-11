@@ -1,4 +1,4 @@
-package com.example.myapplication;
+package com.example.myapplication.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -10,6 +10,12 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import java.util.List;
+
+import com.example.myapplication.Model.Score;
+import com.example.myapplication.GameContext;
+import com.example.myapplication.Leaderboard;
+import com.example.myapplication.R;
+import com.example.myapplication.CustomBaseAdapter;
 
 public class EndScreen extends AppCompatActivity { //comment for pragya: like main activity
     ListView listView;

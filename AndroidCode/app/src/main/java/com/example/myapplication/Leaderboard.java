@@ -2,11 +2,11 @@ package com.example.myapplication;
 import android.os.Bundle;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
 import java.util.List;
 import android.app.Activity;
-import java.util.Date;
+
+import com.example.myapplication.Model.Score;
 
 /**
  * Stores scores from the leaderboard in the a list, called scoreEntry
@@ -23,7 +23,7 @@ public class Leaderboard extends Activity {
 
     public void addScore(String player, int score, String time) {
         String playerName = GameContext.getInstance().getPlayerName();
-        scoreEntry.add(new Score(playerName, score, GameContext.getInstance().timeFormatted));
+        scoreEntry.add(new Score(playerName, score, GameContext.getInstance().getTimeFormatted()));
     } //adding scores to list
 
     public List<Score> getScores() {
