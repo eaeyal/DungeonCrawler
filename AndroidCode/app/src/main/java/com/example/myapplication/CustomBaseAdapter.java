@@ -13,14 +13,12 @@ import java.util.List;
 
 public class CustomBaseAdapter extends BaseAdapter {
     Context context;
-
     List<Score> leaderboardList = GameContext.getInstance().getLeaderboard().getScores();
     LayoutInflater inflater;
     public CustomBaseAdapter(Context ctx, List<Score> leaderboardList) {
         this.context = ctx;
         this.leaderboardList = leaderboardList;
         inflater = LayoutInflater.from(ctx);
-
     }
     @Override
     public int getCount() {

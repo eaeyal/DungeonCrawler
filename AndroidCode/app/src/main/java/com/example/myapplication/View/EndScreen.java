@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -33,11 +34,15 @@ public class EndScreen extends AppCompatActivity { //comment for pragya: like ma
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_end_screen);
-        listView = (ListView) findViewById(R.id.customListView);
+        /*listView = (ListView) findViewById(R.id.customListView);
         CustomBaseAdapter customBaseAdapter = new CustomBaseAdapter(getApplicationContext(),
                 leaderboardEntries);
         listView.setAdapter(customBaseAdapter);
 
+         */
+        listView = (ListView)findViewById(R.id.customListView);
+        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, R.layout.activity_custom_list_view
+        , R.id.textView, leaderboardEntries);
         scoreDisplayView = findViewById(R.id.scoreDisplay);
         scoreDisplayView.setText("Score: " + GameContext.getInstance().getScore());
 
@@ -48,6 +53,7 @@ public class EndScreen extends AppCompatActivity { //comment for pragya: like ma
                 startActivity(intent);
             }
         });
+
     }
 
 
