@@ -10,7 +10,7 @@ import java.util.List;
 public class GameContext {
     private int difficulty;
 
-    private GameContext() {
+    GameContext() {
 
     }
 

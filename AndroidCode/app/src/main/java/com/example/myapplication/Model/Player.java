@@ -32,7 +32,6 @@ public class Player {
         this.name = name;
         this.healthPoints = 75 - (difficulty - 1) * 10;
         this.image = image;
-
         this.setCoordinates(x, y);
     }
 
@@ -64,5 +63,13 @@ public class Player {
             instance = new Player();
         }
         return instance;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
     }
 }
