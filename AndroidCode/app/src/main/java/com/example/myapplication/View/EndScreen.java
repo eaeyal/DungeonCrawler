@@ -10,41 +10,33 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import java.util.List;
-
-import com.example.myapplication.Model.Score;
-import com.example.myapplication.GameContext;
+import com.example.myapplication.ScoreAdapter;
+import com.example.myapplication.Model.Player;
 import com.example.myapplication.Leaderboard;
+import com.example.myapplication.Model.Score;
 import com.example.myapplication.R;
-import com.example.myapplication.CustomBaseAdapter;
+
+import java.util.ArrayList;
 
 public class EndScreen extends AppCompatActivity { //comment for pragya: like main activity
-    ListView listView;
-    String[] leaderboardEntries = GameContext.getInstance().getLeaderboard().getScores();
+    private ListView listView;
+    private ArrayList<Score> leaderboardEntries = Leaderboard.getInstance().getScoresSorted();
+    private ScoreAdapter customListViewScoreAdapter;
+
     //getting the list of scores
-    Leaderboard leaderboard = GameContext.getInstance().getLeaderboard();
-
-    public void Leaderboard() {
-        //leaderboard.addScore("Pragya",100, "Nov 5, 12:30");
-        leaderboard.getScores();
-    }
-
+    private Leaderboard leaderboard = Leaderboard.getInstance();
     private TextView scoreDisplayView;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_end_screen);
-        /*listView = (ListView) findViewById(R.id.customListView);
-        CustomBaseAdapter customBaseAdapter = new CustomBaseAdapter(getApplicationContext(),
-                leaderboardEntries);
-        listView.setAdapter(customBaseAdapter);
 
-         */
-        listView = (ListView)findViewById(R.id.customListView);
-        ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(this, R.layout.activity_custom_list_view
-        , R.id.textView, leaderboardEntries);
+        listView = (ListView)findViewById(R.id.scoresListView);
+        customListViewScoreAdapter = new ScoreAdapter(this, leaderboardEntries);
+        listView.setAdapter(customListViewScoreAdapter);
+
         scoreDisplayView = findViewById(R.id.scoreDisplay);
-        scoreDisplayView.setText("Score: " + GameContext.getInstance().getScore());
+        scoreDisplayView.setText("Score: " + Player.getInstance().getScore());
 
         Button restartButton = findViewById(R.id.restartButton);
         restartButton.setOnClickListener(new View.OnClickListener() {
@@ -55,14 +47,6 @@ public class EndScreen extends AppCompatActivity { //comment for pragya: like ma
         });
 
     }
-
-
-
-
-    /*
-    ID, name, icon, list order, limits
-     */
-
 }
 
 

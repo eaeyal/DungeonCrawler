@@ -19,7 +19,7 @@ public class MainActivity extends AppCompatActivity {
         Button quitButton = findViewById(R.id.button2);
         quitButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                finish();
+                finishAffinity();
                 System.exit(0);
             }
         });
