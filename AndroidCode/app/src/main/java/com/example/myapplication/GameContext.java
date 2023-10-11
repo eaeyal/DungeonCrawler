@@ -15,7 +15,7 @@ public class GameContext {
     private Date time = Calendar.getInstance().getTime();
     private String timeFormatted = DateFormat.getDateInstance().format(time);
 
-    private GameContext() {
+    GameContext() {
 
     }
 

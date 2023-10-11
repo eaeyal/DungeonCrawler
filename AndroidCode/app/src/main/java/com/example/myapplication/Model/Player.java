@@ -30,7 +30,7 @@ public class Player {
         this.playerSpriteRenderer = playerSprite;
 
         this.playerSpriteRenderer.setImageResource(getSpriteAsset());
-        this.setCoordinates(x, y);
+        this.setCoordinates(150, 150);
     }
 
     public void setCoordinates(int x, int y) {
@@ -52,5 +52,13 @@ public class Player {
         default:
             return R.drawable.sprite_1;
         }
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
     }
 }
