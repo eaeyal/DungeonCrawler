@@ -11,6 +11,7 @@ public class GameContext {
     private int playerSprite;
     private Leaderboard leaderboard = new Leaderboard();
 
+    private int score;
     Date time = Calendar.getInstance().getTime();
     String timeFormatted = DateFormat.getDateInstance().format(time);
 
@@ -58,7 +59,8 @@ public class GameContext {
         return leaderboard = new Leaderboard();
     }
 
-
+    public void setScore(int score) {this.score = score;}
+    public int getScore() {return score;}
 
 
 }
