@@ -29,19 +29,13 @@ public class EndScreen extends AppCompatActivity { //comment for pragya: like ma
                 leaderboardEntries);
         listView.setAdapter(customBaseAdapter);
 
-        Button homeButton = (Button) findViewById(R.id.homeButton);
-        homeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                openHomeScreen();
+        Button restartButton = findViewById(R.id.restartButton);
+        restartButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Intent intent = new Intent(EndScreen.this, MainActivity.class);
+                startActivity(intent);
             }
         });
-
-    }
-
-    public void openHomeScreen() {
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
     }
 
 
