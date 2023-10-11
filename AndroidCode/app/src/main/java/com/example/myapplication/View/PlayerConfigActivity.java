@@ -15,49 +15,24 @@ import android.widget.RadioGroup;
 
 import com.example.myapplication.GameContext;
 import com.example.myapplication.R;
+import com.example.myapplication.ViewModel.PlayerConfigActivityViewModel;
 
 import java.util.HashMap;
 
 public class PlayerConfigActivity extends AppCompatActivity {
-    private static HashMap<String, Integer> diffStr2Int = new HashMap<String, Integer>() {
-        {
-            put("Easy", 1);
-            put("Normal", 2);
-            put("Hard", 3);
-        }
-    };
+    PlayerConfigActivityViewModel viewModel;
 
-    private static HashMap<String, Integer> sprite2Int = new HashMap<String, Integer>() {
-        {
-            put("Sprite 1", 1);
-            put("Sprite 2", 2);
-            put("Sprite 3", 3);
-        }
-    };
-
-    protected static int any2int(String d, HashMap<String, Integer> b) {
-        return b.get(d);
-    }
-
-    // assuming the activity don't get recreated on re-render like flutter does
-    // we can keep states here
-    private Integer difficulty = null;
-    private Integer playerSprite = null;
-    private String playerName = null;
-
-    protected void revalidateInput() {
-        if (difficulty != null && playerSprite != null && playerName != null
-                && !playerName.isEmpty() && !playerName.trim().isEmpty()) {
-            Button startGameButton = findViewById(R.id.btnStartGame);
-
-            startGameButton.setEnabled(true);
-        }
+    protected void checkShouldEnableBegin() {
+        Button startGameButton = findViewById(R.id.btnStartGame);
+        startGameButton.setEnabled(viewModel.revalidateInput());
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_player_config);
+
+        viewModel = new PlayerConfigActivityViewModel();
 
         EditText username = findViewById(R.id.playerNameLineEdit);
         Button startGameButton = findViewById(R.id.btnStartGame);
@@ -69,13 +44,7 @@ public class PlayerConfigActivity extends AppCompatActivity {
         startGameButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                GameContext.getInstance().setPlayerName(playerName);
-                GameContext.getInstance().setDifficulty(difficulty);
-                GameContext.getInstance().setPlayerSprite(playerSprite);
-                // to access player info and difficulty info in InitialGameScreen
-                // use
-                // GameContxt.getInstance().getPlayer();
-                // GameContxt.getInstance().getDifficulty();
+                viewModel.finalizePlayer();
 
                 Intent intent = new Intent(PlayerConfigActivity.this, InitialGameScreen.class);
                 startActivity(intent);
@@ -86,8 +55,8 @@ public class PlayerConfigActivity extends AppCompatActivity {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 RadioButton radioButton = findViewById(checkedId);
-                difficulty = any2int((String) radioButton.getText(), diffStr2Int);
-                revalidateInput();
+                viewModel.updateDifficulty((String) radioButton.getText());
+                checkShouldEnableBegin();
             }
         });
 
@@ -96,8 +65,8 @@ public class PlayerConfigActivity extends AppCompatActivity {
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 Log.i("", "Check changed");
                 RadioButton radioButton = findViewById(checkedId);
-                playerSprite = any2int((String) radioButton.getText(), sprite2Int);
-                revalidateInput();
+                viewModel.updatePlayerSprite((String) radioButton.getText());
+                checkShouldEnableBegin();
             }
         });
 
@@ -114,8 +83,8 @@ public class PlayerConfigActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                playerName = username.getText().toString();
-                revalidateInput();
+                viewModel.setPlayerName(username.getText().toString());
+                checkShouldEnableBegin();
             }
         });
     }
