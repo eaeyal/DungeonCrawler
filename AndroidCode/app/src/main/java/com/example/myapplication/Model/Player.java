@@ -1,6 +1,8 @@
-package com.example.myapplication;
+package com.example.myapplication.Model;
 
 import android.widget.ImageView;
+
+import com.example.myapplication.R;
 
 public class Player {
     private String name;
