@@ -23,7 +23,7 @@ public class Leaderboard extends Activity {
 
     public void addScore(String player, int score, String time) {
         String playerName = GameContext.getInstance().getPlayerName();
-        scoreEntry.add(new Score(playerName, score, GameContext.getInstance().timeFormatted));
+        scoreEntry.add(new Score(playerName, score, GameContext.getInstance().getTimeFormatted()));
     } //adding scores to list
 
     public List<Score> getScores() {

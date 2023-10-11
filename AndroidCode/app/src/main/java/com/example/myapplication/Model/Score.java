@@ -6,7 +6,7 @@ public class Score {
     String player;
     int score;
     String time;
-     Score(String player, int score, String time) {
+     public Score(String player, int score, String time) {
         player = GameContext.getInstance().getPlayerName();
         score = GameContext.getInstance().getScore();
         time = GameContext.getInstance().getTimeFormatted();
