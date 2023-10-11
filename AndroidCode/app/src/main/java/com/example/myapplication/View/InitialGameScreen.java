@@ -48,7 +48,8 @@ public class InitialGameScreen extends AppCompatActivity {
         endGameButton.setOnClickListener(v -> {
             GameContext.getInstance().setScore(score);
             // Adding score here and play name as parameters does nothing since called addScore will get it from GameContext
-            GameContext.getInstance().getLeaderboard().addScore(player.getName(), score, "Nov 5, 12:30");
+
+            //GameContext.getInstance().getLeaderboard().addScore(player.getName(), score, "Nov 5, 12:30");
             Intent intent = new Intent(InitialGameScreen.this, EndScreen.class);
             startActivity(intent);
         });

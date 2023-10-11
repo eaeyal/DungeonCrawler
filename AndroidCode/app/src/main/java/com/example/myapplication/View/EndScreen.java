@@ -20,12 +20,12 @@ import com.example.myapplication.CustomBaseAdapter;
 
 public class EndScreen extends AppCompatActivity { //comment for pragya: like main activity
     ListView listView;
-   List<Score> leaderboardEntries = GameContext.getInstance().getLeaderboard().getScores();
+    String[] leaderboardEntries = GameContext.getInstance().getLeaderboard().getScores();
     //getting the list of scores
     Leaderboard leaderboard = GameContext.getInstance().getLeaderboard();
 
     public void Leaderboard() {
-        leaderboard.addScore("Pragya",100, "Nov 5, 12:30");
+        //leaderboard.addScore("Pragya",100, "Nov 5, 12:30");
         leaderboard.getScores();
     }
 
