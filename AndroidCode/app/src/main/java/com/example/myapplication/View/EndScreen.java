@@ -29,6 +29,8 @@ public class EndScreen extends AppCompatActivity { //comment for pragya: like ma
                 leaderboardEntries);
         listView.setAdapter(customBaseAdapter);
 
+        
+
         Button restartButton = findViewById(R.id.restartButton);
         restartButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {

@@ -13,6 +13,8 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
+import com.example.myapplication.View.InitialGameScreen;
+
 import java.util.HashMap;
 
 public class PlayerConfigActivity extends AppCompatActivity {
