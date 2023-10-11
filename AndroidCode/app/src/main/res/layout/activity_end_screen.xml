@@ -42,6 +42,23 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/customListView" />
 
+    <TextView
+        android:id="@+id/scoreDisplay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="34dp"
+        android:layout_marginTop="18dp"
+        android:layout_marginEnd="81dp"
+        android:layout_marginBottom="36dp"
+        android:text="Score:"
+        android:textSize="24sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/restartButton"
+        app:layout_constraintHorizontal_bias="0.333"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/customListView"
+        app:layout_constraintVertical_bias="0.692" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 
