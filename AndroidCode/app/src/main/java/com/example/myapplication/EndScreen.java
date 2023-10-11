@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import java.util.List;
 
@@ -21,6 +22,8 @@ public class EndScreen extends AppCompatActivity { //comment for pragya: like ma
         leaderboard.getScores();
     }
 
+    private TextView scoreDisplayView;
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_end_screen);
@@ -28,6 +31,9 @@ public class EndScreen extends AppCompatActivity { //comment for pragya: like ma
         CustomBaseAdapter customBaseAdapter = new CustomBaseAdapter(getApplicationContext(),
                 leaderboardEntries);
         listView.setAdapter(customBaseAdapter);
+
+        scoreDisplayView = findViewById(R.id.scoreDisplay);
+        scoreDisplayView.setText("Score: " + GameContext.getInstance().getScore());
 
         Button restartButton = findViewById(R.id.restartButton);
         restartButton.setOnClickListener(new View.OnClickListener() {
