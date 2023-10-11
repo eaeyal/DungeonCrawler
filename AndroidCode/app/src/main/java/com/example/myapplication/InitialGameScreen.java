@@ -9,7 +9,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import java.util.Timer;
 import java.util.TimerTask;
-import android.util.Log;
 
 
 public class InitialGameScreen extends AppCompatActivity {
@@ -43,6 +42,8 @@ public class InitialGameScreen extends AppCompatActivity {
         Button endGameButton = findViewById(R.id.btnToEndGame);
         endGameButton.setOnClickListener(v -> {
             GameContext.getInstance().setScore(score);
+            // Adding score here and play name as parameters does nothing since called addScore will get it from GameContext
+            GameContext.getInstance().getLeaderboard().addScore(player.getName(), score, "Nov 5, 12:30");
             Intent intent = new Intent(InitialGameScreen.this, EndScreen.class);
             startActivity(intent);
         });
