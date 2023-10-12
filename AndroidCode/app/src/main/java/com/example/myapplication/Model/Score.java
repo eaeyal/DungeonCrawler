@@ -12,12 +12,6 @@ public class Score implements Comparable<Score> {
         this.time = time;
     }
 
-    public Score(String player) {
-         player = GameContext.getInstance().getPlayerName();
-         score = 100;
-         time = GameContext.getInstance().getTimeFormatted();
-    }
-
     public String getPlayer() {
         return player;
     }

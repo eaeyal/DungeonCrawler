@@ -28,13 +28,6 @@ public class Player {
         this.image = -1;
     }
 
-    private Player(String name, int difficulty, int image) {
-        this.name = name;
-        this.healthPoints = 75 - (difficulty - 1) * 10;
-        this.image = image;
-        this.setCoordinates(x, y);
-    }
-
     public void setCoordinates(int x, int y) {
         this.x = x;
         this.y = y;
@@ -55,6 +48,15 @@ public class Player {
     public int getScore() {
         return score;
     }
+
+    public int getXCoordinate() {
+        return x;
+    }
+
+    public int getYCoordinate() {
+        return y;
+    }
+
 
     private static Player instance = null;
 
