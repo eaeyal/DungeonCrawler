@@ -107,8 +107,6 @@ public class InitialGameScreen extends AppCompatActivity {
             int width = (int) (Math.random() * 7) + 5;
             int height = (int) (Math.random() * 7) + 5;
 
-
-
             currentStyle = (currentStyle + 1) % wallFloorStyles.size();
             ArrayList<Integer> nextStyle = wallFloorStyles.get(currentStyle);
 
