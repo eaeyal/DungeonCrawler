@@ -1,12 +1,10 @@
 package com.example.myapplication.View;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
-import android.view.Display;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -49,10 +47,9 @@ public class InitialGameScreen extends AppCompatActivity {
         playerHealth.setTranslationZ(1f);
         scoreText.setTranslationZ(1f);
 
-        RelativeLayout layout = findViewById(R.id.gameLayout)
-                ;
+        RelativeLayout layout = findViewById(R.id.gameLayout);
         DisplayMetrics displayMetrics = new DisplayMetrics();
-        roomMapTile.drawTileLayout(layout,screenWidth/ 2, screenHeight / 2);
+        roomMapTile.drawTileLayout(layout, screenWidth / 2, screenHeight / 2);
     }
 
     @Override
@@ -88,18 +85,18 @@ public class InitialGameScreen extends AppCompatActivity {
             int width = (int) (Math.random() * 7) + 5;
             int height = (int) (Math.random() * 7) + 5;
 
-            roomMapTile.updateTileDimensionsAndRecomputeLayout(width, height, (RelativeLayout) findViewById(R.id.gameLayout));
+            roomMapTile.updateTileDimensionsAndRecomputeLayout(width, height,
+                    (RelativeLayout) findViewById(R.id.gameLayout));
             roomMapTile.initPrimitiveTileLayout();
-            roomMapTile.drawTileLayout((RelativeLayout) findViewById(R.id.gameLayout),screenWidth/ 2, screenHeight / 2);
+            roomMapTile.drawTileLayout((RelativeLayout) findViewById(R.id.gameLayout),
+                    screenWidth / 2, screenHeight / 2);
         });
 
         Button endGameButton = findViewById(R.id.btnToEndGame);
         endGameButton.setOnClickListener(v -> {
             player.getScore();
-            Leaderboard.getInstance().addScore(player.getName(), player.getScore(), Calendar.getInstance().getTime().toString());
-            // Adding score here and play name as parameters does nothing since called addScore will get it from GameContext
-
-            //GameContext.getInstance().getLeaderboard().addScore(player.getName(), score, "Nov 5, 12:30");
+            Leaderboard.getInstance().addScore(player.getName(), player.getScore(),
+                    Calendar.getInstance().getTime().toString());
             Intent intent = new Intent(InitialGameScreen.this, EndScreen.class);
             startActivity(intent);
         });
@@ -122,6 +119,6 @@ public class InitialGameScreen extends AppCompatActivity {
         super.onStart();
 
         RelativeLayout layout = findViewById(R.id.gameLayout);
-        roomMapTile.drawTileLayout(layout,screenWidth/ 2, screenHeight / 2);
+        roomMapTile.drawTileLayout(layout, screenWidth / 2, screenHeight / 2);
     }
 }

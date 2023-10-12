@@ -27,7 +27,7 @@ public class Tile {
         return height;
     }
 
-    public static Tile FromSpriteId(int id, int width, int height, Activity context) {
+    public static Tile fromSpriteId(int id, int width, int height, Activity context) {
         RelativeLayout.LayoutParams defaultParams = new RelativeLayout.LayoutParams(width, height);
         ImageView tileFloorSprite = new ImageView(context);
         tileFloorSprite.setImageResource(id);

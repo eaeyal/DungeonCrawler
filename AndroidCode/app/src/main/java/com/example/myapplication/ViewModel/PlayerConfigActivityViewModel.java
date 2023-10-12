@@ -1,11 +1,7 @@
 package com.example.myapplication.ViewModel;
 
-import android.widget.Button;
-import android.widget.ImageView;
-
 import com.example.myapplication.GameContext;
 import com.example.myapplication.Model.Player;
-import com.example.myapplication.R;
 
 import java.util.HashMap;
 

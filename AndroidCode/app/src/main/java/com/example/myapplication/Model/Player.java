@@ -1,9 +1,5 @@
 package com.example.myapplication.Model;
 
-import android.widget.ImageView;
-
-import com.example.myapplication.R;
-
 public class Player {
     private String name;
     private int healthPoints; // 75 for easy, 65 for medium, 55 for hard
