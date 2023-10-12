@@ -17,6 +17,8 @@ public class Leaderboard {
 
     private ArrayList<Score> scoreEntry = new ArrayList<>(); //list to store scores
 
+    private Leaderboard() {}
+
     public void addScore(String player, int score, String time) {
         String playerName = Player.getInstance().getName();
 

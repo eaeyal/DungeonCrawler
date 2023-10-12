@@ -1,10 +1,12 @@
 package com.example.myapplication.ViewModel;
 
 import com.example.myapplication.Model.Player;
+import com.example.myapplication.RoomMapTile;
 
 public class InitialGameScreenViewModel {
     private Player player;
     private Runnable updatedCallback;
+    private RoomMapTile roomMapTile;
 
     public InitialGameScreenViewModel() {
         this.player = Player.getInstance();
