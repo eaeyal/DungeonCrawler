@@ -1,11 +1,7 @@
 package com.example.myapplication;
-import android.os.Bundle;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
-import java.util.List;
-import android.app.Activity;
 
 import com.example.myapplication.Model.Player;
 import com.example.myapplication.Model.Score;
@@ -17,7 +13,9 @@ public class Leaderboard {
 
     private ArrayList<Score> scoreEntry = new ArrayList<>(); //list to store scores
 
-    private Leaderboard() {}
+    private Leaderboard() {
+
+    }
 
     public void addScore(String player, int score, String time) {
         String playerName = Player.getInstance().getName();

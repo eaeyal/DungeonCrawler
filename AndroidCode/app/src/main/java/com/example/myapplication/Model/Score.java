@@ -1,12 +1,10 @@
 package com.example.myapplication.Model;
 
-import com.example.myapplication.GameContext;
-
 public class Score implements Comparable<Score> {
-    String player;
-    int score;
-    String time;
-     public Score(String player, int score, String time) {
+    private String player;
+    private int score;
+    private String time;
+    public Score(String player, int score, String time) {
         this.player = player;
         this.score = score;
         this.time = time;
@@ -20,7 +18,9 @@ public class Score implements Comparable<Score> {
         return score;
     }
 
-    public String getTime() { return time;}
+    public String getTime() {
+        return time;
+    }
 
 
     @Override

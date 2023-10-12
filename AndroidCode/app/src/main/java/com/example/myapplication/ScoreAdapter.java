@@ -8,7 +8,6 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.example.myapplication.Model.Score;
-import com.example.myapplication.R;
 
 import java.util.List;
 
@@ -40,7 +39,8 @@ public class ScoreAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
-            convertView = LayoutInflater.from(context).inflate(R.layout.listview_item, parent, false);
+            convertView = LayoutInflater.from(context).inflate(R.layout.listview_item, parent,
+                    false);
         }
 
         Score score = scores.get(position);

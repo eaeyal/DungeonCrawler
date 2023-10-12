@@ -13,14 +13,11 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
-import com.example.myapplication.GameContext;
 import com.example.myapplication.R;
 import com.example.myapplication.ViewModel.PlayerConfigActivityViewModel;
 
-import java.util.HashMap;
-
 public class PlayerConfigActivity extends AppCompatActivity {
-    PlayerConfigActivityViewModel viewModel;
+    private PlayerConfigActivityViewModel viewModel;
 
     protected void checkShouldEnableBegin() {
         Button startGameButton = findViewById(R.id.btnStartGame);

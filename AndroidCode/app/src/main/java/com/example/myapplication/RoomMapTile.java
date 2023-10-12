@@ -5,11 +5,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
-import java.util.ArrayList;
-
 public class RoomMapTile {
-    public final int TILE_WIDTH = 128;
-    public final int TILE_HEIGHT = 128;
+    private final int tileWidth = 128;
+    private final int tileHeight = 128;
 
     private int tileFloorSpriteId;
     private int tileWallSpriteId;
@@ -60,7 +58,8 @@ public class RoomMapTile {
         tiles = null; // Set the tiles array itself to null
     }
 
-    public void updateTileDimensionsAndRecomputeLayout(int width, int height, RelativeLayout invokeContext) {
+    public void updateTileDimensionsAndRecomputeLayout(int width, int height,
+                                                       RelativeLayout invokeContext) {
         undrawAndDisposePreexistingLayout(invokeContext);
 
         this.width = width;
@@ -74,33 +73,38 @@ public class RoomMapTile {
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
                 // create a new tileFloor everytime
-                tiles[i][j] = Tile.FromSpriteId(tileFloorSpriteId, TILE_WIDTH, TILE_HEIGHT, invokeContext);
+                tiles[i][j] = Tile.fromSpriteId(tileFloorSpriteId, tileWidth, tileHeight,
+                        invokeContext);
             }
         }
 
         // Set the wall tiles, top and bottom, left and right
         // Top and bottom
         for (int i = 0; i < width; i++) {
-            tiles[i][0] = Tile.FromSpriteId(tileWallSpriteId, TILE_WIDTH, TILE_HEIGHT, invokeContext);
+            tiles[i][0] = Tile.fromSpriteId(tileWallSpriteId, tileWidth, tileHeight,
+                    invokeContext);
 
-            tiles[i][height - 1] = Tile.FromSpriteId(tileWallSpriteId, TILE_WIDTH, TILE_HEIGHT, invokeContext);
+            tiles[i][height - 1] = Tile.fromSpriteId(tileWallSpriteId, tileWidth, tileHeight,
+                    invokeContext);
         }
 
         // Left and right
         for (int i = 0; i < height; i++) {
-            tiles[0][i] = Tile.FromSpriteId(tileWallSpriteId, TILE_WIDTH, TILE_HEIGHT, invokeContext);
+            tiles[0][i] = Tile.fromSpriteId(tileWallSpriteId, tileWidth, tileHeight,
+                    invokeContext);
 
-            tiles[width - 1][i] = Tile.FromSpriteId(tileWallSpriteId, TILE_WIDTH, TILE_HEIGHT, invokeContext);
+            tiles[width - 1][i] = Tile.fromSpriteId(tileWallSpriteId, tileWidth, tileHeight,
+                    invokeContext);
         }
     }
 
     public void drawTileLayout(RelativeLayout invokeContext, int centerX, int centerY) {
         // centerX and centerY are the coordinates of the screen center
-        // we need to render the tiles in a way that the player is always in the center of the screen
-        // so we need to offset the tiles by the player's coordinates
+        // we need to render the tiles in a way that the player is always in the center of
+        // the screen so we need to offset the tiles by the player's coordinates
 
-        int totalWidth = width * TILE_WIDTH;
-        int totalHeight = height * TILE_HEIGHT;
+        int totalWidth = width * tileWidth;
+        int totalHeight = height * tileHeight;
 
         int left = centerX - (totalWidth / 2);
         int top = centerY - (totalHeight / 2);
@@ -108,9 +112,9 @@ public class RoomMapTile {
         int x;
         int y;
         for (int i = 0; i < width; i++) {
-            x = left + i * TILE_WIDTH;
+            x = left + i * tileWidth;
             for (int j = 0; j < height; j++) {
-                y = top + j * TILE_HEIGHT;
+                y = top + j * tileHeight;
                 tiles[i][j].getSprite().setX(x);
                 tiles[i][j].getSprite().setY(y);
             }
