@@ -45,6 +45,15 @@ public class Player {
         return score;
     }
 
+    public int getXCoordinate() {
+        return x;
+    }
+
+    public int getYCoordinate() {
+        return y;
+    }
+
+
     private static Player instance = null;
 
     public static Player getInstance() {
@@ -52,5 +61,13 @@ public class Player {
             instance = new Player();
         }
         return instance;
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
     }
 }

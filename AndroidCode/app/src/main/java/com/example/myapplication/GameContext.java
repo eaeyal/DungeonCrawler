@@ -3,7 +3,7 @@ package com.example.myapplication;
 public class GameContext {
     private int difficulty;
 
-    private GameContext() {
+    GameContext() {
 
     }
 
