@@ -132,7 +132,4 @@ public class PlayerTests {
         // returns 1 if score is less than score comparing to
         assertEquals(1, score.compareTo(score2));
     }
-
-
-
 }

@@ -31,16 +31,6 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
-
-        //        Button endScreenButton = (Button) findViewById(R.id.button3);
-        //        endScreenButton.setOnClickListener(new View.OnClickListener() {
-        //            @Override
-        //            public void onClick(View v) {
-        //                openEndScreen();
-        //            }
-        //        });
-
-
     }
 
     public void openEndScreen() {
