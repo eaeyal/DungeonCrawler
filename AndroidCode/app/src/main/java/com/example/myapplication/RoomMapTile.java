@@ -68,6 +68,21 @@ public class RoomMapTile {
         this.tiles = new Tile[width][height];
     }
 
+    public void updateTileDimensionsTileStyleAndRecomputeLayout(int width, int height,
+                                                                int tileFloorSpriteId,
+                                                                int tileWallSpriteId,
+                                                                RelativeLayout invokeContext) {
+        undrawAndDisposePreexistingLayout(invokeContext);
+
+        this.width = width;
+        this.height = height;
+
+        this.tiles = new Tile[width][height];
+
+        this.tileFloorSpriteId = tileFloorSpriteId;
+        this.tileWallSpriteId = tileWallSpriteId;
+    }
+
     public void initPrimitiveTileLayout() {
         // Initialize the tiles array with the floor tiles
         for (int i = 0; i < width; i++) {
