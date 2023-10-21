@@ -2,9 +2,12 @@ package com.example.myapplication.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.view.MotionEvent;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -34,8 +37,18 @@ public class InitialGameScreen extends AppCompatActivity {
 
     private RoomMapTile roomMapTile;
 
+    private ImageView playerSprite;
+
     private ArrayList<ArrayList<Integer>> wallFloorStyles = new ArrayList<>();
     private int currentStyle = 0;
+
+    public int getScreenWidth() {
+        return screenWidth;
+    }
+
+    public int getScreenHeight() {
+        return screenHeight;
+    }
 
     protected void rebuildUi() {
         TextView playerName = findViewById(R.id.playerNameTextView);
@@ -56,8 +69,13 @@ public class InitialGameScreen extends AppCompatActivity {
         roomMapTile.drawTileLayout(layout, screenWidth / 2, screenHeight / 2);
     }
 
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_initial_game_screen);
 
@@ -95,7 +113,10 @@ public class InitialGameScreen extends AppCompatActivity {
         roomMapTile.configInvokeContext(this);
         roomMapTile.initPrimitiveTileLayout();
 
-        ImageView playerSprite = findViewById(R.id.playerSprite);
+        playerSprite = findViewById(R.id.playerSprite);
+        int x = Player.getInstance().getXCoordinate();
+        x+=1;
+        playerSprite.setRight(x);
 
         player = Player.getInstance();
 
@@ -141,6 +162,10 @@ public class InitialGameScreen extends AppCompatActivity {
         viewModel.onUpdatedCallback(() -> {
             rebuildUi();
         });
+    }
+
+    public ImageView getPlayerSprite() {
+        return playerSprite;
     }
 
     @Override

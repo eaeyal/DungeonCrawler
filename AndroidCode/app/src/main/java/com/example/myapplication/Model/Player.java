@@ -1,6 +1,13 @@
 package com.example.myapplication.Model;
 
+import android.media.Image;
 import android.view.KeyEvent;
+import android.widget.ImageView;
+
+import com.example.myapplication.R;
+import com.example.myapplication.View.InitialGameScreen;
+import com.example.myapplication.View.PlayerConfigActivity;
+
 
 public class Player {
     private String name;
@@ -11,6 +18,9 @@ public class Player {
 
     private int x = 0;
     private int y = 0;
+
+    private int spriteId;
+
 
     public String getName() {
         return name;
@@ -24,10 +34,20 @@ public class Player {
         this.name = null;
         this.healthPoints = -1;
         this.image = -1;
+
     }
 
     public void setCoordinates(int x, int y) {
         this.x = x;
+        this.y = y;
+    }
+
+    public int setXCoordinate(int x) {
+        this.x = x;
+        return x;
+    }
+
+    public void setYCoordinate(int y) {
         this.y = y;
     }
 
@@ -73,23 +93,33 @@ public class Player {
     }
 
     public void moveRight() {
-        int x = Player.getInstance().getXCoordinate();
+
+        //int sprinteId = Player.getInstance().getS
+
+/*
+        int x = Player.getInstance().playerSprite.getRight();
         x+=0.25;
+        Player.getInstance().playerSpriteA.setRight(x);
+
+ */
     }
 
     public void moveLeft() {
         int x = Player.getInstance().getXCoordinate();
         x+=-0.25;
+        Player.getInstance().setCoordinates(x,Player.getInstance().getYCoordinate());
     }
 
     public void moveUp() {
         int y = Player.getInstance().getYCoordinate();
         y+=1;
+        Player.getInstance().setCoordinates(Player.getInstance().getXCoordinate(), y);
     }
 
     public void moveDown() {
         int y = Player.getInstance().getYCoordinate();
         y=-1;
+        Player.getInstance().setCoordinates(Player.getInstance().getXCoordinate(), y);
     }
 
     public void doNothing() {
@@ -97,7 +127,10 @@ public class Player {
         int y = Player.instance.getYCoordinate();
     }
 
-    public boolean onKeyUp(int keyCode, KeyEvent event) {
+
+
+    public boolean playerMovement(int keyCode, KeyEvent event) {
+
         switch (keyCode) {
             case KeyEvent.KEYCODE_DPAD_LEFT:
                 moveLeft();
@@ -118,10 +151,13 @@ public class Player {
                 doNothing();
                 return true;
         }
-
-
-
-        }
+        //if (Player.getInstance().getXCoordinate() > initialGameS)
     }
+
+
+
+
+}
+
 
 

@@ -132,4 +132,26 @@ public class PlayerTests {
         // returns 1 if score is less than score comparing to
         assertEquals(1, score.compareTo(score2));
     }
+
+    @Test
+    public void testPlayerMovementRight() {
+        player = player.getInstance();
+        player.setCoordinates(150, 150);
+        player.moveRight();
+        assertEquals(player.getXCoordinate(), 151);
+    }
+
+    public void testPlayerMovementLeft() {
+        player = player.getInstance();
+        player.setCoordinates(150, 150);
+        player.moveLeft();
+        assertEquals(player.getXCoordinate(), 149);
+    }
+
+    public void testPlayerMovementUp() {
+        player = player.getInstance();
+        player.setCoordinates(150, 150);
+        //player.onKeyUp()
+        assertEquals(player.getXCoordinate(), 149);
+    }
 }
