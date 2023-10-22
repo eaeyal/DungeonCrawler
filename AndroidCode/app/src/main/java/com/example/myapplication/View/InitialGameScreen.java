@@ -35,7 +35,7 @@ public class InitialGameScreen extends AppCompatActivity {
 
     private InitialGameScreenViewModel viewModel;
 
-//    private RoomMapTile roomMapTile;
+    private RoomMapTile roomMapTile;
 
     private RoomManager roomManager;
 
