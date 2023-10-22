@@ -116,7 +116,15 @@ public class InitialGameScreen extends AppCompatActivity {
         roomMapTile.configInvokeContext(this);
         roomMapTile.initPrimitiveTileLayout();
 
+
         playerSprite = findViewById(R.id.playerSprite); //Player Sprite image set //TODO
+        if (player.getImage() == 1) {
+            playerSprite.setImageResource(R.drawable.player1);
+        } else if (player.getImage() == 2) {
+            playerSprite.setImageResource(R.drawable.player2);
+        } else {
+            playerSprite.setImageResource(R.drawable.player3);
+        }
 
 
         Button changeMapLayout = findViewById(R.id.btnChangeMap);
