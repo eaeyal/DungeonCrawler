@@ -2,13 +2,11 @@ package com.example.myapplication.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.KeyEvent;
-import android.view.MotionEvent;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -16,14 +14,13 @@ import android.widget.TextView;
 
 import com.example.myapplication.Leaderboard;
 import com.example.myapplication.Model.Player;
+import com.example.myapplication.Physics.RoomManager;
 import com.example.myapplication.R;
-import com.example.myapplication.RoomMapTile;
+import com.example.myapplication.Physics.RoomMapTile;
 import com.example.myapplication.ViewModel.InitialGameScreenViewModel;
-import com.example.myapplication.ViewModel.Subscriber;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -38,7 +35,9 @@ public class InitialGameScreen extends AppCompatActivity {
 
     private InitialGameScreenViewModel viewModel;
 
-    private RoomMapTile roomMapTile;
+//    private RoomMapTile roomMapTile;
+
+    private RoomManager roomManager;
 
     private ImageView playerSprite;
 
@@ -68,8 +67,8 @@ public class InitialGameScreen extends AppCompatActivity {
         scoreText.setTranslationZ(1f);
 
         RelativeLayout layout = findViewById(R.id.gameLayout);
-        DisplayMetrics displayMetrics = new DisplayMetrics();
-        roomMapTile.drawTileLayout(layout, screenWidth / 2, screenHeight / 2);
+
+        roomManager.drawRoom(layout);
     }
 
 
@@ -77,8 +76,6 @@ public class InitialGameScreen extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_initial_game_screen);
 
@@ -88,7 +85,27 @@ public class InitialGameScreen extends AppCompatActivity {
         screenWidth = displayMetrics.widthPixels;
 
         viewModel = new InitialGameScreenViewModel();
+        roomManager = new RoomManager();
 
+        roomManager.addRoom(
+                RoomMapTile.fromTileStyle(
+                        R.drawable.wooden_plank, R.drawable.wood,
+                        5, 5,
+                        screenWidth / 2, screenHeight / 2, this));
+
+        roomManager.addRoom(
+                RoomMapTile.fromTileStyle(
+                        R.drawable.stone_brick, R.drawable.smooth_stone,
+                        5, 5,
+                        screenWidth / 2, screenHeight / 2, this));
+
+        roomManager.addRoom(
+                RoomMapTile.fromTileStyle(
+                        R.drawable.sandstone, R.drawable.better_sandstone,
+                        5, 5,
+                        screenWidth / 2, screenHeight / 2, this));
+
+        playerSprite = findViewById(R.id.playerSprite); //Player Sprite image set
         int floorTileImage = R.drawable.wooden_plank;
         int wallTileImage = R.drawable.wood;
         ArrayList<Integer> woodenLayout = new ArrayList<>(2);
@@ -175,7 +192,13 @@ public class InitialGameScreen extends AppCompatActivity {
         Player.getInstance().subscribe((player) -> {
             playerSprite.setX(player.getX());
             playerSprite.setY(player.getY());
+            roomManager.getCurrentRoom().getIntersectingTiles(player.getX(), player.getY(), playerSprite.getWidth(), playerSprite.getHeight()).forEach((tile) -> {
+                Log.i("", "Intersecting tile: " + tile.getType());
+            });
         });
+
+        // initialize the player coordinate to the center of the screen
+        player.setCoordinates(screenWidth / 2, screenHeight / 2);
     }
 
     @Override
@@ -211,6 +234,6 @@ public class InitialGameScreen extends AppCompatActivity {
         super.onStart();
 
         RelativeLayout layout = findViewById(R.id.gameLayout);
-        roomMapTile.drawTileLayout(layout, screenWidth / 2, screenHeight / 2);
+        roomManager.drawRoom(layout);
     }
 }
