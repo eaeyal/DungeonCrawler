@@ -24,9 +24,6 @@ public class Player {
     private int x = 0;
     private int y = 0;
 
-    private int spriteId;
-
-
     public String getName() {
         return name;
     }
@@ -40,6 +37,10 @@ public class Player {
         this.healthPoints = -1;
         this.image = -1;
 
+    }
+
+    public void setImage(int image) {
+        this.image = image;
     }
 
     public void setCoordinates(int x, int y) {
@@ -82,6 +83,7 @@ public class Player {
         return y;
     }
 
+    public int getImage() {return image;}
     private static Player instance = null;
 
     public static Player getInstance() {

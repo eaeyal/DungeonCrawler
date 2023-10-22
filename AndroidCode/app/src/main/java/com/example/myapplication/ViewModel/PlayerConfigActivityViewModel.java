@@ -55,6 +55,7 @@ public class PlayerConfigActivityViewModel {
     }
 
     public void finalizePlayer() {
+        player.setImage(playerSprite);
         player.setName(playerName);
         player.setHealthPoints(75 - (difficulty - 1) * 10);
         GameContext.getInstance().setDifficulty(difficulty);
