@@ -16,12 +16,14 @@ import android.widget.TextView;
 
 import com.example.myapplication.Leaderboard;
 import com.example.myapplication.Model.Player;
+import com.example.myapplication.Physics.CollisionInfo;
+import com.example.myapplication.Physics.RoomManager;
+import com.example.myapplication.Physics.TileType;
 import com.example.myapplication.R;
 import com.example.myapplication.RoomMapTile;
 import com.example.myapplication.ViewModel.InitialGameScreenViewModel;
 import com.example.myapplication.ViewModel.Subscriber;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Timer;
@@ -38,12 +40,9 @@ public class InitialGameScreen extends AppCompatActivity {
 
     private InitialGameScreenViewModel viewModel;
 
-    private RoomMapTile roomMapTile;
+    private RoomManager roomManager;
 
     private ImageView playerSprite;
-
-    private ArrayList<ArrayList<Integer>> wallFloorStyles = new ArrayList<>();
-    private int currentStyle = 0;
 
     public int getScreenWidth() {
         return screenWidth;
@@ -72,8 +71,12 @@ public class InitialGameScreen extends AppCompatActivity {
         roomMapTile.drawTileLayout(layout, screenWidth / 2, screenHeight / 2);
     }
 
-
-
+    protected void gotoEndScreen() {
+        Leaderboard.getInstance().addScore(player.getName(), player.getScore(),
+                Calendar.getInstance().getTime().toString());
+        Intent intent = new Intent(InitialGameScreen.this, EndScreen.class);
+        startActivity(intent);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,36 +91,35 @@ public class InitialGameScreen extends AppCompatActivity {
         screenWidth = displayMetrics.widthPixels;
 
         viewModel = new InitialGameScreenViewModel();
+        roomManager = new RoomManager();
 
-        int floorTileImage = R.drawable.wooden_plank;
-        int wallTileImage = R.drawable.wood;
-        ArrayList<Integer> woodenLayout = new ArrayList<>(2);
-        woodenLayout.add(floorTileImage);
-        woodenLayout.add(wallTileImage);
-        wallFloorStyles.add(woodenLayout);
+        roomManager.addRoom(
+                RoomMapTile.fromTileStyle(
+                        R.drawable.wooden_plank, R.drawable.wood, R.drawable.iron_door,
+                        5, 5,
+                        screenWidth / 2, screenHeight / 2, this));
 
-        int floorStoneTileImage = R.drawable.stone_brick;
-        int wallStoneTileImage = R.drawable.smooth_stone;
-        ArrayList<Integer> stoneLayout = new ArrayList<>(2);
-        stoneLayout.add(floorStoneTileImage);
-        stoneLayout.add(wallStoneTileImage);
-        wallFloorStyles.add(stoneLayout);
+        roomManager.addRoom(
+                RoomMapTile.fromTileStyle(
+                        R.drawable.stone_brick, R.drawable.smooth_stone, R.drawable.iron_door,
+                        5, 5,
+                        screenWidth / 2, screenHeight / 2, this));
 
-        int floorSandstoneTileImage = R.drawable.sandstone;
-        int wallSandstoneTileImage = R.drawable.better_sandstone;
-        ArrayList<Integer> sandstoneLayout = new ArrayList<>(2);
-        sandstoneLayout.add(floorSandstoneTileImage);
-        sandstoneLayout.add(wallSandstoneTileImage);
-        wallFloorStyles.add(sandstoneLayout);
+        roomManager.addRoom(
+                RoomMapTile.fromTileStyle(
+                        R.drawable.sandstone, R.drawable.better_sandstone, R.drawable.oak_door,
+                        5, 5,
+                        screenWidth / 2, screenHeight / 2, this));
 
-        roomMapTile = new RoomMapTile();
-        roomMapTile.configTileFloorSpriteId(floorTileImage);
-        roomMapTile.configTileWallSpriteId(wallTileImage);
-        roomMapTile.configInvokeContext(this);
-        roomMapTile.initPrimitiveTileLayout();
+//        for (int i = 0; i < roomManager.getTotalRoomCount(); i++) {
+//            roomManager.getRoom(i).replaceRandomWallTileAsExitTile();
+//        }
 
-
-        playerSprite = findViewById(R.id.playerSprite); //Player Sprite image set //TODO
+        playerSprite = findViewById(R.id.playerSprite); //Player Sprite image set
+        playerSprite.setMaxWidth(56);
+        playerSprite.setMaxHeight(56);
+        playerSprite.setMinimumHeight(56);
+        playerSprite.setMinimumWidth(56);
         if (player.getImage() == 1) {
             playerSprite.setImageResource(R.drawable.player1);
         } else if (player.getImage() == 2) {
@@ -126,30 +128,8 @@ public class InitialGameScreen extends AppCompatActivity {
             playerSprite.setImageResource(R.drawable.player3);
         }
 
-
-        Button changeMapLayout = findViewById(R.id.btnChangeMap);
-        changeMapLayout.setOnClickListener(v -> {
-            // generate random number between 5 - 12
-            int width = (int) (Math.random() * 7) + 5;
-            int height = (int) (Math.random() * 7) + 5;
-
-            currentStyle = (currentStyle + 1) % wallFloorStyles.size();
-            ArrayList<Integer> nextStyle = wallFloorStyles.get(currentStyle);
-
-            roomMapTile.configTileFloorSpriteId(nextStyle.get(0));
-            roomMapTile.configTileWallSpriteId(nextStyle.get(1));
-
-            roomMapTile.updateTileDimensionsAndRecomputeLayout(width, height,
-                    (RelativeLayout) findViewById(R.id.gameLayout));
-
-            roomMapTile.initPrimitiveTileLayout();
-            roomMapTile.drawTileLayout((RelativeLayout) findViewById(R.id.gameLayout),
-                    screenWidth / 2, screenHeight / 2);
-        });
-
         Button endGameButton = findViewById(R.id.btnToEndGame);
         endGameButton.setOnClickListener(v -> {
-            player.getScore();
             Leaderboard.getInstance().addScore(player.getName(), player.getScore(),
                     Calendar.getInstance().getTime().toString());
             Intent intent = new Intent(InitialGameScreen.this, EndScreen.class);
@@ -164,10 +144,7 @@ public class InitialGameScreen extends AppCompatActivity {
             }
         }, 0, 1000); // Check every .5 seconds
 
-        viewModel.onUpdatedCallback(() -> {
-            rebuildUi();
-        });
-
+        viewModel.onUpdatedCallback(this::rebuildUi);
 
         // set our player Z index to be above the map
         playerSprite.setTranslationZ(1f);
@@ -175,13 +152,62 @@ public class InitialGameScreen extends AppCompatActivity {
         Player.getInstance().subscribe((player) -> {
             playerSprite.setX(player.getX());
             playerSprite.setY(player.getY());
+
+            List<CollisionInfo> collidingTiles = roomManager.getCurrentRoom().getCollidingTiles(player.getX(), player.getY(), 56, 56);
+            // if we are only colliding with door tiles or floor tiles, change room
+            boolean shouldChangeRoom = true;
+            boolean hasExitTile = false;
+            for (CollisionInfo collisionInfo : collidingTiles) {
+                if (collisionInfo.tile.getType() != TileType.Exit && collisionInfo.tile.getType() != TileType.Floor) {
+                    shouldChangeRoom = false;
+                    break;
+                }
+
+                if (collisionInfo.tile.getType() == TileType.Exit) {
+                    hasExitTile = true;
+                }
+            }
+
+            if (shouldChangeRoom && hasExitTile) {
+                int currentRoomIndex = roomManager.getCurrentRoomIndex();
+
+                // end game if we are in the last room, that is, currentRoomIndex == roomManager.getTotalRoomCount() - 1
+                if (currentRoomIndex == roomManager.getTotalRoomCount() - 1) {
+                    // rest the room index to 0
+                    roomManager.changeRoom(0);
+
+                    gotoEndScreen();
+                    return;
+                }
+
+                int nextRoomIndex = (currentRoomIndex + 1) % roomManager.getTotalRoomCount();
+                roomManager.changeRoom(nextRoomIndex);
+
+                // rest the player's coordinates to the center of the screen
+                player.setCoordinatesNoNotify(screenWidth / 2, screenHeight / 2);
+                player.setCoordinates(screenWidth / 2, screenHeight / 2);
+                rebuildUi();
+            }
+
+            collidingTiles.forEach((collisionInfo) -> {
+                Log.i("COLLISION", "Colliding with tile: " + collisionInfo.tile.getType());
+                player.resolveCollision(collisionInfo);
+                collisionInfo.tile.resolveCollision(collisionInfo);
+            });
         });
+        // initialize the player coordinate to the center of the screen
+        player.setCoordinates(screenWidth / 2, screenHeight / 2);
     }
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         // move player
         Player player = Player.getInstance();
+        // prospect player coordinates
+
+        int playerX = player.getXCoordinate();
+        int playerY = player.getYCoordinate();
+
         if (keyCode == KeyEvent.KEYCODE_A) {
             if (player.getX() >= 0) {
                 player.setXCoordinate(player.getXCoordinate() - 10);
