@@ -106,6 +106,63 @@ public class InitialGameScreen extends AppCompatActivity {
                         screenWidth / 2, screenHeight / 2, this));
 
         playerSprite = findViewById(R.id.playerSprite); //Player Sprite image set
+        int floorTileImage = R.drawable.wooden_plank;
+        int wallTileImage = R.drawable.wood;
+        ArrayList<Integer> woodenLayout = new ArrayList<>(2);
+        woodenLayout.add(floorTileImage);
+        woodenLayout.add(wallTileImage);
+        wallFloorStyles.add(woodenLayout);
+
+        int floorStoneTileImage = R.drawable.stone_brick;
+        int wallStoneTileImage = R.drawable.smooth_stone;
+        ArrayList<Integer> stoneLayout = new ArrayList<>(2);
+        stoneLayout.add(floorStoneTileImage);
+        stoneLayout.add(wallStoneTileImage);
+        wallFloorStyles.add(stoneLayout);
+
+        int floorSandstoneTileImage = R.drawable.sandstone;
+        int wallSandstoneTileImage = R.drawable.better_sandstone;
+        ArrayList<Integer> sandstoneLayout = new ArrayList<>(2);
+        sandstoneLayout.add(floorSandstoneTileImage);
+        sandstoneLayout.add(wallSandstoneTileImage);
+        wallFloorStyles.add(sandstoneLayout);
+
+        roomMapTile = new RoomMapTile();
+        roomMapTile.configTileFloorSpriteId(floorTileImage);
+        roomMapTile.configTileWallSpriteId(wallTileImage);
+        roomMapTile.configInvokeContext(this);
+        roomMapTile.initPrimitiveTileLayout();
+
+
+        playerSprite = findViewById(R.id.playerSprite); //Player Sprite image set //TODO
+        if (player.getImage() == 1) {
+            playerSprite.setImageResource(R.drawable.player1);
+        } else if (player.getImage() == 2) {
+            playerSprite.setImageResource(R.drawable.player2);
+        } else {
+            playerSprite.setImageResource(R.drawable.player3);
+        }
+
+
+        Button changeMapLayout = findViewById(R.id.btnChangeMap);
+        changeMapLayout.setOnClickListener(v -> {
+            // generate random number between 5 - 12
+            int width = (int) (Math.random() * 7) + 5;
+            int height = (int) (Math.random() * 7) + 5;
+
+            currentStyle = (currentStyle + 1) % wallFloorStyles.size();
+            ArrayList<Integer> nextStyle = wallFloorStyles.get(currentStyle);
+
+            roomMapTile.configTileFloorSpriteId(nextStyle.get(0));
+            roomMapTile.configTileWallSpriteId(nextStyle.get(1));
+
+            roomMapTile.updateTileDimensionsAndRecomputeLayout(width, height,
+                    (RelativeLayout) findViewById(R.id.gameLayout));
+
+            roomMapTile.initPrimitiveTileLayout();
+            roomMapTile.drawTileLayout((RelativeLayout) findViewById(R.id.gameLayout),
+                    screenWidth / 2, screenHeight / 2);
+        });
 
         Button endGameButton = findViewById(R.id.btnToEndGame);
         endGameButton.setOnClickListener(v -> {
