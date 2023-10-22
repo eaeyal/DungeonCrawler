@@ -192,7 +192,7 @@ public class RoomMapTile {
         drawTileLayout(invokeContext, xOffset, yOffset);
     }
 
-    private void drawTileLayout(RelativeLayout invokeContext, int centerX, int centerY) {
+    public void drawTileLayout(RelativeLayout invokeContext, int centerX, int centerY) {
         // centerX and centerY are the coordinates of the screen center
         // we need to render the tiles in a way that the player is always in the center of
         // the screen so we need to offset the tiles by the player's coordinates
