@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.KeyEvent;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -120,14 +119,6 @@ public class InitialGameScreen extends AppCompatActivity {
         } else {
             playerSprite.setImageResource(R.drawable.player3);
         }
-
-        Button endGameButton = findViewById(R.id.btnToEndGame);
-        endGameButton.setOnClickListener(v -> {
-            Leaderboard.getInstance().addScore(player.getName(), player.getScore(),
-                    Calendar.getInstance().getTime().toString());
-            Intent intent = new Intent(InitialGameScreen.this, EndScreen.class);
-            startActivity(intent);
-        });
 
         scoreTimer = new Timer();
         scoreTimer.schedule(new TimerTask() {
