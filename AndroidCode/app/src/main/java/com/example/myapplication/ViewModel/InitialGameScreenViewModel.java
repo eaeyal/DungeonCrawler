@@ -12,6 +12,8 @@ public class InitialGameScreenViewModel {
         this.player.setScore(100);
     }
 
+
+
     public Player getPlayer() {
         return player;
     }

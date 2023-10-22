@@ -183,16 +183,24 @@ public class InitialGameScreen extends AppCompatActivity {
         // move player
         Player player = Player.getInstance();
         if (keyCode == KeyEvent.KEYCODE_A) {
-            player.setXCoordinate(player.getXCoordinate() - 10);
+            if (player.getX() >= 0) {
+                player.setXCoordinate(player.getXCoordinate() - 10);
+            }
         }
         if (keyCode == KeyEvent.KEYCODE_D) {
-            player.setXCoordinate(player.getXCoordinate() + 10);
+            if (player.getX() < 1000) {
+                player.setXCoordinate(player.getXCoordinate() + 10);
+            }
         }
         if (keyCode == KeyEvent.KEYCODE_W) {
-            player.setYCoordinate(player.getYCoordinate() - 10);
+            if (player.getY() >= 20) {
+                player.setYCoordinate(player.getYCoordinate() - 10);
+            }
         }
         if (keyCode == KeyEvent.KEYCODE_S) {
-            player.setYCoordinate(player.getYCoordinate() + 10);
+            if (player.getY() <= 1680) {
+                player.setYCoordinate(player.getYCoordinate() + 10);
+            }
         }
 
         return super.onKeyDown(keyCode, event);
