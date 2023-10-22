@@ -2,13 +2,11 @@ package com.example.myapplication.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.KeyEvent;
-import android.view.MotionEvent;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -20,9 +18,8 @@ import com.example.myapplication.Physics.CollisionInfo;
 import com.example.myapplication.Physics.RoomManager;
 import com.example.myapplication.Physics.TileType;
 import com.example.myapplication.R;
-import com.example.myapplication.RoomMapTile;
+import com.example.myapplication.Physics.RoomMapTile;
 import com.example.myapplication.ViewModel.InitialGameScreenViewModel;
-import com.example.myapplication.ViewModel.Subscriber;
 
 import java.util.Calendar;
 import java.util.List;
@@ -67,8 +64,8 @@ public class InitialGameScreen extends AppCompatActivity {
         scoreText.setTranslationZ(1f);
 
         RelativeLayout layout = findViewById(R.id.gameLayout);
-        DisplayMetrics displayMetrics = new DisplayMetrics();
-        roomMapTile.drawTileLayout(layout, screenWidth / 2, screenHeight / 2);
+
+        roomManager.drawRoom(layout);
     }
 
     protected void gotoEndScreen() {
@@ -80,8 +77,6 @@ public class InitialGameScreen extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_initial_game_screen);
 
@@ -209,24 +204,16 @@ public class InitialGameScreen extends AppCompatActivity {
         int playerY = player.getYCoordinate();
 
         if (keyCode == KeyEvent.KEYCODE_A) {
-            if (player.getX() >= 0) {
-                player.setXCoordinate(player.getXCoordinate() - 10);
-            }
+            player.setXCoordinate(player.getXCoordinate() - 10);
         }
         if (keyCode == KeyEvent.KEYCODE_D) {
-            if (player.getX() < 1000) {
-                player.setXCoordinate(player.getXCoordinate() + 10);
-            }
+            player.setXCoordinate(player.getXCoordinate() + 10);
         }
         if (keyCode == KeyEvent.KEYCODE_W) {
-            if (player.getY() >= 20) {
-                player.setYCoordinate(player.getYCoordinate() - 10);
-            }
+            player.setYCoordinate(player.getYCoordinate() - 10);
         }
         if (keyCode == KeyEvent.KEYCODE_S) {
-            if (player.getY() <= 1680) {
-                player.setYCoordinate(player.getYCoordinate() + 10);
-            }
+            player.setYCoordinate(player.getYCoordinate() + 10);
         }
 
         return super.onKeyDown(keyCode, event);
@@ -237,6 +224,6 @@ public class InitialGameScreen extends AppCompatActivity {
         super.onStart();
 
         RelativeLayout layout = findViewById(R.id.gameLayout);
-        roomMapTile.drawTileLayout(layout, screenWidth / 2, screenHeight / 2);
+        roomManager.drawRoom(layout);
     }
 }
