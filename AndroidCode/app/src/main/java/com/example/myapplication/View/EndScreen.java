@@ -35,7 +35,13 @@ public class EndScreen extends AppCompatActivity { //comment for pragya: like ma
         listView.setAdapter(customListViewScoreAdapter);
 
         scoreDisplayView = findViewById(R.id.scoreDisplay);
-        scoreDisplayView.setText("Score: " + Player.getInstance().getScore());
+
+        // show that player has won if they finished the dungeon with a positive score
+        if (Player.getInstance().getScore() > 0) {
+            scoreDisplayView.setText("WINNER! Score: " + Player.getInstance().getScore());
+        } else {
+            scoreDisplayView.setText("You lose! Score: 0");
+        }
 
         Button restartButton = findViewById(R.id.restartButton);
         restartButton.setOnClickListener(new View.OnClickListener() {
