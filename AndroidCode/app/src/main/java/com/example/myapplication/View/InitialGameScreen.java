@@ -2,11 +2,13 @@ package com.example.myapplication.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.KeyEvent;
+import android.view.MotionEvent;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -18,8 +20,9 @@ import com.example.myapplication.Physics.CollisionInfo;
 import com.example.myapplication.Physics.RoomManager;
 import com.example.myapplication.Physics.TileType;
 import com.example.myapplication.R;
-import com.example.myapplication.Physics.RoomMapTile;
+import com.example.myapplication.RoomMapTile;
 import com.example.myapplication.ViewModel.InitialGameScreenViewModel;
+import com.example.myapplication.ViewModel.Subscriber;
 
 import java.util.Calendar;
 import java.util.List;
@@ -64,8 +67,8 @@ public class InitialGameScreen extends AppCompatActivity {
         scoreText.setTranslationZ(1f);
 
         RelativeLayout layout = findViewById(R.id.gameLayout);
-
-        roomManager.drawRoom(layout);
+        DisplayMetrics displayMetrics = new DisplayMetrics();
+        roomMapTile.drawTileLayout(layout, screenWidth / 2, screenHeight / 2);
     }
 
     protected void gotoEndScreen() {
@@ -77,6 +80,8 @@ public class InitialGameScreen extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_initial_game_screen);
 
@@ -232,6 +237,6 @@ public class InitialGameScreen extends AppCompatActivity {
         super.onStart();
 
         RelativeLayout layout = findViewById(R.id.gameLayout);
-        roomManager.drawRoom(layout);
+        roomMapTile.drawTileLayout(layout, screenWidth / 2, screenHeight / 2);
     }
 }
