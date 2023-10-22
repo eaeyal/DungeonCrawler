@@ -2,13 +2,10 @@ package com.example.myapplication.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.KeyEvent;
-import android.view.MotionEvent;
-import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -16,14 +13,13 @@ import android.widget.TextView;
 
 import com.example.myapplication.Leaderboard;
 import com.example.myapplication.Model.Player;
+import com.example.myapplication.Physics.RoomManager;
 import com.example.myapplication.R;
-import com.example.myapplication.RoomMapTile;
+import com.example.myapplication.Physics.RoomMapTile;
 import com.example.myapplication.ViewModel.InitialGameScreenViewModel;
-import com.example.myapplication.ViewModel.Subscriber;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -38,7 +34,9 @@ public class InitialGameScreen extends AppCompatActivity {
 
     private InitialGameScreenViewModel viewModel;
 
-    private RoomMapTile roomMapTile;
+//    private RoomMapTile roomMapTile;
+
+    private RoomManager roomManager;
 
     private ImageView playerSprite;
 
@@ -68,8 +66,8 @@ public class InitialGameScreen extends AppCompatActivity {
         scoreText.setTranslationZ(1f);
 
         RelativeLayout layout = findViewById(R.id.gameLayout);
-        DisplayMetrics displayMetrics = new DisplayMetrics();
-        roomMapTile.drawTileLayout(layout, screenWidth / 2, screenHeight / 2);
+
+        roomManager.drawRoom(layout);
     }
 
 
@@ -77,8 +75,6 @@ public class InitialGameScreen extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_initial_game_screen);
 
@@ -88,56 +84,27 @@ public class InitialGameScreen extends AppCompatActivity {
         screenWidth = displayMetrics.widthPixels;
 
         viewModel = new InitialGameScreenViewModel();
+        roomManager = new RoomManager();
 
-        int floorTileImage = R.drawable.wooden_plank;
-        int wallTileImage = R.drawable.wood;
-        ArrayList<Integer> woodenLayout = new ArrayList<>(2);
-        woodenLayout.add(floorTileImage);
-        woodenLayout.add(wallTileImage);
-        wallFloorStyles.add(woodenLayout);
+        roomManager.addRoom(
+                RoomMapTile.fromTileStyle(
+                        R.drawable.wooden_plank, R.drawable.wood,
+                        5, 5,
+                        screenWidth / 2, screenHeight / 2, this));
 
-        int floorStoneTileImage = R.drawable.stone_brick;
-        int wallStoneTileImage = R.drawable.smooth_stone;
-        ArrayList<Integer> stoneLayout = new ArrayList<>(2);
-        stoneLayout.add(floorStoneTileImage);
-        stoneLayout.add(wallStoneTileImage);
-        wallFloorStyles.add(stoneLayout);
+        roomManager.addRoom(
+                RoomMapTile.fromTileStyle(
+                        R.drawable.stone_brick, R.drawable.smooth_stone,
+                        5, 5,
+                        screenWidth / 2, screenHeight / 2, this));
 
-        int floorSandstoneTileImage = R.drawable.sandstone;
-        int wallSandstoneTileImage = R.drawable.better_sandstone;
-        ArrayList<Integer> sandstoneLayout = new ArrayList<>(2);
-        sandstoneLayout.add(floorSandstoneTileImage);
-        sandstoneLayout.add(wallSandstoneTileImage);
-        wallFloorStyles.add(sandstoneLayout);
+        roomManager.addRoom(
+                RoomMapTile.fromTileStyle(
+                        R.drawable.sandstone, R.drawable.better_sandstone,
+                        5, 5,
+                        screenWidth / 2, screenHeight / 2, this));
 
-        roomMapTile = new RoomMapTile();
-        roomMapTile.configTileFloorSpriteId(floorTileImage);
-        roomMapTile.configTileWallSpriteId(wallTileImage);
-        roomMapTile.configInvokeContext(this);
-        roomMapTile.initPrimitiveTileLayout();
-
-        playerSprite = findViewById(R.id.playerSprite); //Player Sprite image set //TODO
-
-
-        Button changeMapLayout = findViewById(R.id.btnChangeMap);
-        changeMapLayout.setOnClickListener(v -> {
-            // generate random number between 5 - 12
-            int width = (int) (Math.random() * 7) + 5;
-            int height = (int) (Math.random() * 7) + 5;
-
-            currentStyle = (currentStyle + 1) % wallFloorStyles.size();
-            ArrayList<Integer> nextStyle = wallFloorStyles.get(currentStyle);
-
-            roomMapTile.configTileFloorSpriteId(nextStyle.get(0));
-            roomMapTile.configTileWallSpriteId(nextStyle.get(1));
-
-            roomMapTile.updateTileDimensionsAndRecomputeLayout(width, height,
-                    (RelativeLayout) findViewById(R.id.gameLayout));
-
-            roomMapTile.initPrimitiveTileLayout();
-            roomMapTile.drawTileLayout((RelativeLayout) findViewById(R.id.gameLayout),
-                    screenWidth / 2, screenHeight / 2);
-        });
+        playerSprite = findViewById(R.id.playerSprite); //Player Sprite image set
 
         Button endGameButton = findViewById(R.id.btnToEndGame);
         endGameButton.setOnClickListener(v -> {
@@ -168,6 +135,9 @@ public class InitialGameScreen extends AppCompatActivity {
             playerSprite.setX(player.getX());
             playerSprite.setY(player.getY());
         });
+
+        // initialize the player coordinate to the center of the screen
+        player.setCoordinates(screenWidth / 2, screenHeight / 2);
     }
 
     @Override
@@ -195,6 +165,6 @@ public class InitialGameScreen extends AppCompatActivity {
         super.onStart();
 
         RelativeLayout layout = findViewById(R.id.gameLayout);
-        roomMapTile.drawTileLayout(layout, screenWidth / 2, screenHeight / 2);
+        roomManager.drawRoom(layout);
     }
 }

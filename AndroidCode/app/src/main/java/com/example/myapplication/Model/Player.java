@@ -45,6 +45,7 @@ public class Player {
     public void setCoordinates(int x, int y) {
         this.x = x;
         this.y = y;
+        notifySubscribers();
     }
 
     public int setXCoordinate(int x) {
