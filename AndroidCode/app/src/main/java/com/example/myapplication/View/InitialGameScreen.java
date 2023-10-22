@@ -5,7 +5,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -19,7 +18,6 @@ import com.example.myapplication.R;
 import com.example.myapplication.Physics.RoomMapTile;
 import com.example.myapplication.ViewModel.InitialGameScreenViewModel;
 
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -35,14 +33,9 @@ public class InitialGameScreen extends AppCompatActivity {
 
     private InitialGameScreenViewModel viewModel;
 
-//    private RoomMapTile roomMapTile;
-
     private RoomManager roomManager;
 
     private ImageView playerSprite;
-
-    private ArrayList<ArrayList<Integer>> wallFloorStyles = new ArrayList<>();
-    private int currentStyle = 0;
 
     public int getScreenWidth() {
         return screenWidth;
@@ -70,9 +63,6 @@ public class InitialGameScreen extends AppCompatActivity {
 
         roomManager.drawRoom(layout);
     }
-
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -109,7 +99,6 @@ public class InitialGameScreen extends AppCompatActivity {
 
         Button endGameButton = findViewById(R.id.btnToEndGame);
         endGameButton.setOnClickListener(v -> {
-            player.getScore();
             Leaderboard.getInstance().addScore(player.getName(), player.getScore(),
                     Calendar.getInstance().getTime().toString());
             Intent intent = new Intent(InitialGameScreen.this, EndScreen.class);
@@ -124,9 +113,8 @@ public class InitialGameScreen extends AppCompatActivity {
             }
         }, 0, 1000); // Check every .5 seconds
 
-        viewModel.onUpdatedCallback(() -> {
-            rebuildUi();
-        });
+        viewModel.onUpdatedCallback(this::rebuildUi);
+
 
 
         // set our player Z index to be above the map
@@ -135,11 +123,12 @@ public class InitialGameScreen extends AppCompatActivity {
         Player.getInstance().subscribe((player) -> {
             playerSprite.setX(player.getX());
             playerSprite.setY(player.getY());
-            roomManager.getCurrentRoom().getIntersectingTiles(player.getX(), player.getY(), playerSprite.getWidth(), playerSprite.getHeight()).forEach((tile) -> {
-                Log.i("", "Intersecting tile: " + tile.getType());
-            });
+            roomManager.getCurrentRoom().getCollidingTiles(player.getX(), player.getY(), 56, 56)
+                    .forEach((collisionInfo) -> {
+                        player.resolveCollision(collisionInfo);
+                        collisionInfo.tile.resolveCollision(collisionInfo);
+                    });
         });
-
         // initialize the player coordinate to the center of the screen
         player.setCoordinates(screenWidth / 2, screenHeight / 2);
     }
@@ -148,6 +137,11 @@ public class InitialGameScreen extends AppCompatActivity {
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         // move player
         Player player = Player.getInstance();
+        // prospect player coordinates
+
+        int playerX = player.getXCoordinate();
+        int playerY = player.getYCoordinate();
+
         if (keyCode == KeyEvent.KEYCODE_A) {
             player.setXCoordinate(player.getXCoordinate() - 10);
         }

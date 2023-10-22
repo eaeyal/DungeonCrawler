@@ -4,6 +4,11 @@ import android.media.Image;
 import android.view.KeyEvent;
 import android.widget.ImageView;
 
+import androidx.constraintlayout.motion.widget.FloatLayout;
+
+import com.example.myapplication.Physics.CollisionInfo;
+import com.example.myapplication.Physics.CollisionResolutionStrategy;
+import com.example.myapplication.Physics.TileType;
 import com.example.myapplication.R;
 import com.example.myapplication.View.InitialGameScreen;
 import com.example.myapplication.View.PlayerConfigActivity;
@@ -14,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class Player {
+public class Player implements CollisionResolutionStrategy {
     private String name;
     private int healthPoints; // 75 for easy, 65 for medium, 55 for hard
     private int image; // 1 for sprite_1, 2 for sprite_2, 3 for sprite_3
@@ -23,6 +28,9 @@ public class Player {
 
     private int x = 0;
     private int y = 0;
+
+    private int previousX = 0;
+    private int previousY = 0;
 
     private int spriteId;
 
@@ -43,20 +51,32 @@ public class Player {
     }
 
     public void setCoordinates(int x, int y) {
+        savePrevCoord();
         this.x = x;
         this.y = y;
+
         notifySubscribers();
     }
 
-    public int setXCoordinate(int x) {
+    public void revertCoordinates() {
+        this.setCoordinates(this.previousX, this.previousY);
+    }
+
+    private void savePrevCoord() {
+        this.previousX = this.x;
+        this.previousY = this.y;
+    }
+
+    public void setXCoordinate(int x) {
+        savePrevCoord();
         this.x = x;
         notifySubscribers();
-        return x;
     }
 
     public void setYCoordinate(int y) {
-        notifySubscribers();
+        savePrevCoord();
         this.y = y;
+        notifySubscribers();
     }
 
     public void setName(String name) {
@@ -100,75 +120,14 @@ public class Player {
         return y;
     }
 
-    /*
-
-    public void moveRight() {
-
-        //int sprinteId = Player.getInstance().getS
-
-
-        int x = Player.getInstance().playerSprite.getRight();
-        x+=0.25;
-        Player.getInstance().playerSpriteA.setRight(x);
-
-
+    public void setX(int x) {
+        this.x = x;
     }
 
-
-
-    public void moveLeft() {
-        int x = Player.getInstance().getXCoordinate();
-        x+=-0.25;
-        Player.getInstance().setCoordinates(x,Player.getInstance().getYCoordinate());
+    public void setY(int y) {
+        this.y = y;
     }
 
-    public void moveUp() {
-        int y = Player.getInstance().getYCoordinate();
-        y+=1;
-        Player.getInstance().setCoordinates(Player.getInstance().getXCoordinate(), y);
-    }
-
-    public void moveDown() {
-        int y = Player.getInstance().getYCoordinate();
-        y=-1;
-        Player.getInstance().setCoordinates(Player.getInstance().getXCoordinate(), y);
-    }
-
-    public void doNothing() {
-        int x = Player.getInstance().getXCoordinate();
-        int y = Player.instance.getYCoordinate();
-    }
-
-
-
-
-
-    public boolean playerMovement(int keyCode, KeyEvent event) {
-
-        switch (keyCode) {
-            case KeyEvent.KEYCODE_DPAD_LEFT:
-                moveLeft();
-                return true;
-
-            case KeyEvent.KEYCODE_DPAD_RIGHT:
-                moveRight();
-                return true;
-
-            case KeyEvent.KEYCODE_DPAD_UP:
-                moveUp();
-                return true;
-
-            case KeyEvent.KEYCODE_DPAD_DOWN:
-                moveDown();
-                return true;
-            default:
-                doNothing();
-                return true;
-        }
-        //if (Player.getInstance().getXCoordinate() > initialGameS)
-    }
-
-     */
     private List<Subscriber> subscribers = new ArrayList<>();
 
     public void subscribe(Subscriber subscriber) {
@@ -186,10 +145,61 @@ public class Player {
     }
 
 
+    @Override
+    public void resolveCollision(CollisionInfo collision) {
+        if (collision.tile.getType() == TileType.Floor) {
+            return;
+        }
 
+        boolean movingLeft = this.previousX > this.x;
+        boolean movingRight = this.previousX < this.x;
+        boolean movingUp = this.previousY > this.y;
+        boolean movingDown = this.previousY < this.y;
 
+        int tileLeft = collision.tilePosX;
+        int tileRight = tileLeft + collision.tile.getWidth();
+        int tileTop = collision.tilePosY;
+        int tileBottom = tileTop + collision.tile.getHeight();
 
+        int overLapX;
+        if (movingLeft) {
+            overLapX = collision.collisionPosX - tileRight;
+        } else {
+            overLapX = collision.collisionPosX - tileLeft;
+        }
+
+        int overLapY;
+        if (movingUp) {
+            overLapY = collision.collisionPosY - tileBottom;
+        } else {
+            overLapY = collision.collisionPosY - tileTop;
+        }
+
+        overLapY = Math.abs(overLapY);
+        overLapX = Math.abs(overLapX);
+
+        // if we were moving horizontally and we are overlapping on the left side
+        // then we need to move the player to the right using the overlap amount
+        if (movingLeft && overLapX > 0) {
+            this.setX(this.getX() + overLapX);
+        }
+
+        // if we were moving horizontally and we are overlapping on the right side
+        // then we need to move the player to the left using the overlap amount
+        if (movingRight && overLapX > 0) {
+            this.setX(this.getX() - overLapX);
+        }
+
+        // if we were moving vertically and we are overlapping on the top side
+        // then we need to move the player down using the overlap amount
+        if (movingUp && overLapY > 0) {
+            this.setY(this.getY() + overLapY);
+        }
+
+        // if we were moving vertically and we are overlapping on the bottom side
+        // then we need to move the player up using the overlap amount
+        if (movingDown && overLapY > 0) {
+            this.setY(this.getY() - overLapY);
+        }
+    }
 }
-
-
-

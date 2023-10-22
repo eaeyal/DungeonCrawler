@@ -122,23 +122,7 @@ public class RoomMapTile {
         }
     }
 
-    public Tile getTileAtPoint(int x, int y) {
-//        for (int i = 0; i < tiles.length; i++) {
-//            for (int j = 0; j < tiles[i].length; j++) {
-//                Tile tile = tiles[i][j];
-//
-//                int tile_x = xOffset + i * tile.getWidth();
-//                int tile_y = yOffset + j * tile.getHeight();
-//
-//                if (x >= tile_x && x <= tile_x + tile.getWidth() &&
-//                        y >= tile_y && y <= tile_y + tile.getHeight()) {
-//                    return tile;
-//                }
-//            }
-//        }
-//
-//        return null;
-
+    public CollisionInfo getTileAtPoint(int x, int y) {
         int totalWidth = width * tiles[0][0].getWidth();
         int totalHeight = height * tiles[0][0].getHeight();
 
@@ -152,7 +136,7 @@ public class RoomMapTile {
 
                 if (x >= x_tile && x < x_tile + tiles[0][0].getWidth() &&
                         y >= y_tile && y < y_tile + tiles[0][0].getHeight()) {
-                    return tiles[i][j];
+                    return new CollisionInfo(tiles[i][j], x_tile, y_tile, x, y);
                 }
             }
         }
@@ -160,18 +144,18 @@ public class RoomMapTile {
         // }
     }
 
-    public List<Tile> getIntersectingTiles(int x, int y, int width, int height) {
+    public List<CollisionInfo> getCollidingTiles(int x, int y, int width, int height) {
         // x, y is the top left corner of the rectangle
         // need to find all other corners of the rectangle
         // and then find the tiles that intersect with the rectangle
         // and return them
 
-        List<Tile> intersectingTiles = new ArrayList<>();
+        List<CollisionInfo> intersectingTiles = new ArrayList<>();
 
-        Tile topLeft = getTileAtPoint(x, y);
-        Tile topRight = getTileAtPoint(x + width, y);
-        Tile bottomLeft = getTileAtPoint(x, y + height);
-        Tile bottomRight = getTileAtPoint(x + width, y + height);
+        CollisionInfo topLeft = getTileAtPoint(x, y);
+        CollisionInfo topRight = getTileAtPoint(x + width, y);
+        CollisionInfo bottomLeft = getTileAtPoint(x, y + height);
+        CollisionInfo bottomRight = getTileAtPoint(x + width, y + height);
 
         if (topLeft != null) {
             intersectingTiles.add(topLeft);
