@@ -2,9 +2,13 @@ package com.example.myapplication.View;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.view.KeyEvent;
+import android.view.MotionEvent;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -15,15 +19,17 @@ import com.example.myapplication.Model.Player;
 import com.example.myapplication.R;
 import com.example.myapplication.RoomMapTile;
 import com.example.myapplication.ViewModel.InitialGameScreenViewModel;
+import com.example.myapplication.ViewModel.Subscriber;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
 
 public class InitialGameScreen extends AppCompatActivity {
-    private Player player;
+    private Player player = Player.getInstance();
     private Timer scoreTimer;
     private TextView scoreText;
 
@@ -34,8 +40,18 @@ public class InitialGameScreen extends AppCompatActivity {
 
     private RoomMapTile roomMapTile;
 
+    private ImageView playerSprite;
+
     private ArrayList<ArrayList<Integer>> wallFloorStyles = new ArrayList<>();
     private int currentStyle = 0;
+
+    public int getScreenWidth() {
+        return screenWidth;
+    }
+
+    public int getScreenHeight() {
+        return screenHeight;
+    }
 
     protected void rebuildUi() {
         TextView playerName = findViewById(R.id.playerNameTextView);
@@ -56,8 +72,13 @@ public class InitialGameScreen extends AppCompatActivity {
         roomMapTile.drawTileLayout(layout, screenWidth / 2, screenHeight / 2);
     }
 
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_initial_game_screen);
 
@@ -95,11 +116,8 @@ public class InitialGameScreen extends AppCompatActivity {
         roomMapTile.configInvokeContext(this);
         roomMapTile.initPrimitiveTileLayout();
 
-        ImageView playerSprite = findViewById(R.id.playerSprite);
+        playerSprite = findViewById(R.id.playerSprite); //Player Sprite image set //TODO
 
-        player = Player.getInstance();
-
-        player.setCoordinates(150, 150);
 
         Button changeMapLayout = findViewById(R.id.btnChangeMap);
         changeMapLayout.setOnClickListener(v -> {
@@ -141,6 +159,35 @@ public class InitialGameScreen extends AppCompatActivity {
         viewModel.onUpdatedCallback(() -> {
             rebuildUi();
         });
+
+
+        // set our player Z index to be above the map
+        playerSprite.setTranslationZ(1f);
+        // Bind our player movement callbacks
+        Player.getInstance().subscribe((player) -> {
+            playerSprite.setX(player.getX());
+            playerSprite.setY(player.getY());
+        });
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        // move player
+        Player player = Player.getInstance();
+        if (keyCode == KeyEvent.KEYCODE_A) {
+            player.setXCoordinate(player.getXCoordinate() - 10);
+        }
+        if (keyCode == KeyEvent.KEYCODE_D) {
+            player.setXCoordinate(player.getXCoordinate() + 10);
+        }
+        if (keyCode == KeyEvent.KEYCODE_W) {
+            player.setYCoordinate(player.getYCoordinate() - 10);
+        }
+        if (keyCode == KeyEvent.KEYCODE_S) {
+            player.setYCoordinate(player.getYCoordinate() + 10);
+        }
+
+        return super.onKeyDown(keyCode, event);
     }
 
     @Override
