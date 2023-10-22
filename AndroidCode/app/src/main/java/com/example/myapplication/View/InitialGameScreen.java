@@ -6,6 +6,7 @@ import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
@@ -18,9 +19,11 @@ import com.example.myapplication.Model.Player;
 import com.example.myapplication.R;
 import com.example.myapplication.RoomMapTile;
 import com.example.myapplication.ViewModel.InitialGameScreenViewModel;
+import com.example.myapplication.ViewModel.Subscriber;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -113,7 +116,9 @@ public class InitialGameScreen extends AppCompatActivity {
         roomMapTile.configInvokeContext(this);
         roomMapTile.initPrimitiveTileLayout();
 
-        playerSprite = findViewById(R.id.playerSprite);
+        playerSprite = findViewById(R.id.playerSprite); //Player Sprite image set //TODO
+
+        /*
         int x = Player.getInstance().getXCoordinate();
         x+=1;
         playerSprite.setRight(x);
@@ -121,6 +126,8 @@ public class InitialGameScreen extends AppCompatActivity {
         player = Player.getInstance();
 
         player.setCoordinates(150, 150);
+
+         */
 
         Button changeMapLayout = findViewById(R.id.btnChangeMap);
         changeMapLayout.setOnClickListener(v -> {
@@ -166,6 +173,54 @@ public class InitialGameScreen extends AppCompatActivity {
 
     public ImageView getPlayerSprite() {
         return playerSprite;
+    }
+
+    private List<Subscriber> subscribers = new ArrayList<>();
+
+    public boolean movePlayerSprite(int keyCode) {
+        ImageView imageView = findViewById(R.id.playerSprite);
+        int x = playerSprite.getLeft();
+        int y = playerSprite.getTop();
+        int stepSize = 10;
+
+        switch (keyCode) {
+            case KeyEvent.KEYCODE_DPAD_UP:
+                playerSprite.offsetTopAndBottom(stepSize);
+                break;
+            case KeyEvent.KEYCODE_DPAD_DOWN:
+                playerSprite.offsetTopAndBottom(-stepSize);
+                break;
+            case KeyEvent.KEYCODE_DPAD_LEFT:
+                playerSprite.offsetLeftAndRight(-stepSize);
+                break;
+            case KeyEvent.KEYCODE_DPAD_RIGHT:
+                playerSprite.offsetLeftAndRight(stepSize);
+                break;
+            default:
+                return false;
+        }
+        return true;
+    }
+    public void update() {
+
+        movePlayerSprite(KeyEvent.KEYCODE_DPAD_UP);
+        movePlayerSprite(KeyEvent.KEYCODE_DPAD_DOWN);
+        movePlayerSprite(KeyEvent.KEYCODE_DPAD_LEFT);
+        movePlayerSprite(KeyEvent.KEYCODE_DPAD_RIGHT);
+        notifySubscribers();
+    }
+    public void subscribe(Subscriber subscriber) {
+        subscribers.add(subscriber);
+    }
+
+    public void unsubscribe(Subscriber subscriber) {
+        subscribers.remove(subscriber);
+    }
+
+    protected void notifySubscribers() {
+        for (Subscriber subscriber : subscribers) {
+            subscriber.update(this); //update playerSprite
+        }
     }
 
     @Override
