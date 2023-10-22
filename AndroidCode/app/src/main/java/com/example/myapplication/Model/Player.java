@@ -7,9 +7,11 @@ import android.widget.ImageView;
 import com.example.myapplication.R;
 import com.example.myapplication.View.InitialGameScreen;
 import com.example.myapplication.View.PlayerConfigActivity;
+import com.example.myapplication.ViewModel.InitialGameScreenViewModel;
+import com.example.myapplication.ViewModel.Subscriber;
 
 
-public class Player {
+public class Player implements Subscriber {
     private String name;
     private int healthPoints; // 75 for easy, 65 for medium, 55 for hard
     private int image; // 1 for sprite_1, 2 for sprite_2, 3 for sprite_3
@@ -155,8 +157,11 @@ public class Player {
     }
 
 
+    @Override
+    public void update(InitialGameScreen playerSprite) {
+        //update
 
-
+    }
 }
 
 

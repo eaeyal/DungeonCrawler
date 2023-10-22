@@ -201,13 +201,14 @@ public class InitialGameScreen extends AppCompatActivity {
         }
         return true;
     }
-    public void update() {
+    public boolean update() {
 
         movePlayerSprite(KeyEvent.KEYCODE_DPAD_UP);
         movePlayerSprite(KeyEvent.KEYCODE_DPAD_DOWN);
         movePlayerSprite(KeyEvent.KEYCODE_DPAD_LEFT);
         movePlayerSprite(KeyEvent.KEYCODE_DPAD_RIGHT);
         notifySubscribers();
+        return true;
     }
     public void subscribe(Subscriber subscriber) {
         subscribers.add(subscriber);
