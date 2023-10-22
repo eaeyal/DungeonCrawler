@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -134,6 +135,9 @@ public class InitialGameScreen extends AppCompatActivity {
         Player.getInstance().subscribe((player) -> {
             playerSprite.setX(player.getX());
             playerSprite.setY(player.getY());
+            roomManager.getCurrentRoom().getIntersectingTiles(player.getX(), player.getY(), playerSprite.getWidth(), playerSprite.getHeight()).forEach((tile) -> {
+                Log.i("", "Intersecting tile: " + tile.getType());
+            });
         });
 
         // initialize the player coordinate to the center of the screen

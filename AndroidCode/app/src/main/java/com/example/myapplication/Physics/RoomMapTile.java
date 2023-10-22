@@ -123,21 +123,41 @@ public class RoomMapTile {
     }
 
     public Tile getTileAtPoint(int x, int y) {
+//        for (int i = 0; i < tiles.length; i++) {
+//            for (int j = 0; j < tiles[i].length; j++) {
+//                Tile tile = tiles[i][j];
+//
+//                int tile_x = xOffset + i * tile.getWidth();
+//                int tile_y = yOffset + j * tile.getHeight();
+//
+//                if (x >= tile_x && x <= tile_x + tile.getWidth() &&
+//                        y >= tile_y && y <= tile_y + tile.getHeight()) {
+//                    return tile;
+//                }
+//            }
+//        }
+//
+//        return null;
+
+        int totalWidth = width * tiles[0][0].getWidth();
+        int totalHeight = height * tiles[0][0].getHeight();
+
+        int left = xOffset - (totalWidth / 2);
+        int top = yOffset - (totalHeight / 2);
+
         for (int i = 0; i < tiles.length; i++) {
+            int x_tile = left + i * tiles[0][0].getWidth();
             for (int j = 0; j < tiles[i].length; j++) {
-                Tile tile = tiles[i][j];
+                int y_tile = top + j * tiles[0][0].getHeight();
 
-                int tile_x = i * tile.getWidth();
-                int tile_y = j * tile.getHeight();
-
-                if (x >= tile_x && x <= tile_x + tile.getWidth() &&
-                        y >= tile_y && y <= tile_y + tile.getHeight()) {
-                    return tile;
+                if (x >= x_tile && x < x_tile + tiles[0][0].getWidth() &&
+                        y >= y_tile && y < y_tile + tiles[0][0].getHeight()) {
+                    return tiles[i][j];
                 }
             }
         }
-
-        return null;
+        return null; // Return null if no tile is found at the given point
+        // }
     }
 
     public List<Tile> getIntersectingTiles(int x, int y, int width, int height) {
