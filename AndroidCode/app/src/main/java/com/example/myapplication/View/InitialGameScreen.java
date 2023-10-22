@@ -28,7 +28,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 
-public class InitialGameScreen extends AppCompatActivity implements Subscriber {
+public class InitialGameScreen extends AppCompatActivity {
     private Player player = Player.getInstance();
     private Timer scoreTimer;
     private TextView scoreText;
@@ -161,48 +161,33 @@ public class InitialGameScreen extends AppCompatActivity implements Subscriber {
         });
 
 
-
-       // Player.getInstance().subscribe(
-       Subscriber subscriber = new Subscriber() {
-           @Override
-           public void update(Player player) {
-               update(Player.getInstance());
-           }
-       };
-
-
-    public boolean movePlayerSprite(int keyCode) {
-        int x = playerSprite.getLeft();
-        int y = playerSprite.getTop();
-        int stepSize = 10;
-
-        switch (keyCode) {
-            case KeyEvent.KEYCODE_DPAD_UP:
-                playerSprite.offsetTopAndBottom(stepSize);
-                break;
-            case KeyEvent.KEYCODE_DPAD_DOWN:
-                playerSprite.offsetTopAndBottom(-stepSize);
-                break;
-            case KeyEvent.KEYCODE_DPAD_LEFT:
-                playerSprite.offsetLeftAndRight(-stepSize);
-                break;
-            case KeyEvent.KEYCODE_DPAD_RIGHT:
-                playerSprite.offsetLeftAndRight(stepSize);
-                break;
-            default:
-                return false;
-        }
-        return true;
+        // set our player Z index to be above the map
+        playerSprite.setTranslationZ(1f);
+        // Bind our player movement callbacks
+        Player.getInstance().subscribe((player) -> {
+            playerSprite.setX(player.getX());
+            playerSprite.setY(player.getY());
+        });
     }
 
     @Override
-    public void update(Player playerSprite) {
-        movePlayerSprite(KeyEvent.KEYCODE_DPAD_UP);
-        movePlayerSprite(KeyEvent.KEYCODE_DPAD_DOWN);
-        movePlayerSprite(KeyEvent.KEYCODE_DPAD_LEFT);
-        movePlayerSprite(KeyEvent.KEYCODE_DPAD_RIGHT);
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        // move player
+        Player player = Player.getInstance();
+        if (keyCode == KeyEvent.KEYCODE_A) {
+            player.setXCoordinate(player.getXCoordinate() - 10);
+        }
+        if (keyCode == KeyEvent.KEYCODE_D) {
+            player.setXCoordinate(player.getXCoordinate() + 10);
+        }
+        if (keyCode == KeyEvent.KEYCODE_W) {
+            player.setYCoordinate(player.getYCoordinate() - 10);
+        }
+        if (keyCode == KeyEvent.KEYCODE_S) {
+            player.setYCoordinate(player.getYCoordinate() + 10);
+        }
 
-
+        return super.onKeyDown(keyCode, event);
     }
 
     @Override
@@ -212,6 +197,4 @@ public class InitialGameScreen extends AppCompatActivity implements Subscriber {
         RelativeLayout layout = findViewById(R.id.gameLayout);
         roomMapTile.drawTileLayout(layout, screenWidth / 2, screenHeight / 2);
     }
-
-
 }

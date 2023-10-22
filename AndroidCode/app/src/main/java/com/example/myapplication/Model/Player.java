@@ -49,10 +49,12 @@ public class Player {
 
     public int setXCoordinate(int x) {
         this.x = x;
+        notifySubscribers();
         return x;
     }
 
     public void setYCoordinate(int y) {
+        notifySubscribers();
         this.y = y;
     }
 
