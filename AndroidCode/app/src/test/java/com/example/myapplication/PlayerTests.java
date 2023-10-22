@@ -2,8 +2,12 @@ package com.example.myapplication;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
+
+import android.view.KeyEvent;
+
 import com.example.myapplication.Model.Player;
 import com.example.myapplication.Model.Score;
+import com.example.myapplication.View.InitialGameScreen;
 import com.example.myapplication.ViewModel.PlayerConfigActivityViewModel;
 import com.example.myapplication.ViewModel.InitialGameScreenViewModel;
 
@@ -133,25 +137,43 @@ public class PlayerTests {
         assertEquals(1, score.compareTo(score2));
     }
 
-    @Test
-    public void testPlayerMovementRight() {
-        player = player.getInstance();
-        player.setCoordinates(150, 150);
-        player.moveRight();
-        assertEquals(player.getXCoordinate(), 151);
-    }
+    InitialGameScreen initialGameScreen = new InitialGameScreen();
 
+    @Test
     public void testPlayerMovementLeft() {
         player = player.getInstance();
-        player.setCoordinates(150, 150);
-        player.moveLeft();
-        assertEquals(player.getXCoordinate(), 149);
+        player.setCoordinates(40,40);
+        InitialGameScreen initialGameScreen = new InitialGameScreen();
+        initialGameScreen.onKeyDown(KeyEvent.KEYCODE_A, null);
+        assertEquals(30, player.getXCoordinate());
+        assertEquals(40, player.getYCoordinate());
+    }
+
+    public void testPlayerMovementRight() {
+        player = player.getInstance();
+        player.setCoordinates(40,40);
+        InitialGameScreen initialGameScreen = new InitialGameScreen();
+        initialGameScreen.onKeyDown(KeyEvent.KEYCODE_D, null);
+        assertEquals(50, player.getXCoordinate());
+        assertEquals(40, player.getYCoordinate());
+    }
+
+    public void testPlayerMovementDown() {
+        player = player.getInstance();
+        player.setCoordinates(40,40);
+        InitialGameScreen initialGameScreen = new InitialGameScreen();
+        initialGameScreen.onKeyDown(KeyEvent.KEYCODE_S, null);
+        assertEquals(40, player.getXCoordinate());
+        assertEquals(30, player.getYCoordinate());
     }
 
     public void testPlayerMovementUp() {
         player = player.getInstance();
-        player.setCoordinates(150, 150);
-        //player.onKeyUp()
-        assertEquals(player.getXCoordinate(), 149);
+        player.setCoordinates(40,40);
+        InitialGameScreen initialGameScreen = new InitialGameScreen();
+        initialGameScreen.onKeyDown(KeyEvent.KEYCODE_W, null);
+        assertEquals(40, player.getXCoordinate());
+        assertEquals(50, player.getYCoordinate());
     }
+
 }
