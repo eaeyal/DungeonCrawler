@@ -16,6 +16,7 @@ public class RoomMapTile {
 
     private int tileFloorSpriteId;
     private int tileWallSpriteId;
+    private int tileExitSpriteId;
 
     private Activity invokeContext;
 
@@ -40,6 +41,10 @@ public class RoomMapTile {
 
     public void configTileWallSpriteId(int spriteId) {
         tileWallSpriteId = spriteId;
+    }
+
+    public void configTileExitSpriteId(int spriteId) {
+        tileExitSpriteId = spriteId;
     }
 
     public void configInvokeContext(Activity context) {
@@ -120,6 +125,8 @@ public class RoomMapTile {
             tiles[width - 1][i] = Tile.fromSpriteId(tileWallSpriteId, tileWidth, tileHeight, TileType.Wall,
                     invokeContext);
         }
+
+        replaceRandomWallTileAsExitTile();
     }
 
     public CollisionInfo getTileAtPoint(int x, int y) {
@@ -219,18 +226,31 @@ public class RoomMapTile {
         }
     }
 
-    public static RoomMapTile fromTileStyle(int tileFloorSpriteId, int tileWallSpriteId,
+    public static RoomMapTile fromTileStyle(int tileFloorSpriteId, int tileWallSpriteId, int tileExitSpriteID,
                                             int width, int height,
                                             int xOffset, int yOffset,
                                             Activity invokeContext) {
         RoomMapTile roomMapTile = new RoomMapTile();
         roomMapTile.configTileFloorSpriteId(tileFloorSpriteId);
         roomMapTile.configTileWallSpriteId(tileWallSpriteId);
+        roomMapTile.configTileExitSpriteId(tileExitSpriteID);
         roomMapTile.configInvokeContext(invokeContext);
         roomMapTile.initPrimitiveTileLayout();
         roomMapTile.updateTileDimensionsAndRecomputeLayout(width, height,
                 (RelativeLayout) invokeContext.findViewById(R.id.gameLayout));
         roomMapTile.setXYOffset(xOffset, yOffset);
         return roomMapTile;
+    }
+
+    public void replaceRandomWallTileAsExitTile() {
+        for (int i = 1; i < tiles.length - 1; i++) {
+            for (int j = 0; j < tiles[i].length - 1; j++) {
+                if (tiles[i][j].getType() == TileType.Wall) {
+                    tiles[i][j] = Tile.fromSpriteId(tileExitSpriteId, tileWidth, tileHeight,
+                            TileType.Exit, invokeContext);
+                    return;
+                }
+            }
+        }
     }
 }

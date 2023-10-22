@@ -32,6 +32,14 @@ public class RoomManager {
         room.drawTileLayout(context);
     }
 
+    public RoomMapTile getRoom(int index) {
+        return rooms.get(index);
+    }
+
+    public int getTotalRoomCount() {
+        return rooms.size();
+    }
+
     public int getCurrentRoomIndex() {
         return currentRoomIndex;
     }

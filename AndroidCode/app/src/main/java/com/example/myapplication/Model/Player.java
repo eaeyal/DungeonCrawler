@@ -50,6 +50,19 @@ public class Player implements CollisionResolutionStrategy {
 
     }
 
+    public void setImage(int image) {
+        this.image = image;
+    }
+
+    public int getImage() {
+        return image;
+    }
+
+    public void setCoordinatesNoNotify(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
+
     public void setCoordinates(int x, int y) {
         savePrevCoord();
         this.x = x;
