@@ -10,8 +10,11 @@ import com.example.myapplication.View.PlayerConfigActivity;
 import com.example.myapplication.ViewModel.InitialGameScreenViewModel;
 import com.example.myapplication.ViewModel.Subscriber;
 
+import java.util.ArrayList;
+import java.util.List;
 
-public class Player implements Subscriber {
+
+public class Player {
     private String name;
     private int healthPoints; // 75 for easy, 65 for medium, 55 for hard
     private int image; // 1 for sprite_1, 2 for sprite_2, 3 for sprite_3
@@ -94,17 +97,21 @@ public class Player implements Subscriber {
         return y;
     }
 
+    /*
+
     public void moveRight() {
 
         //int sprinteId = Player.getInstance().getS
 
-/*
+
         int x = Player.getInstance().playerSprite.getRight();
         x+=0.25;
         Player.getInstance().playerSpriteA.setRight(x);
 
- */
+
     }
+
+
 
     public void moveLeft() {
         int x = Player.getInstance().getXCoordinate();
@@ -128,6 +135,8 @@ public class Player implements Subscriber {
         int x = Player.getInstance().getXCoordinate();
         int y = Player.instance.getYCoordinate();
     }
+
+
 
 
 
@@ -156,12 +165,29 @@ public class Player implements Subscriber {
         //if (Player.getInstance().getXCoordinate() > initialGameS)
     }
 
+     */
+    private List<Subscriber> subscribers = new ArrayList<>();
 
-    @Override
-    public void update(InitialGameScreen playerSprite) {
-        //update
 
+
+    public void subscribe(Subscriber subscriber) {
+        subscribers.add(subscriber);
     }
+
+    public void unsubscribe(Subscriber subscriber) {
+        subscribers.remove(subscriber);
+    }
+
+    protected void notifySubscribers() {
+        for (Subscriber subscriber : subscribers) {
+            subscriber.update(this); //update playerSprite
+        }
+    }
+
+
+
+
+
 }
 
 

@@ -28,8 +28,8 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 
-public class InitialGameScreen extends AppCompatActivity {
-    private Player player;
+public class InitialGameScreen extends AppCompatActivity implements Subscriber {
+    private Player player = Player.getInstance();
     private Timer scoreTimer;
     private TextView scoreText;
 
@@ -118,16 +118,6 @@ public class InitialGameScreen extends AppCompatActivity {
 
         playerSprite = findViewById(R.id.playerSprite); //Player Sprite image set //TODO
 
-        /*
-        int x = Player.getInstance().getXCoordinate();
-        x+=1;
-        playerSprite.setRight(x);
-
-        player = Player.getInstance();
-
-        player.setCoordinates(150, 150);
-
-         */
 
         Button changeMapLayout = findViewById(R.id.btnChangeMap);
         changeMapLayout.setOnClickListener(v -> {
@@ -175,10 +165,8 @@ public class InitialGameScreen extends AppCompatActivity {
         return playerSprite;
     }
 
-    private List<Subscriber> subscribers = new ArrayList<>();
 
     public boolean movePlayerSprite(int keyCode) {
-        ImageView imageView = findViewById(R.id.playerSprite);
         int x = playerSprite.getLeft();
         int y = playerSprite.getTop();
         int stepSize = 10;
@@ -201,27 +189,15 @@ public class InitialGameScreen extends AppCompatActivity {
         }
         return true;
     }
-    public boolean update() {
 
+
+    @Override
+    public void update(Player playerSprite) {
         movePlayerSprite(KeyEvent.KEYCODE_DPAD_UP);
         movePlayerSprite(KeyEvent.KEYCODE_DPAD_DOWN);
         movePlayerSprite(KeyEvent.KEYCODE_DPAD_LEFT);
         movePlayerSprite(KeyEvent.KEYCODE_DPAD_RIGHT);
-        notifySubscribers();
-        return true;
-    }
-    public void subscribe(Subscriber subscriber) {
-        subscribers.add(subscriber);
-    }
 
-    public void unsubscribe(Subscriber subscriber) {
-        subscribers.remove(subscriber);
-    }
-
-    protected void notifySubscribers() {
-        for (Subscriber subscriber : subscribers) {
-            subscriber.update(this); //update playerSprite
-        }
     }
 
     @Override
@@ -231,4 +207,6 @@ public class InitialGameScreen extends AppCompatActivity {
         RelativeLayout layout = findViewById(R.id.gameLayout);
         roomMapTile.drawTileLayout(layout, screenWidth / 2, screenHeight / 2);
     }
+
+
 }
