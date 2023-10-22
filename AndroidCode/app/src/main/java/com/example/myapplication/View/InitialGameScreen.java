@@ -159,11 +159,16 @@ public class InitialGameScreen extends AppCompatActivity implements Subscriber {
         viewModel.onUpdatedCallback(() -> {
             rebuildUi();
         });
-    }
 
-    public ImageView getPlayerSprite() {
-        return playerSprite;
-    }
+
+
+       // Player.getInstance().subscribe(
+       Subscriber subscriber = new Subscriber() {
+           @Override
+           public void update(Player player) {
+               update(Player.getInstance());
+           }
+       };
 
 
     public boolean movePlayerSprite(int keyCode) {
@@ -190,13 +195,13 @@ public class InitialGameScreen extends AppCompatActivity implements Subscriber {
         return true;
     }
 
-
     @Override
     public void update(Player playerSprite) {
         movePlayerSprite(KeyEvent.KEYCODE_DPAD_UP);
         movePlayerSprite(KeyEvent.KEYCODE_DPAD_DOWN);
         movePlayerSprite(KeyEvent.KEYCODE_DPAD_LEFT);
         movePlayerSprite(KeyEvent.KEYCODE_DPAD_RIGHT);
+
 
     }
 

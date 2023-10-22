@@ -168,8 +168,6 @@ public class Player {
      */
     private List<Subscriber> subscribers = new ArrayList<>();
 
-
-
     public void subscribe(Subscriber subscriber) {
         subscribers.add(subscriber);
     }
