@@ -102,7 +102,8 @@ public class RoomMapTile {
         for (int i = 0; i < width; i++) {
             for (int j = 0; j < height; j++) {
                 // create a new tileFloor everytime
-                tiles[i][j] = Tile.fromSpriteId(tileFloorSpriteId, tileWidth, tileHeight, TileType.Floor,
+                tiles[i][j] = Tile.fromSpriteId(tileFloorSpriteId,
+                        tileWidth, tileHeight, TileType.Floor,
                         invokeContext);
             }
         }
@@ -113,7 +114,8 @@ public class RoomMapTile {
             tiles[i][0] = Tile.fromSpriteId(tileWallSpriteId, tileWidth, tileHeight, TileType.Wall,
                     invokeContext);
 
-            tiles[i][height - 1] = Tile.fromSpriteId(tileWallSpriteId, tileWidth, tileHeight, TileType.Wall,
+            tiles[i][height - 1] = Tile.fromSpriteId(tileWallSpriteId,
+                    tileWidth, tileHeight, TileType.Wall,
                     invokeContext);
         }
 
@@ -122,7 +124,8 @@ public class RoomMapTile {
             tiles[0][i] = Tile.fromSpriteId(tileWallSpriteId, tileWidth, tileHeight, TileType.Wall,
                     invokeContext);
 
-            tiles[width - 1][i] = Tile.fromSpriteId(tileWallSpriteId, tileWidth, tileHeight, TileType.Wall,
+            tiles[width - 1][i] = Tile.fromSpriteId(tileWallSpriteId,
+                    tileWidth, tileHeight, TileType.Wall,
                     invokeContext);
         }
 
@@ -137,13 +140,13 @@ public class RoomMapTile {
         int top = yOffset - (totalHeight / 2);
 
         for (int i = 0; i < tiles.length; i++) {
-            int x_tile = left + i * tiles[0][0].getWidth();
+            int xTile = left + i * tiles[0][0].getWidth();
             for (int j = 0; j < tiles[i].length; j++) {
-                int y_tile = top + j * tiles[0][0].getHeight();
+                int yTile = top + j * tiles[0][0].getHeight();
 
-                if (x >= x_tile && x < x_tile + tiles[0][0].getWidth() &&
-                        y >= y_tile && y < y_tile + tiles[0][0].getHeight()) {
-                    return new CollisionInfo(tiles[i][j], x_tile, y_tile, x, y);
+                if (x >= xTile && x < xTile + tiles[0][0].getWidth()
+                        && y >= yTile && y < yTile + tiles[0][0].getHeight()) {
+                    return new CollisionInfo(tiles[i][j], xTile, yTile, x, y);
                 }
             }
         }
@@ -226,20 +229,25 @@ public class RoomMapTile {
         }
     }
 
-    public static RoomMapTile fromTileStyle(int tileFloorSpriteId, int tileWallSpriteId, int tileExitSpriteID,
-                                            int width, int height,
-                                            int xOffset, int yOffset,
-                                            Activity invokeContext) {
+    public static RoomMapTile fromTileStyle(int tileFloorSpriteId,
+                                            int tileWallSpriteId, int tileExitSpriteID,
+                                            int xOffset, int yOffset) {
         RoomMapTile roomMapTile = new RoomMapTile();
         roomMapTile.configTileFloorSpriteId(tileFloorSpriteId);
         roomMapTile.configTileWallSpriteId(tileWallSpriteId);
         roomMapTile.configTileExitSpriteId(tileExitSpriteID);
-        roomMapTile.configInvokeContext(invokeContext);
-        roomMapTile.initPrimitiveTileLayout();
-        roomMapTile.updateTileDimensionsAndRecomputeLayout(width, height,
-                (RelativeLayout) invokeContext.findViewById(R.id.gameLayout));
         roomMapTile.setXYOffset(xOffset, yOffset);
+
         return roomMapTile;
+    }
+
+    public RoomMapTile build(int width, int height,
+                             Activity invokeContext) {
+        this.configInvokeContext(invokeContext);
+        this.initPrimitiveTileLayout();
+        this.updateTileDimensionsAndRecomputeLayout(width, height,
+                (RelativeLayout) invokeContext.findViewById(R.id.gameLayout));
+        return this;
     }
 
     public void replaceRandomWallTileAsExitTile() {

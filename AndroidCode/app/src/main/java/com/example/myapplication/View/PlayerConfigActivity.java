@@ -1,9 +1,6 @@
 package com.example.myapplication.View;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
-import android.media.Image;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -15,13 +12,15 @@ import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.myapplication.R;
 import com.example.myapplication.ViewModel.PlayerConfigActivityViewModel;
 
 public class PlayerConfigActivity extends AppCompatActivity {
     private PlayerConfigActivityViewModel viewModel;
 
-    ImageView playerSprite; /*= findViewById(R.id.playerSprite);
+    private ImageView playerSprite; /*= findViewById(R.id.playerSprite);
 
     private ImageView findViewById(int playerSprite) {
         return playerSpriteA;

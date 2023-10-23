@@ -1,6 +1,5 @@
 package com.example.myapplication.Physics;
 
-import android.app.Activity;
 import android.widget.RelativeLayout;
 
 import java.util.ArrayList;

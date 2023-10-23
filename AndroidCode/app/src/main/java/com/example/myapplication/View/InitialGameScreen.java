@@ -1,25 +1,25 @@
 package com.example.myapplication.View;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.KeyEvent;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.myapplication.Leaderboard;
 import com.example.myapplication.Model.Player;
 import com.example.myapplication.Physics.CollisionInfo;
 import com.example.myapplication.Physics.RoomManager;
+import com.example.myapplication.Physics.RoomMapTile;
 import com.example.myapplication.Physics.TileType;
 import com.example.myapplication.R;
-import com.example.myapplication.Physics.RoomMapTile;
 import com.example.myapplication.ViewModel.InitialGameScreenViewModel;
+import com.example.myapplication.ViewModel.Subscriber;
 
 import java.util.Calendar;
 import java.util.List;
@@ -75,6 +75,7 @@ public class InitialGameScreen extends AppCompatActivity {
         startActivity(intent);
     }
 
+    /** @noinspection checkstyle:OperatorWrap*/
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -91,24 +92,20 @@ public class InitialGameScreen extends AppCompatActivity {
         roomManager.addRoom(
                 RoomMapTile.fromTileStyle(
                         R.drawable.wooden_plank, R.drawable.wood, R.drawable.iron_door,
-                        5, 5,
-                        screenWidth / 2, screenHeight / 2, this));
+                        screenWidth / 2, screenHeight / 2)
+                        .build(5, 5, this));
 
         roomManager.addRoom(
                 RoomMapTile.fromTileStyle(
                         R.drawable.stone_brick, R.drawable.smooth_stone, R.drawable.iron_door,
-                        5, 5,
-                        screenWidth / 2, screenHeight / 2, this));
+                        screenWidth / 2, screenHeight / 2)
+                        .build(5, 5, this));
 
         roomManager.addRoom(
                 RoomMapTile.fromTileStyle(
                         R.drawable.sandstone, R.drawable.better_sandstone, R.drawable.oak_door,
-                        5, 5,
-                        screenWidth / 2, screenHeight / 2, this));
-
-//        for (int i = 0; i < roomManager.getTotalRoomCount(); i++) {
-//            roomManager.getRoom(i).replaceRandomWallTileAsExitTile();
-//        }
+                        screenWidth / 2, screenHeight / 2)
+                        .build(5, 5, this));
 
         playerSprite = findViewById(R.id.playerSprite); //Player Sprite image set
         playerSprite.setMaxWidth(56);
@@ -145,21 +142,35 @@ public class InitialGameScreen extends AppCompatActivity {
         // set our player Z index to be above the map
         playerSprite.setTranslationZ(1f);
         // Bind our player movement callbacks
+
+        Player.getInstance().subscribe(new Subscriber() {
+            @Override
+            public void update(Player player) {
+
+            }
+        });
+
+        Player.getInstance().subscribe((player) -> {
+
+        });
+
         Player.getInstance().subscribe((player) -> {
             playerSprite.setX(player.getX());
             playerSprite.setY(player.getY());
 
-            List<CollisionInfo> collidingTiles = roomManager.getCurrentRoom().getCollidingTiles(player.getX(), player.getY(), 56, 56);
+            List<CollisionInfo> collidingTiles = roomManager.getCurrentRoom()
+                    .getCollidingTiles(player.getX(), player.getY(), 56, 56);
             // if we are only colliding with door tiles or floor tiles, change room
             boolean shouldChangeRoom = true;
             boolean hasExitTile = false;
             for (CollisionInfo collisionInfo : collidingTiles) {
-                if (collisionInfo.tile.getType() != TileType.Exit && collisionInfo.tile.getType() != TileType.Floor) {
+                if (collisionInfo.getTile().getType() != TileType.Exit
+                        && collisionInfo.getTile().getType() != TileType.Floor) {
                     shouldChangeRoom = false;
                     break;
                 }
 
-                if (collisionInfo.tile.getType() == TileType.Exit) {
+                if (collisionInfo.getTile().getType() == TileType.Exit) {
                     hasExitTile = true;
                 }
             }
@@ -167,7 +178,8 @@ public class InitialGameScreen extends AppCompatActivity {
             if (shouldChangeRoom && hasExitTile) {
                 int currentRoomIndex = roomManager.getCurrentRoomIndex();
 
-                // end game if we are in the last room, that is, currentRoomIndex == roomManager.getTotalRoomCount() - 1
+                // end game if we are in the last room, that is,
+                // currentRoomIndex == roomManager.getTotalRoomCount() - 1
                 if (currentRoomIndex == roomManager.getTotalRoomCount() - 1) {
                     // rest the room index to 0
                     roomManager.changeRoom(0);
@@ -188,9 +200,10 @@ public class InitialGameScreen extends AppCompatActivity {
             }
 
             collidingTiles.forEach((collisionInfo) -> {
-                Log.i("COLLISION", "Colliding with tile: " + collisionInfo.tile.getType());
+                Log.i("COLLISION", "Colliding with tile: "
+                        + collisionInfo.getTile().getType());
                 player.resolveCollision(collisionInfo);
-                collisionInfo.tile.resolveCollision(collisionInfo);
+                collisionInfo.getTile().resolveCollision(collisionInfo);
             });
         });
         // initialize the player coordinate to the center of the screen
