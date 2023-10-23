@@ -39,22 +39,6 @@
         android:textColor="@android:color/black"
         android:textSize="18sp" />
 
-    <Button
-        android:id="@+id/btnToEndGame"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="270dp"
-        android:layout_marginTop="650dp"
-        android:text="End Game" />
-
-    <Button
-        android:id="@+id/btnChangeMap"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="70dp"
-        android:layout_marginTop="650dp"
-        android:text="Change Map" />
-
     <ImageView
         android:id="@+id/playerSprite"
         android:layout_width="wrap_content"

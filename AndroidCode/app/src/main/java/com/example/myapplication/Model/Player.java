@@ -1,18 +1,8 @@
 package com.example.myapplication.Model;
 
-import android.media.Image;
-import android.view.KeyEvent;
-import android.widget.ImageView;
-
-import androidx.constraintlayout.motion.widget.FloatLayout;
-
 import com.example.myapplication.Physics.CollisionInfo;
 import com.example.myapplication.Physics.CollisionResolutionStrategy;
 import com.example.myapplication.Physics.TileType;
-import com.example.myapplication.R;
-import com.example.myapplication.View.InitialGameScreen;
-import com.example.myapplication.View.PlayerConfigActivity;
-import com.example.myapplication.ViewModel.InitialGameScreenViewModel;
 import com.example.myapplication.ViewModel.Subscriber;
 
 import java.util.ArrayList;
@@ -160,7 +150,7 @@ public class Player implements CollisionResolutionStrategy {
 
     @Override
     public void resolveCollision(CollisionInfo collision) {
-        if (collision.tile.getType() == TileType.Floor) {
+        if (collision.getTile().getType() == TileType.Floor) {
             return;
         }
 
@@ -169,23 +159,23 @@ public class Player implements CollisionResolutionStrategy {
         boolean movingUp = this.previousY > this.y;
         boolean movingDown = this.previousY < this.y;
 
-        int tileLeft = collision.tilePosX;
-        int tileRight = tileLeft + collision.tile.getWidth();
-        int tileTop = collision.tilePosY;
-        int tileBottom = tileTop + collision.tile.getHeight();
+        int tileLeft = collision.getTilePosX();
+        int tileRight = tileLeft + collision.getTile().getWidth();
+        int tileTop = collision.getTilePosY();
+        int tileBottom = tileTop + collision.getTile().getHeight();
 
         int overLapX;
         if (movingLeft) {
-            overLapX = collision.collisionPosX - tileRight;
+            overLapX = collision.getCollisionPosX() - tileRight;
         } else {
-            overLapX = collision.collisionPosX - tileLeft;
+            overLapX = collision.getCollisionPosX() - tileLeft;
         }
 
         int overLapY;
         if (movingUp) {
-            overLapY = collision.collisionPosY - tileBottom;
+            overLapY = collision.getCollisionPosY() - tileBottom;
         } else {
-            overLapY = collision.collisionPosY - tileTop;
+            overLapY = collision.getCollisionPosY() - tileTop;
         }
 
         overLapY = Math.abs(overLapY);
