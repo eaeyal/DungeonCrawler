@@ -181,6 +181,19 @@ public class PlayerTests {
     }
 
     @Test
+    public void testMultiplePlayerMovements() {
+        player = player.getInstance();
+        player.setCoordinates(40,40);
+        gameViewModel = new InitialGameScreenViewModel();
+        gameViewModel.movePlayer(KeyEvent.KEYCODE_A);
+        gameViewModel.movePlayer(KeyEvent.KEYCODE_S);
+        gameViewModel.movePlayer(KeyEvent.KEYCODE_D);
+        gameViewModel.movePlayer(KeyEvent.KEYCODE_W);
+        assertEquals(40, player.getXCoordinate());
+        assertEquals(40, player.getYCoordinate());
+    }
+
+    @Test
     public void loserTests() {
         player = player.getInstance();
         if (player.getScore() <= 0) {
