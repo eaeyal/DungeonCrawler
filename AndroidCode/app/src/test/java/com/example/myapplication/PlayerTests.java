@@ -2,7 +2,10 @@ package com.example.myapplication;
 import org.junit.Before;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
+import com.example.myapplication.R;
 import android.view.KeyEvent;
 
 import com.example.myapplication.Model.Player;
@@ -174,6 +177,23 @@ public class PlayerTests {
         initialGameScreen.onKeyDown(KeyEvent.KEYCODE_W, null);
         assertEquals(40, player.getXCoordinate());
         assertEquals(50, player.getYCoordinate());
+    }
+
+    @Test
+    public void loserTests() {
+        player = player.getInstance();
+        if (player.getScore() <= 0) {
+            assertFalse(player.getOutcome());
+
+        }
+    }
+
+    @Test
+    public void winnerTests() {
+        player = player.getInstance();
+        if (player.getOutcome()) {
+            assertTrue(player.getRoomList().size() == 3);
+        }
     }
 
 }

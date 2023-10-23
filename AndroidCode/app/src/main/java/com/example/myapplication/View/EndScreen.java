@@ -37,7 +37,7 @@ public class EndScreen extends AppCompatActivity { //comment for pragya: like ma
         scoreDisplayView = findViewById(R.id.scoreDisplay);
 
         // show that player has won if they finished the dungeon with a positive score
-        if (Player.getInstance().getScore() > 0) {
+        if (Player.getInstance().getScore() > 0 && Player.getInstance().getX() != 500000) {
             scoreDisplayView.setText("WINNER! Score: " + Player.getInstance().getScore());
         } else {
             scoreDisplayView.setText("You lose! Score: 0");

@@ -11,6 +11,10 @@ import java.util.List;
 
 public class Player implements CollisionResolutionStrategy {
     private String name;
+
+    private ArrayList<String> roomsVisited;
+
+    private boolean winner;
     private int healthPoints; // 75 for easy, 65 for medium, 55 for hard
     private int image; // 1 for sprite_1, 2 for sprite_2, 3 for sprite_3
 
@@ -82,6 +86,22 @@ public class Player implements CollisionResolutionStrategy {
         notifySubscribers();
     }
 
+    public void addRoom(String... rooms) {
+        if (roomsVisited == null) {
+            roomsVisited = new ArrayList<String>();
+        }
+        for (String room : rooms) {
+            roomsVisited.add(room);
+        }
+    }
+
+    public ArrayList<String> getRoomList() {
+        if (roomsVisited == null) {
+            roomsVisited = new ArrayList<String>();
+        }
+        return roomsVisited;
+    }
+
     public void setName(String name) {
         this.name = name;
     }
@@ -129,6 +149,18 @@ public class Player implements CollisionResolutionStrategy {
 
     public void setY(int y) {
         this.y = y;
+    }
+
+    public boolean getOutcome() {
+        return winner;
+    }
+
+    public void setWinner() {
+        winner = true;
+    }
+
+    public void setLoser() {
+        winner = false;
     }
 
     private List<Subscriber> subscribers = new ArrayList<>();
