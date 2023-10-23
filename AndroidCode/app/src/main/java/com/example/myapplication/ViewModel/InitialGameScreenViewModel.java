@@ -1,5 +1,7 @@
 package com.example.myapplication.ViewModel;
 
+import android.view.KeyEvent;
+
 import com.example.myapplication.Model.Player;
 
 public class InitialGameScreenViewModel {
@@ -32,6 +34,27 @@ public class InitialGameScreenViewModel {
     public void onUpdated() {
         if (updatedCallback != null) {
             updatedCallback.run();
+        }
+    }
+
+    public void movePlayer(int keyCode) {
+        Player player = Player.getInstance();
+        // prospect player coordinates
+
+        int playerX = player.getXCoordinate();
+        int playerY = player.getYCoordinate();
+
+        if (keyCode == KeyEvent.KEYCODE_A) {
+            player.setXCoordinate(player.getXCoordinate() - 10);
+        }
+        if (keyCode == KeyEvent.KEYCODE_D) {
+            player.setXCoordinate(player.getXCoordinate() + 10);
+        }
+        if (keyCode == KeyEvent.KEYCODE_W) {
+            player.setYCoordinate(player.getYCoordinate() - 10);
+        }
+        if (keyCode == KeyEvent.KEYCODE_S) {
+            player.setYCoordinate(player.getYCoordinate() + 10);
         }
     }
 
