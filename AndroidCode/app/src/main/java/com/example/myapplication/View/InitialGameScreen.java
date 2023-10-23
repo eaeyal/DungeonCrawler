@@ -125,6 +125,7 @@ public class InitialGameScreen extends AppCompatActivity {
 
         Button endGameButton = findViewById(R.id.btnToEndGame);
         endGameButton.setOnClickListener(v -> {
+            player.setX(500000);
             Leaderboard.getInstance().addScore(player.getName(), player.getScore(),
                     Calendar.getInstance().getTime().toString());
             Intent intent = new Intent(InitialGameScreen.this, EndScreen.class);
@@ -172,6 +173,8 @@ public class InitialGameScreen extends AppCompatActivity {
                     roomManager.changeRoom(0);
 
                     gotoEndScreen();
+                    player.setWinner();
+                    player.addRoom("wooden plank", "stone brick", "sandstone");
                     return;
                 }
 
