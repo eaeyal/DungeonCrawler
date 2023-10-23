@@ -10,10 +10,13 @@ import android.view.KeyEvent;
 
 import com.example.myapplication.Model.Player;
 import com.example.myapplication.Model.Score;
-import com.example.myapplication.View.InitialGameScreen;
 import com.example.myapplication.ViewModel.PlayerConfigActivityViewModel;
 import com.example.myapplication.ViewModel.InitialGameScreenViewModel;
-
+/*
+import com.example.myapplication.Physics.RoomMapTile;
+import com.example.myapplication.Physics.CollisionInfo;
+import java.util.List;
+ */
 
 import java.sql.Time;
 import java.text.DateFormat;
@@ -140,43 +143,41 @@ public class PlayerTests {
         assertEquals(1, score.compareTo(score2));
     }
 
-    InitialGameScreen initialGameScreen = new InitialGameScreen();
-
     @Test
     public void testPlayerMovementLeft() {
         player = player.getInstance();
+        gameViewModel = new InitialGameScreenViewModel();
         player.setCoordinates(40,40);
-        InitialGameScreen initialGameScreen = new InitialGameScreen();
-        initialGameScreen.onKeyDown(KeyEvent.KEYCODE_A, null);
+        gameViewModel.movePlayer(KeyEvent.KEYCODE_A);
         assertEquals(30, player.getXCoordinate());
         assertEquals(40, player.getYCoordinate());
     }
-
+    @Test
     public void testPlayerMovementRight() {
         player = player.getInstance();
         player.setCoordinates(40,40);
-        InitialGameScreen initialGameScreen = new InitialGameScreen();
-        initialGameScreen.onKeyDown(KeyEvent.KEYCODE_D, null);
+        gameViewModel = new InitialGameScreenViewModel();
+        gameViewModel.movePlayer(KeyEvent.KEYCODE_D);
         assertEquals(50, player.getXCoordinate());
         assertEquals(40, player.getYCoordinate());
     }
-
+    @Test
     public void testPlayerMovementDown() {
         player = player.getInstance();
         player.setCoordinates(40,40);
-        InitialGameScreen initialGameScreen = new InitialGameScreen();
-        initialGameScreen.onKeyDown(KeyEvent.KEYCODE_S, null);
+        gameViewModel = new InitialGameScreenViewModel();
+        gameViewModel.movePlayer(KeyEvent.KEYCODE_S);
         assertEquals(40, player.getXCoordinate());
-        assertEquals(30, player.getYCoordinate());
+        assertEquals(50, player.getYCoordinate());
     }
-
+    @Test
     public void testPlayerMovementUp() {
         player = player.getInstance();
         player.setCoordinates(40,40);
-        InitialGameScreen initialGameScreen = new InitialGameScreen();
-        initialGameScreen.onKeyDown(KeyEvent.KEYCODE_W, null);
+        gameViewModel = new InitialGameScreenViewModel();
+        gameViewModel.movePlayer(KeyEvent.KEYCODE_W);
         assertEquals(40, player.getXCoordinate());
-        assertEquals(50, player.getYCoordinate());
+        assertEquals(30, player.getYCoordinate());
     }
 
     @Test
@@ -195,5 +196,19 @@ public class PlayerTests {
             assertTrue(player.getRoomList().size() == 3);
         }
     }
+
+    /*
+    @Test
+    public void collisionTest() {
+        RoomMapTile roomMapTile = new RoomMapTile();
+        List<CollisionInfo> collisions = roomMapTile.getCollidingTiles(50, 50, 40, 40);
+        boolean collides;
+        collides = collisions.contains(roomMapTile.getTileAtPoint(50, 50));
+        assertTrue(collides);
+    }
+
+     */
+
+
 
 }

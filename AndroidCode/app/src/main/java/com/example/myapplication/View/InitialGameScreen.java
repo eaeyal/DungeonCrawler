@@ -119,7 +119,7 @@ public class InitialGameScreen extends AppCompatActivity {
         } else {
             playerSprite.setImageResource(R.drawable.player3);
         }
-
+        /*
         Button endGameButton = findViewById(R.id.btnToEndGame);
         endGameButton.setOnClickListener(v -> {
             player.setX(500000);
@@ -129,6 +129,8 @@ public class InitialGameScreen extends AppCompatActivity {
             startActivity(intent);
         });
 
+
+         */
         scoreTimer = new Timer();
         scoreTimer.schedule(new TimerTask() {
             @Override
@@ -210,27 +212,11 @@ public class InitialGameScreen extends AppCompatActivity {
         player.setCoordinates(screenWidth / 2, screenHeight / 2);
     }
 
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         // move player
-        Player player = Player.getInstance();
-        // prospect player coordinates
-
-        int playerX = player.getXCoordinate();
-        int playerY = player.getYCoordinate();
-
-        if (keyCode == KeyEvent.KEYCODE_A) {
-            player.setXCoordinate(player.getXCoordinate() - 10);
-        }
-        if (keyCode == KeyEvent.KEYCODE_D) {
-            player.setXCoordinate(player.getXCoordinate() + 10);
-        }
-        if (keyCode == KeyEvent.KEYCODE_W) {
-            player.setYCoordinate(player.getYCoordinate() - 10);
-        }
-        if (keyCode == KeyEvent.KEYCODE_S) {
-            player.setYCoordinate(player.getYCoordinate() + 10);
-        }
+        viewModel.movePlayer(keyCode);
 
         return super.onKeyDown(keyCode, event);
     }
