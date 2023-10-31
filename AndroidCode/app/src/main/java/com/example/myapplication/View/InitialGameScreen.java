@@ -41,6 +41,8 @@ public class InitialGameScreen extends AppCompatActivity {
 
     private ImageView playerSprite;
 
+    private ImageView skeletonSprite;
+
     public int getScreenWidth() {
         return screenWidth;
     }
@@ -119,23 +121,27 @@ public class InitialGameScreen extends AppCompatActivity {
         } else {
             playerSprite.setImageResource(R.drawable.player3);
         }
-        /*
-        Button endGameButton = findViewById(R.id.btnToEndGame);
-        endGameButton.setOnClickListener(v -> {
-            player.setX(500000);
-            Leaderboard.getInstance().addScore(player.getName(), player.getScore(),
-                    Calendar.getInstance().getTime().toString());
-            Intent intent = new Intent(InitialGameScreen.this, EndScreen.class);
-            startActivity(intent);
-        });
+
+        // Creating Skeleton Sprite
+        skeletonSprite = findViewById(R.id.enemySprite1);
+        viewModel.createSkeleton();
+        skeletonSprite.setX(viewModel.getEnemyX(viewModel.getSkeleton()));
+        skeletonSprite.setY(viewModel.getEnemyY(viewModel.getSkeleton()));
+        // Enemy movement tied to clock?
 
 
-         */
         scoreTimer = new Timer();
         scoreTimer.schedule(new TimerTask() {
             @Override
             public void run() {
                 runOnUiThread(() -> viewModel.updateScore());
+
+
+                // Example code on how skeletonSprite can move with timer
+                viewModel.moveEnemy(viewModel.getSkeleton());
+                skeletonSprite.setX(viewModel.getEnemyX(viewModel.getSkeleton()));
+                skeletonSprite.setY(viewModel.getEnemyY(viewModel.getSkeleton()));
+
             }
         }, 0, 1000); // Check every .5 seconds
 

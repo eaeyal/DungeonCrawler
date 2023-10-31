@@ -56,4 +56,10 @@
         android:textSize="16sp"
         android:visibility="visible" />
 
+    <ImageView
+        android:id="@+id/enemySprite1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/player3" />
+
 </RelativeLayout>
