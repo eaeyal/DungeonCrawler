@@ -53,7 +53,11 @@ public class Slime implements Enemy {
     @Override
     public void startPos() {
         this.setX(100);
-        this.setY(100);
+        this.setY(-100);
+    }
+    public void setCoordinates(int x, int y) {
+        this.x = x;
+        this.y = y;
     }
 
     // Enemy's attack pattern
@@ -65,11 +69,17 @@ public class Slime implements Enemy {
     @Override
     public void movement() {
         // Change this for the movement
-        if (this.getX() < 200) {
-            this.setX(this.getX() + 20);
-        } else if (this.getX() >= 200) {
-            this.setX((this.getX() - 20));
+        if (Player.getInstance().getHealthPoints() < 65) {
+            this.setSpeed(this.getSpeed() + 30);
+            this.setCoordinates(this.getX() - 5, this.getY() + 2);
+            this.setCoordinates(this.getX() + 5, this.getY() + 3);
+        } else {
+            this.setSpeed(20);
+            this.setCoordinates(this.getX() + 5, this.getY() + 5);
+            this.setSpeed(25);
+            this.setCoordinates(this.getX() + 6, this.getY() + 6);
         }
+
     }
 
 }

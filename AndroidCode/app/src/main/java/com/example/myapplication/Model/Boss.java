@@ -34,6 +34,10 @@ public class Boss implements Enemy {
         this.y = y;
     }
 
+    public void setCoordinates(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
     public void setSpriteId(int spriteId) {
         this.spriteId = spriteId;
     }
@@ -64,11 +68,16 @@ public class Boss implements Enemy {
 
     @Override
     public void movement() {
-        // Change this for the movement
-        if (this.getX() < 200) {
-            this.setX(this.getX() + 20);
-        } else if (this.getX() >= 200) {
-            this.setX((this.getX() - 20));
+        //300 should be replaced with the value that prevents it from going offscreen
+        if (this.getX() < 50 ) {
+            this.setX(this.getX() + 10);
+            this.setY(this.getY() + 10);
+            this.setSpeed(20);
+        } else {
+            this.setX(this.getX() - 10);
+            this.setY(this.getY() - 10);
+            this.setSpeed(10);
         }
+
     }
 }

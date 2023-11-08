@@ -2,15 +2,23 @@ package com.example.myapplication.ViewModel;
 
 import android.view.KeyEvent;
 
+import com.example.myapplication.Model.BossController;
 import com.example.myapplication.Model.Player;
 import com.example.myapplication.Model.EnemyController;
+import com.example.myapplication.Model.Skeleton;
 import com.example.myapplication.Model.SkeletonController;
+import com.example.myapplication.Model.SlimeController;
+import com.example.myapplication.Model.Undead;
+import com.example.myapplication.Model.UndeadController;
 
 public class InitialGameScreenViewModel {
     private Player player;
     private Runnable updatedCallback;
 
     private EnemyController skeleton;
+    private EnemyController boss;
+    private EnemyController slime;
+    private EnemyController undead;
 
     public InitialGameScreenViewModel() {
         this.player = Player.getInstance();
@@ -30,6 +38,7 @@ public class InitialGameScreenViewModel {
 
         onUpdated();
     }
+
 
     public int getScore() {
         return player.getScore();
@@ -71,6 +80,22 @@ public class InitialGameScreenViewModel {
         skeleton = new SkeletonController();
         skeleton.render();
     }
+
+    public void createBoss() {
+        boss = new BossController();
+        boss.render();
+    }
+
+    public void createSlime() {
+        slime = new SlimeController();
+        slime.render();
+    }
+
+    public void createUndead() {
+        undead = new UndeadController();
+        undead.render();
+    }
+
     public int getEnemyX(EnemyController enemyC) {
        return enemyC.enemy.getX();
     }
@@ -91,8 +116,21 @@ public class InitialGameScreenViewModel {
         return skeleton;
     }
 
+    public EnemyController getBoss() {
+        return boss;
+    }
+
+    public EnemyController getSlime() {
+        return slime;
+    }
+
+    public EnemyController getUndead() {
+        return undead;
+    }
     public void moveEnemy(EnemyController enemyC) {
         enemyC.movement();
     }
+
+
 
 }

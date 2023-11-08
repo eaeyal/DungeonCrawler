@@ -29,7 +29,8 @@ import java.util.TimerTask;
 
 public class InitialGameScreen extends AppCompatActivity {
     private Player player = Player.getInstance();
-    private Timer scoreTimer;
+    private Timer scoreTimer1;
+    private Timer scoreTimer2;
     private TextView scoreText;
 
     private int screenWidth;
@@ -41,7 +42,11 @@ public class InitialGameScreen extends AppCompatActivity {
 
     private ImageView playerSprite;
 
-    private ImageView skeletonSprite;
+    private ImageView enemy1Sprite;
+    private ImageView enemy2Sprite;
+    private ImageView slimeSprite;
+    private ImageView undeadSprite;
+
 
     public int getScreenWidth() {
         return screenWidth;
@@ -109,6 +114,7 @@ public class InitialGameScreen extends AppCompatActivity {
                         screenWidth / 2, screenHeight / 2)
                         .build(5, 5, this));
 
+
         playerSprite = findViewById(R.id.playerSprite); //Player Sprite image set
         playerSprite.setMaxWidth(56);
         playerSprite.setMaxHeight(56);
@@ -123,27 +129,68 @@ public class InitialGameScreen extends AppCompatActivity {
         }
 
         // Creating Skeleton Sprite
-        skeletonSprite = findViewById(R.id.enemySprite1);
+        enemy1Sprite = findViewById(R.id.enemySprite1);
         viewModel.createSkeleton();
-        skeletonSprite.setX(viewModel.getEnemyX(viewModel.getSkeleton()));
-        skeletonSprite.setY(viewModel.getEnemyY(viewModel.getSkeleton()));
+        enemy1Sprite.setX(viewModel.getEnemyX(viewModel.getSkeleton()));
+        enemy1Sprite.setY(viewModel.getEnemyY(viewModel.getSkeleton()));
         // Enemy movement tied to clock?
 
+        //enemy2Sprite = findViewById(R.id.enemySprite2);
+        viewModel.createBoss();
+        enemy2Sprite.setX(viewModel.getEnemyX(viewModel.getBoss()));
+        enemy2Sprite.setY(viewModel.getEnemyY(viewModel.getBoss()));
 
-        scoreTimer = new Timer();
-        scoreTimer.schedule(new TimerTask() {
+        ///if player reaches door, then change the enemy sprite
+
+        enemy1Sprite = findViewById(R.id.----);
+        viewModel.createSlime();
+        enemy1Sprite.setX(viewModel.getEnemyX(viewModel.getSlime()));
+        enemy1Sprite.setY(viewModel.getEnemyY(viewModel.getSlime()));
+
+        enemy1Sprite = findViewById(R.id.----);
+        viewModel.createSlime();
+        enemy1Sprite.setX(viewModel.getEnemyX(viewModel.getSlime()));
+        enemy1Sprite.setY(viewModel.getEnemyY(viewModel.getSlime()));
+
+
+        if (//roomManager.getIndex()...) )
+        scoreTimer1 = new Timer();
+        scoreTimer1.schedule(new TimerTask() {
             @Override
             public void run() {
                 runOnUiThread(() -> viewModel.updateScore());
 
-
                 // Example code on how skeletonSprite can move with timer
                 viewModel.moveEnemy(viewModel.getSkeleton());
-                skeletonSprite.setX(viewModel.getEnemyX(viewModel.getSkeleton()));
-                skeletonSprite.setY(viewModel.getEnemyY(viewModel.getSkeleton()));
+                enemy1Sprite.setX(viewModel.getEnemyX(viewModel.getSkeleton()));
+                enemy1Sprite.setY(viewModel.getEnemyY(viewModel.getSkeleton()));
+
+                viewModel.moveEnemy(viewModel.getBoss());
+                enemy2Sprite.setX(viewModel.getEnemyX(viewModel.getBoss()));
+                enemy2Sprite.setY(viewModel.getEnemyY(viewModel.getBoss()));
 
             }
         }, 0, 1000); // Check every .5 seconds
+
+        else if (//roomManager.getIndex())) {
+        scoreTimer2 = new Timer());
+        scoreTimer2.schedule(new TimerTask() {
+            @Override
+            public void run() {
+                runOnUiThread(() -> viewModel.updateScore());
+
+                // Example code on how skeletonSprite can move with timer
+                viewModel.moveEnemy(viewModel.getUndead());
+                enemy1Sprite.setX(viewModel.getEnemyX(viewModel.getUndead()));
+                enemy1Sprite.setY(viewModel.getEnemyY(viewModel.getUndead()));
+
+                viewModel.moveEnemy(viewModel.getBoss());
+                enemy2Sprite.setX(viewModel.getEnemyX(viewModel.getSlime()));
+                enemy2Sprite.setY(viewModel.getEnemyY(viewModel.getSlime()));
+
+            }
+        }, 0, 1023); // Check every .5 seconds
+
 
         viewModel.onUpdatedCallback(this::rebuildUi);
 

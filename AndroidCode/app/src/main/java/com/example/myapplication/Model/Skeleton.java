@@ -1,5 +1,8 @@
 package com.example.myapplication.Model;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 public class Skeleton implements Enemy {
     private int spriteId; // Set skeleton sprite
     private int x;
@@ -7,6 +10,7 @@ public class Skeleton implements Enemy {
     private int healthPoints;
     private int attackDamage;
     private int speed;
+
 
     public int getSpriteId() {
         return spriteId;
@@ -34,6 +38,10 @@ public class Skeleton implements Enemy {
         this.y = y;
     }
 
+    public void setCoordinates(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
     public void setSpriteId(int spriteId) {
         this.spriteId = spriteId;
     }
@@ -52,7 +60,7 @@ public class Skeleton implements Enemy {
 
     @Override
     public void startPos() {
-        this.setX(100);
+        this.setX(125);
         this.setY(100);
     }
 
@@ -62,13 +70,10 @@ public class Skeleton implements Enemy {
         // Attacks in a certain amount of tile.
     }
 
+
     @Override
     public void movement() {
-        // Change this for the movement
-        if (this.getX() < 200) {
-            this.setX(this.getX() + 20);
-        } else if (this.getX() >= 200) {
-            this.setX((this.getX() - 20));
-        }
+        this.setSpeed(5);
+        this.setCoordinates(this.getX() + 10, this.getX() + 10);
     }
 }

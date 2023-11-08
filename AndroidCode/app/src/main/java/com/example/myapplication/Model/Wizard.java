@@ -1,6 +1,6 @@
 package com.example.myapplication.Model;
 
-public class Undead implements Enemy{
+public class Wizard implements Enemy{
     private int spriteId;
     private int x;
     private int y;
