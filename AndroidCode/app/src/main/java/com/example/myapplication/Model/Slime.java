@@ -52,8 +52,8 @@ public class Slime implements Enemy {
 
     @Override
     public void startPos() {
-        this.setX(100);
-        this.setY(-100);
+        this.setX(0);
+        this.setY(0);
     }
     public void setCoordinates(int x, int y) {
         this.x = x;

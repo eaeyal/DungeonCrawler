@@ -6,9 +6,8 @@ public class SkeletonController extends EnemyController {
         return new Skeleton();
     }
 
-    /*public void movement() {
-        Skeleton.getInstance().setCoordinates(Skeleton.getInstance().getX() + 10, Skeleton.getInstance().getX() + 10);
-    }
 
-     */
 }
+
+
+

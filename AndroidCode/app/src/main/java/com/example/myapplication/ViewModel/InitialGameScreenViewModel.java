@@ -3,6 +3,7 @@ package com.example.myapplication.ViewModel;
 import android.view.KeyEvent;
 
 import com.example.myapplication.Model.BossController;
+import com.example.myapplication.Model.Enemy;
 import com.example.myapplication.Model.Player;
 import com.example.myapplication.Model.EnemyController;
 import com.example.myapplication.Model.Skeleton;
@@ -10,16 +11,17 @@ import com.example.myapplication.Model.SkeletonController;
 import com.example.myapplication.Model.SlimeController;
 import com.example.myapplication.Model.Undead;
 import com.example.myapplication.Model.UndeadController;
+import com.example.myapplication.Model.WizardController;
 
 public class InitialGameScreenViewModel {
     private Player player;
     private Runnable updatedCallback;
-
     private EnemyController skeleton;
     private EnemyController boss;
     private EnemyController slime;
     private EnemyController undead;
-
+    private EnemyController olaf;
+    private EnemyController wizard;
     public InitialGameScreenViewModel() {
         this.player = Player.getInstance();
         this.player.setScore(100);
@@ -96,6 +98,16 @@ public class InitialGameScreenViewModel {
         undead.render();
     }
 
+    public void createOlaf() {
+        olaf = new UndeadController();
+        olaf.render();
+    }
+
+    public void createWizard() {
+        wizard = new WizardController();
+        wizard.render();
+    }
+
     public int getEnemyX(EnemyController enemyC) {
        return enemyC.enemy.getX();
     }
@@ -127,6 +139,9 @@ public class InitialGameScreenViewModel {
     public EnemyController getUndead() {
         return undead;
     }
+
+    public EnemyController getOlaf() { return olaf; }
+    public EnemyController getWizard() {return wizard; }
     public void moveEnemy(EnemyController enemyC) {
         enemyC.movement();
     }
