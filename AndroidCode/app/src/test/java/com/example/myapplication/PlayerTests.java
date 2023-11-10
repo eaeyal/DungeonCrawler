@@ -12,6 +12,7 @@ import com.example.myapplication.Model.Player;
 import com.example.myapplication.Model.Score;
 import com.example.myapplication.ViewModel.PlayerConfigActivityViewModel;
 import com.example.myapplication.ViewModel.InitialGameScreenViewModel;
+import com.example.myapplication.Model.EnemyController;
 /*
 import com.example.myapplication.Physics.RoomMapTile;
 import com.example.myapplication.Physics.CollisionInfo;
@@ -210,18 +211,20 @@ public class PlayerTests {
         }
     }
 
-    /*
     @Test
-    public void collisionTest() {
-        RoomMapTile roomMapTile = new RoomMapTile();
-        List<CollisionInfo> collisions = roomMapTile.getCollidingTiles(50, 50, 40, 40);
-        boolean collides;
-        collides = collisions.contains(roomMapTile.getTileAtPoint(50, 50));
-        assertTrue(collides);
+    public void creatingEnemy() {
+        gameViewModel = new InitialGameScreenViewModel();
+        gameViewModel.createSkeleton();
+        assertEquals(100, gameViewModel.getEnemyX(gameViewModel.getSkeleton()));
+        assertEquals(100, gameViewModel.getEnemyY(gameViewModel.getSkeleton()));
     }
-
-     */
-
-
-
+    @Test
+    public void basicEnemyMovement() {
+        gameViewModel = new InitialGameScreenViewModel();
+        gameViewModel.createSkeleton();
+        gameViewModel.setEnemyX(120, gameViewModel.getSkeleton());
+        gameViewModel.setEnemyY(120, gameViewModel.getSkeleton());
+        assertEquals(120, gameViewModel.getEnemyX(gameViewModel.getSkeleton()));
+        assertEquals(120, gameViewModel.getEnemyY(gameViewModel.getSkeleton()));
+    }
 }

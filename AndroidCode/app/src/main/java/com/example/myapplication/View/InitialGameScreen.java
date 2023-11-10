@@ -29,7 +29,8 @@ import java.util.TimerTask;
 
 public class InitialGameScreen extends AppCompatActivity {
     private Player player = Player.getInstance();
-    private Timer scoreTimer;
+    private Timer scoreTimer1;
+    private Timer scoreTimer2;
     private TextView scoreText;
 
     private int screenWidth;
@@ -40,6 +41,13 @@ public class InitialGameScreen extends AppCompatActivity {
     private RoomManager roomManager;
 
     private ImageView playerSprite;
+    private ImageView enemy1Sprite;
+    private ImageView enemy2Sprite;
+    private ImageView slimeSprite;
+    private ImageView undeadSprite;
+
+    boolean shouldChangeRoom;
+
 
     public int getScreenWidth() {
         return screenWidth;
@@ -75,7 +83,9 @@ public class InitialGameScreen extends AppCompatActivity {
         startActivity(intent);
     }
 
-    /** @noinspection checkstyle:OperatorWrap*/
+    /**
+     * @noinspection checkstyle:OperatorWrap
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -91,21 +101,22 @@ public class InitialGameScreen extends AppCompatActivity {
 
         roomManager.addRoom(
                 RoomMapTile.fromTileStyle(
-                        R.drawable.wooden_plank, R.drawable.wood, R.drawable.iron_door,
-                        screenWidth / 2, screenHeight / 2)
+                                R.drawable.wooden_plank, R.drawable.wood, R.drawable.iron_door,
+                                screenWidth / 2, screenHeight / 2)
                         .build(5, 5, this));
 
         roomManager.addRoom(
                 RoomMapTile.fromTileStyle(
-                        R.drawable.stone_brick, R.drawable.smooth_stone, R.drawable.iron_door,
-                        screenWidth / 2, screenHeight / 2)
+                                R.drawable.stone_brick, R.drawable.smooth_stone, R.drawable.iron_door,
+                                screenWidth / 2, screenHeight / 2)
                         .build(5, 5, this));
 
         roomManager.addRoom(
                 RoomMapTile.fromTileStyle(
-                        R.drawable.sandstone, R.drawable.better_sandstone, R.drawable.oak_door,
-                        screenWidth / 2, screenHeight / 2)
+                                R.drawable.sandstone, R.drawable.better_sandstone, R.drawable.oak_door,
+                                screenWidth / 2, screenHeight / 2)
                         .build(5, 5, this));
+
 
         playerSprite = findViewById(R.id.playerSprite); //Player Sprite image set
         playerSprite.setMaxWidth(56);
@@ -119,113 +130,189 @@ public class InitialGameScreen extends AppCompatActivity {
         } else {
             playerSprite.setImageResource(R.drawable.player3);
         }
-        /*
-        Button endGameButton = findViewById(R.id.btnToEndGame);
-        endGameButton.setOnClickListener(v -> {
-            player.setX(500000);
-            Leaderboard.getInstance().addScore(player.getName(), player.getScore(),
-                    Calendar.getInstance().getTime().toString());
-            Intent intent = new Intent(InitialGameScreen.this, EndScreen.class);
-            startActivity(intent);
-        });
 
+        // initial enemies
+        enemy1Sprite = findViewById(R.id.enemySprite1);
+        enemy1Sprite.setTranslationZ(1f);
+        enemy1Sprite.setX(screenHeight / 2);
+        enemy1Sprite.setY(screenHeight / 2);
+        viewModel.createSlime();
+        enemy1Sprite.setX(viewModel.getEnemyX(viewModel.getSlime()));
+        enemy1Sprite.setY(viewModel.getEnemyY(viewModel.getSlime()));
 
-         */
-        scoreTimer = new Timer();
-        scoreTimer.schedule(new TimerTask() {
+        enemy2Sprite = findViewById(R.id.enemySprite2);
+        enemy2Sprite.setTranslationZ(1f);
+        viewModel.createWizard();
+        enemy2Sprite.setX(viewModel.getEnemyX(viewModel.getWizard()));
+        enemy2Sprite.setY(viewModel.getEnemyY(viewModel.getWizard()));
+
+        scoreTimer1 = new Timer();
+        scoreTimer1.schedule(new TimerTask() {
             @Override
             public void run() {
                 runOnUiThread(() -> viewModel.updateScore());
+
+                // Example code on how skeletonSprite can move with timer
+                viewModel.moveEnemy(viewModel.getSlime());
+                enemy1Sprite.setX(viewModel.getEnemyX(viewModel.getSlime()));
+                enemy1Sprite.setY(viewModel.getEnemyY(viewModel.getSlime()));
+
+                viewModel.moveEnemy(viewModel.getWizard());
+                enemy2Sprite.setX(viewModel.getEnemyX(viewModel.getWizard()));
+                enemy2Sprite.setY(viewModel.getEnemyY(viewModel.getWizard()));
+
             }
         }, 0, 1000); // Check every .5 seconds
 
-        viewModel.onUpdatedCallback(this::rebuildUi);
 
-        // set our player Z index to be above the map
-        playerSprite.setTranslationZ(1f);
-        // Bind our player movement callbacks
 
-        Player.getInstance().subscribe(new Subscriber() {
-            @Override
-            public void update(Player player) {
+        if (roomManager.getCurrentRoomIndex() == 1) {
+            enemy1Sprite.setImageResource(R.drawable.thumbnail_olaf);
+            viewModel.createOlaf();
+            enemy1Sprite.setX(viewModel.getEnemyX(viewModel.getOlaf()));
+            enemy1Sprite.setY(viewModel.getEnemyY(viewModel.getOlaf()));
 
-            }
-        });
+            enemy2Sprite.setImageResource(R.drawable.thumbnail_skeleton);
+            viewModel.createSkeleton();
+            enemy1Sprite.setX(viewModel.getEnemyX(viewModel.getSkeleton()));
+            enemy1Sprite.setY(viewModel.getEnemyY(viewModel.getSkeleton()));
 
-        Player.getInstance().subscribe((player) -> {
+            scoreTimer1 = new Timer();
+            scoreTimer1.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    runOnUiThread(() -> viewModel.updateScore());
 
-        });
+                    // Example code on how skeletonSprite can move with timer
+                    viewModel.moveEnemy(viewModel.getSkeleton());
+                    enemy1Sprite.setX(viewModel.getEnemyX(viewModel.getSkeleton()));
+                    enemy1Sprite.setY(viewModel.getEnemyY(viewModel.getSkeleton()));
 
-        Player.getInstance().subscribe((player) -> {
-            playerSprite.setX(player.getX());
-            playerSprite.setY(player.getY());
+                    viewModel.moveEnemy(viewModel.getBoss());
+                    enemy2Sprite.setX(viewModel.getEnemyX(viewModel.getBoss()));
+                    enemy2Sprite.setY(viewModel.getEnemyY(viewModel.getBoss()));
 
-            List<CollisionInfo> collidingTiles = roomManager.getCurrentRoom()
-                    .getCollidingTiles(player.getX(), player.getY(), 56, 56);
-            // if we are only colliding with door tiles or floor tiles, change room
-            boolean shouldChangeRoom = true;
-            boolean hasExitTile = false;
-            for (CollisionInfo collisionInfo : collidingTiles) {
-                if (collisionInfo.getTile().getType() != TileType.Exit
-                        && collisionInfo.getTile().getType() != TileType.Floor) {
-                    shouldChangeRoom = false;
-                    break;
                 }
+            }, 0, 1000); // Check every .5 seconds
+        } else if (roomManager.getCurrentRoomIndex() == 2) {
 
-                if (collisionInfo.getTile().getType() == TileType.Exit) {
-                    hasExitTile = true;
+            enemy1Sprite.setImageResource(R.drawable.undead);
+            viewModel.createUndead();
+            enemy1Sprite.setX(viewModel.getEnemyX(viewModel.getUndead()));
+            enemy1Sprite.setY(viewModel.getEnemyY(viewModel.getUndead()));
+
+            enemy2Sprite.setImageResource(R.drawable.boss);
+            viewModel.createBoss();
+            enemy1Sprite.setX(viewModel.getEnemyX(viewModel.getBoss()));
+            enemy2Sprite.setY(viewModel.getEnemyY(viewModel.getBoss()));
+
+            scoreTimer2 = new Timer();
+            scoreTimer2.schedule(new TimerTask() {
+                @Override
+                public void run() {
+                    runOnUiThread(() -> viewModel.updateScore());
+
+                    // Example code on how skeletonSprite can move with timer
+                    viewModel.moveEnemy(viewModel.getUndead());
+                    enemy1Sprite.setX(viewModel.getEnemyX(viewModel.getUndead()));
+                    enemy1Sprite.setY(viewModel.getEnemyY(viewModel.getUndead()));
+
+                    viewModel.moveEnemy(viewModel.getBoss());
+                    enemy2Sprite.setX(viewModel.getEnemyX(viewModel.getSlime()));
+                    enemy2Sprite.setY(viewModel.getEnemyY(viewModel.getSlime()));
+
                 }
-            }
+            }, 0, 1023); // Check every .5 seconds
+        }
 
-            if (shouldChangeRoom && hasExitTile) {
-                int currentRoomIndex = roomManager.getCurrentRoomIndex();
 
-                // end game if we are in the last room, that is,
-                // currentRoomIndex == roomManager.getTotalRoomCount() - 1
-                if (currentRoomIndex == roomManager.getTotalRoomCount() - 1) {
-                    // rest the room index to 0
-                    roomManager.changeRoom(0);
+            viewModel.onUpdatedCallback(this::rebuildUi);
 
-                    gotoEndScreen();
-                    player.setWinner();
-                    player.addRoom("wooden plank", "stone brick", "sandstone");
-                    return;
+            // set our player Z index to be above the map
+            playerSprite.setTranslationZ(1f);
+            // Bind our player movement callbacks
+
+            Player.getInstance().subscribe(new Subscriber() {
+                @Override
+                public void update(Player player) {
+
                 }
-
-                int nextRoomIndex = (currentRoomIndex + 1) % roomManager.getTotalRoomCount();
-                roomManager.changeRoom(nextRoomIndex);
-
-                // rest the player's coordinates to the center of the screen
-                player.setCoordinatesNoNotify(screenWidth / 2, screenHeight / 2);
-                player.setCoordinates(screenWidth / 2, screenHeight / 2);
-                rebuildUi();
-            }
-
-            collidingTiles.forEach((collisionInfo) -> {
-                Log.i("COLLISION", "Colliding with tile: "
-                        + collisionInfo.getTile().getType());
-                player.resolveCollision(collisionInfo);
-                collisionInfo.getTile().resolveCollision(collisionInfo);
             });
-        });
-        // initialize the player coordinate to the center of the screen
-        player.setCoordinates(screenWidth / 2, screenHeight / 2);
+
+            Player.getInstance().subscribe((player) -> {
+
+            });
+
+            Player.getInstance().subscribe((player) -> {
+                playerSprite.setX(player.getX());
+                playerSprite.setY(player.getY());
+
+                List<CollisionInfo> collidingTiles = roomManager.getCurrentRoom()
+                        .getCollidingTiles(player.getX(), player.getY(), 56, 56);
+                // if we are only colliding with door tiles or floor tiles, change room
+                boolean shouldChangeRoom = true;
+                boolean hasExitTile = false;
+                for (CollisionInfo collisionInfo : collidingTiles) {
+                    if (collisionInfo.getTile().getType() != TileType.Exit
+                            && collisionInfo.getTile().getType() != TileType.Floor) {
+                        shouldChangeRoom = false;
+                        break;
+                    }
+
+                    if (collisionInfo.getTile().getType() == TileType.Exit) {
+                        hasExitTile = true;
+                    }
+                }
+
+                if (shouldChangeRoom && hasExitTile) {
+                    int currentRoomIndex = roomManager.getCurrentRoomIndex();
+
+                    // end game if we are in the last room, that is,
+                    // currentRoomIndex == roomManager.getTotalRoomCount() - 1
+                    if (currentRoomIndex == roomManager.getTotalRoomCount() - 1) {
+                        // rest the room index to 0
+                        roomManager.changeRoom(0);
+
+                        gotoEndScreen();
+                        player.setWinner();
+                        player.addRoom("wooden plank", "stone brick", "sandstone");
+                        return;
+                    }
+
+                    int nextRoomIndex = (currentRoomIndex + 1) % roomManager.getTotalRoomCount();
+                    roomManager.changeRoom(nextRoomIndex);
+
+                    // rest the player's coordinates to the center of the screen
+                    player.setCoordinatesNoNotify(screenWidth / 2, screenHeight / 2);
+                    player.setCoordinates(screenWidth / 2, screenHeight / 2);
+                    rebuildUi();
+                }
+
+                collidingTiles.forEach((collisionInfo) -> {
+                    Log.i("COLLISION", "Colliding with tile: "
+                            + collisionInfo.getTile().getType());
+                    player.resolveCollision(collisionInfo);
+                    collisionInfo.getTile().resolveCollision(collisionInfo);
+                });
+            });
+            // initialize the player coordinate to the center of the screen
+            player.setCoordinates(screenWidth / 2, screenHeight / 2);
+        }
+
+
+        @Override
+        public boolean onKeyDown ( int keyCode, KeyEvent event){
+            // move player
+            viewModel.movePlayer(keyCode);
+
+            return super.onKeyDown(keyCode, event);
+        }
+
+        @Override
+        protected void onStart () {
+            super.onStart();
+
+            RelativeLayout layout = findViewById(R.id.gameLayout);
+            roomManager.drawRoom(layout);
+        }
     }
-
-
-    @Override
-    public boolean onKeyDown(int keyCode, KeyEvent event) {
-        // move player
-        viewModel.movePlayer(keyCode);
-
-        return super.onKeyDown(keyCode, event);
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-
-        RelativeLayout layout = findViewById(R.id.gameLayout);
-        roomManager.drawRoom(layout);
-    }
-}
