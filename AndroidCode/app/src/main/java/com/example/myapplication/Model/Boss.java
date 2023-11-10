@@ -66,6 +66,7 @@ public class Boss implements Enemy {
     @Override
     public void attack() {
         // Attacks in a certain amount of tile.
+        // needs to be implemented
     }
 
     @Override
