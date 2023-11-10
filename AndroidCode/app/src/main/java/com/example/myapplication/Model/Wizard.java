@@ -1,6 +1,6 @@
 package com.example.myapplication.Model;
 
-public class Undead implements Enemy{
+public class Wizard implements Enemy{
     private int spriteId;
     private int x;
     private int y;
@@ -68,8 +68,9 @@ public class Undead implements Enemy{
 
     @Override
     public void movement() {
-        this.setSpeed(10);
-        this.setX(this.getX() + 10);
-        this.setY(this.getY() - 10);
+        this.setSpeed(15);
+        this.setX(this.getX() + 1);
+        this.setY(this.getY() - 4);
+
     }
 }

@@ -1,6 +1,5 @@
 package com.example.myapplication.Model;
-
-public class Undead implements Enemy{
+public class Olaf implements Enemy {
     private int spriteId;
     private int x;
     private int y;
@@ -34,6 +33,10 @@ public class Undead implements Enemy{
         this.y = y;
     }
 
+    public void setCoordinates(int x, int y) {
+        this.x = x;
+        this.y = y;
+    }
     public void setSpriteId(int spriteId) {
         this.spriteId = spriteId;
     }
@@ -50,10 +53,6 @@ public class Undead implements Enemy{
         this.attackDamage = attackDamage;
     }
 
-    public void setCoordinates(int x, int y) {
-        this.x = x;
-        this.y = y;
-    }
     @Override
     public void startPos() {
         this.setX(100);
@@ -68,8 +67,17 @@ public class Undead implements Enemy{
 
     @Override
     public void movement() {
-        this.setSpeed(10);
-        this.setX(this.getX() + 10);
-        this.setY(this.getY() - 10);
+        //300 should be replaced with the value that prevents it from going offscreen
+        if (this.getX() < 50 ) {
+            this.setX(this.getX() + 10);
+            this.setY(this.getY() + 10);
+            this.setSpeed(20);
+        } else {
+            this.setX(this.getX() - 10);
+            this.setY(this.getY() - 10);
+            this.setSpeed(10);
+        }
+
     }
 }
+

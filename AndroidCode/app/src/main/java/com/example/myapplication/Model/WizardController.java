@@ -1,13 +1,8 @@
 package com.example.myapplication.Model;
 
-public class SkeletonController extends EnemyController {
+public class WizardController extends EnemyController {
     @Override
     public Enemy createEnemy() {
-        return new Skeleton();
+        return new Wizard();
     }
-
-
 }
-
-
-
