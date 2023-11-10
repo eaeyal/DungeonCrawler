@@ -8,6 +8,8 @@ public class Boss implements Enemy {
     private int attackDamage;
     private int speed;
 
+    private int direction;
+
     public int getSpriteId() {
         return spriteId;
     }
@@ -56,20 +58,21 @@ public class Boss implements Enemy {
 
     @Override
     public void startPos() {
-        this.setX(100);
-        this.setY(100);
+        this.setX(600);
+        this.setY(950);
     }
 
     // Enemy's attack pattern
     @Override
     public void attack() {
         // Attacks in a certain amount of tile.
+        // needs to be implemented
     }
 
     @Override
     public void movement() {
         //300 should be replaced with the value that prevents it from going offscreen
-        if (this.getX() < 50 ) {
+        /* if (this.getX() < 50 ) {
             this.setX(this.getX() + 10);
             this.setY(this.getY() + 10);
             this.setSpeed(20);
@@ -77,6 +80,30 @@ public class Boss implements Enemy {
             this.setX(this.getX() - 10);
             this.setY(this.getY() - 10);
             this.setSpeed(10);
+        } */
+
+        switch (direction) {
+            case 0:
+                // move up
+                this.setY(this.getY() - 21);
+                direction++;
+                break;
+            case 1:
+                // move down
+                this.setY(this.getY() + 21);
+                direction++;
+                break;
+            case 2:
+                // move left
+                this.setX(this.getX() - 21);
+                direction++;
+                break;
+            case 3:
+                this.setX(this.getX() + 21);
+                direction = 0;
+                break;
+            default:
+                break;
         }
 
     }

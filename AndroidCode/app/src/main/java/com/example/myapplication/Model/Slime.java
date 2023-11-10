@@ -7,6 +7,7 @@ public class Slime implements Enemy {
     private int healthPoints;
     private int attackDamage;
     private int speed;
+    private int direction;
 
     public int getSpriteId() {
         return spriteId;
@@ -52,8 +53,8 @@ public class Slime implements Enemy {
 
     @Override
     public void startPos() {
-        this.setX(0);
-        this.setY(0);
+        this.setX(600);
+        this.setY(950);
     }
     public void setCoordinates(int x, int y) {
         this.x = x;
@@ -69,7 +70,7 @@ public class Slime implements Enemy {
     @Override
     public void movement() {
         // Change this for the movement
-        if (Player.getInstance().getHealthPoints() < 65) {
+        /* if (Player.getInstance().getHealthPoints() < 65) {
             this.setSpeed(this.getSpeed() + 30);
             this.setCoordinates(this.getX() - 5, this.getY() + 2);
             this.setCoordinates(this.getX() + 5, this.getY() + 3);
@@ -78,7 +79,31 @@ public class Slime implements Enemy {
             this.setCoordinates(this.getX() + 5, this.getY() + 5);
             this.setSpeed(25);
             this.setCoordinates(this.getX() + 6, this.getY() + 6);
+        } */
+        switch (direction) {
+            case 0:
+                // move up
+                this.setY(this.getY() - 21);
+                direction++;
+                break;
+            case 1:
+                // move down
+                this.setY(this.getY() + 21);
+                direction++;
+                break;
+            case 2:
+                // move left
+                this.setX(this.getX() - 21);
+                direction++;
+                break;
+            case 3:
+                this.setX(this.getX() + 21);
+                direction = 0;
+                break;
+            default:
+                break;
         }
+
 
     }
 
