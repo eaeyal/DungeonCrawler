@@ -8,6 +8,7 @@ import android.view.KeyEvent;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.graphics.Rect;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -151,6 +152,8 @@ public class InitialGameScreen extends AppCompatActivity {
             @Override
             public void run() {
                 runOnUiThread(() -> viewModel.updateScore());
+
+                checkCollision();
 
                 // Example code on how skeletonSprite can move with timer
                 viewModel.moveEnemy(viewModel.getSlime());
@@ -299,6 +302,36 @@ public class InitialGameScreen extends AppCompatActivity {
             player.setCoordinates(screenWidth / 2, screenHeight / 2);
         }
 
+    public boolean isCollisionWithEnemy(ImageView player, ImageView enemy) {
+        Rect rectPlayer = new Rect();
+        player.getHitRect(rectPlayer);
+
+        Rect rectEnemy = new Rect();
+        enemy.getHitRect(rectEnemy);
+
+        return Rect.intersects(rectPlayer, rectEnemy);
+    }
+
+    public void checkCollision() {
+        if (player.getScore() > 10) {
+            if (isCollisionWithEnemy(playerSprite, enemy2Sprite)) {
+                player.setScore(player.getScore() - 10);
+            }
+            if (isCollisionWithEnemy(playerSprite, enemy1Sprite)) {
+                player.setScore(player.getScore() - 10);
+            }
+        }
+        /*
+         Could implement this in the future,
+         right now it bugs out when I run this.
+         If we implement this then there is no
+         need for the first line of this method.
+
+         if (player.getScore() <= 0) {
+            setContentView(R.layout.loss_by_enemy);
+        } */
+
+    }
 
         @Override
         public boolean onKeyDown ( int keyCode, KeyEvent event){
