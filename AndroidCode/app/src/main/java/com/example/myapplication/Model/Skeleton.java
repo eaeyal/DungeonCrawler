@@ -10,6 +10,7 @@ public class Skeleton implements Enemy {
     private int healthPoints;
     private int attackDamage;
     private int speed;
+    private int direction;
 
 
     public int getSpriteId() {
@@ -60,8 +61,8 @@ public class Skeleton implements Enemy {
 
     @Override
     public void startPos() {
-        this.setX(125);
-        this.setY(100);
+        this.setX(600);
+        this.setY(950);
     }
 
     // Enemy's attack pattern
@@ -73,7 +74,32 @@ public class Skeleton implements Enemy {
 
     @Override
     public void movement() {
+        /*
         this.setSpeed(5);
         this.setCoordinates(this.getX() + 10, this.getX() + 10);
+        */
+        switch (direction) {
+            case 0:
+                // move up
+                this.setY(this.getY() - 21);
+                direction++;
+                break;
+            case 1:
+                // move down
+                this.setY(this.getY() + 21);
+                direction++;
+                break;
+            case 2:
+                // move left
+                this.setX(this.getX() - 21);
+                direction++;
+                break;
+            case 3:
+                this.setX(this.getX() + 21);
+                direction = 0;
+                break;
+            default:
+                break;
+        }
     }
 }

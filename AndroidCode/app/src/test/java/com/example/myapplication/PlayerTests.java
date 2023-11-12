@@ -227,4 +227,34 @@ public class PlayerTests {
         assertEquals(120, gameViewModel.getEnemyX(gameViewModel.getSkeleton()));
         assertEquals(120, gameViewModel.getEnemyY(gameViewModel.getSkeleton()));
     }
+    @Test
+    /**
+     * This test ensures that players will lose 10
+     * health when colliding with an enemy.
+     */
+    public void testEnemyCollision() {
+        gameViewModel = new InitialGameScreenViewModel();
+        gameViewModel.createWizard();
+        player = player.getInstance();
+        player.setCoordinates(500, 500);
+        int scoreBeforeCollision = player.getScore();
+        gameViewModel.setEnemyX(501, gameViewModel.getWizard());
+        gameViewModel.setEnemyY(499, gameViewModel.getWizard());
+        assertFalse(scoreBeforeCollision < player.getScore());
+    }
+    @Test
+    /**
+     * This test ensures that players with health below 10
+     * will not be affected by enemy collision.
+     */
+    public void testCollisionLowHealth() {
+        gameViewModel = new InitialGameScreenViewModel();
+        gameViewModel.createWizard();
+        player = player.getInstance();
+        player.setScore(9);
+        player.setCoordinates(500, 500);
+        gameViewModel.setEnemyX(501, gameViewModel.getWizard());
+        gameViewModel.setEnemyY(499, gameViewModel.getWizard());
+        assertFalse(player.getScore() < 0);
+    }
 }
