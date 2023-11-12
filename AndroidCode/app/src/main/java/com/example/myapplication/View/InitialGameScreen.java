@@ -337,7 +337,10 @@ public class InitialGameScreen extends AppCompatActivity {
         public boolean onKeyDown ( int keyCode, KeyEvent event){
             // move player
             viewModel.movePlayer(keyCode);
-
+            if(player.getScore() <= 0) {
+                Intent intent = new Intent(InitialGameScreen.this, GameOverScreen.class);
+                startActivity(intent);
+            }
             return super.onKeyDown(keyCode, event);
         }
 
