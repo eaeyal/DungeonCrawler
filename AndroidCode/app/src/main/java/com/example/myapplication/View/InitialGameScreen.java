@@ -313,12 +313,12 @@ public class InitialGameScreen extends AppCompatActivity {
     }
 
     public void checkCollision() {
-        if (player.getScore() > 10) {
+        if (player.getHealthPoints() >= 0) {
             if (isCollisionWithEnemy(playerSprite, enemy2Sprite)) {
-                player.setScore(player.getScore() - 10);
+                player.setHealthPoints(player.getHealthPoints() - 10);
             }
             if (isCollisionWithEnemy(playerSprite, enemy1Sprite)) {
-                player.setScore(player.getScore() - 10);
+                player.setHealthPoints(player.getHealthPoints() - 10);
             }
         }
         /*
@@ -337,7 +337,7 @@ public class InitialGameScreen extends AppCompatActivity {
         public boolean onKeyDown ( int keyCode, KeyEvent event){
             // move player
             viewModel.movePlayer(keyCode);
-            if(player.getScore() <= 0) {
+            if(player.getHealthPoints() <= 0) {
                 Intent intent = new Intent(InitialGameScreen.this, GameOverScreen.class);
                 startActivity(intent);
             }
