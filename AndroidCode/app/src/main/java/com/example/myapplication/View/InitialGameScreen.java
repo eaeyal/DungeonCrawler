@@ -310,14 +310,13 @@ public class InitialGameScreen extends AppCompatActivity {
         return Rect.intersects(rectPlayer, rectEnemy);
     }
 
-   public void checkCollision() {
+    public void checkCollision() {
         if (player.getHealthPoints() >= 0) {
-            if (isCollisionWithEnemy(playerSprite, enemy2Sprite)) {
-                player.setHealthPoints(player.getHealthPoints() - 10);
-            }
-            if (isCollisionWithEnemy(playerSprite, enemy1Sprite)) {
-                player.setHealthPoints(player.getHealthPoints() - 10);
-            }
+            this.enemies.forEach((imageView, enemyController) -> {
+                if (isCollisionWithEnemy(playerSprite, imageView)) {
+                    player.setHealthPoints(player.getHealthPoints() - 10);
+                }
+            });
         }
     }
 
