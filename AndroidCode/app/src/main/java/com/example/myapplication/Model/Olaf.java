@@ -60,7 +60,7 @@ public class Olaf implements Enemy {
     public void startPos() {
         reverseDirection = false;
         this.setX(310);
-        this.setY(734);
+        this.setY(634);
     }
 
     // Enemy's attack pattern
