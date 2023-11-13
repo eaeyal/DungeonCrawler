@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.myapplication.GameContext;
 import com.example.myapplication.Leaderboard;
 import com.example.myapplication.Model.EnemyController;
 import com.example.myapplication.Model.Player;
@@ -314,7 +315,8 @@ public class InitialGameScreen extends AppCompatActivity {
         if (player.getHealthPoints() >= 0) {
             this.enemies.forEach((imageView, enemyController) -> {
                 if (isCollisionWithEnemy(playerSprite, imageView)) {
-                    player.setHealthPoints(player.getHealthPoints() - 10);
+                    int diff = GameContext.getInstance().getDifficulty();
+                    player.setHealthPoints(player.getHealthPoints() - 10 * diff);
                 }
             });
         }
