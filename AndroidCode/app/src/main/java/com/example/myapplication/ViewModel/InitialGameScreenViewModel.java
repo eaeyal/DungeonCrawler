@@ -4,6 +4,7 @@ import android.view.KeyEvent;
 
 import com.example.myapplication.Model.BossController;
 import com.example.myapplication.Model.EnemyController;
+import com.example.myapplication.Model.OlafController;
 import com.example.myapplication.Model.Player;
 import com.example.myapplication.Model.SkeletonController;
 import com.example.myapplication.Model.SlimeController;
@@ -96,7 +97,7 @@ public class InitialGameScreenViewModel {
     }
 
     public void createOlaf() {
-        olaf = new UndeadController();
+        olaf = new OlafController();
         olaf.render();
     }
 
