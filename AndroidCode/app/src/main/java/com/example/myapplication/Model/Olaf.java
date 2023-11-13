@@ -8,6 +8,8 @@ public class Olaf implements Enemy {
     private int speed;
     private int direction;
 
+    private boolean reverseDirection;
+
     public int getSpriteId() {
         return spriteId;
     }
@@ -56,8 +58,9 @@ public class Olaf implements Enemy {
 
     @Override
     public void startPos() {
-        this.setX(600);
-        this.setY(950);
+        reverseDirection = false;
+        this.setX(310);
+        this.setY(734);
     }
 
     // Enemy's attack pattern
@@ -68,40 +71,44 @@ public class Olaf implements Enemy {
 
     @Override
     public void movement() {
-        //300 should be replaced with the value that prevents it from going offscreen
-        /* if (this.getX() < 50 ) {
-            this.setX(this.getX() + 10);
-            this.setY(this.getY() + 10);
-            this.setSpeed(20);
-        } else {
-            this.setX(this.getX() - 10);
-            this.setY(this.getY() - 10);
-            this.setSpeed(10);
-        } */
-        switch (direction) {
-            case 0:
-                // move up
-                this.setY(this.getY() - 21);
-                direction++;
-                break;
-            case 1:
-                // move down
-                this.setY(this.getY() + 21);
-                direction++;
-                break;
-            case 2:
-                // move left
-                this.setX(this.getX() - 21);
-                direction++;
-                break;
-            case 3:
-                this.setX(this.getX() + 21);
-                direction = 0;
-                break;
-            default:
-                break;
-        }
+        // move in zig zag pattern
+        /*
+        bot left:
+        210, 2240
 
+        bot right:
+        1170, 2240
+
+        top right
+        1170, 634
+
+        top left
+        210, 634
+         */
+
+        // change direction if positively out of bounds
+//        if (this.getX() > 1170) {
+//            reverseDirection = true;
+//        }
+//        if (this.getX() < 210) {
+//            reverseDirection = false;
+//        }
+//
+//        if (this.getY() > 2240) {
+//            reverseDirection = true;
+//        }
+//
+//        if (this.getY() < 634) {
+//            reverseDirection = false;
+//        }
+//
+//        if (reverseDirection) {
+//            setX(getX() - 10);
+//            setY(getY() - 10);
+//        } else {
+//            setX(getX() + 10);
+//            setY(getY() + 10);
+//        }
     }
 }
 

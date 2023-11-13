@@ -49,7 +49,7 @@ public class InitialGameScreen extends AppCompatActivity {
     private ImageView slimeSprite;
     private ImageView undeadSprite;
 
-    boolean shouldChangeRoom;
+    private boolean shouldChangeRoom;
 
 
     public int getScreenWidth() {
@@ -94,17 +94,12 @@ public class InitialGameScreen extends AppCompatActivity {
         // and there is a significant change in replacement asset size
         RelativeLayout layout = findViewById(R.id.gameLayout);
         ImageView imageView = new ImageView(this);
-//        imageView.setLayoutParams(
-//                new RelativeLayout.LayoutParams(
-//                        RelativeLayout.LayoutParams.WRAP_CONTENT,
-//                        RelativeLayout.LayoutParams.WRAP_CONTENT)
-//        );
+
         imageView.setImageResource(spriteId);
         imageView.setAdjustViewBounds(true);
         imageView.setMaxWidth(156);
         imageView.setMaxHeight(156);
         imageView.setTranslationZ(1f);
-//        imageView.setScaleType(ImageView.ScaleType.FIT_XY);
         layout.addView(imageView);
         return imageView;
     }
@@ -125,35 +120,35 @@ public class InitialGameScreen extends AppCompatActivity {
         // instantiate enemies based on the rooms we are currently in
         // (Can use factory method for this)
         switch (roomManager.getCurrentRoomIndex()) {
-            case 0:
-                ImageView slime = instantiateImageViewForEnemy(R.drawable.thumbnail_slime);
-                viewModel.createSlime();
-                enemies.put(slime, viewModel.getSlime());
+        case 0:
+            ImageView slime = instantiateImageViewForEnemy(R.drawable.thumbnail_slime);
+            viewModel.createSlime();
+            enemies.put(slime, viewModel.getSlime());
 
-                ImageView wizard = instantiateImageViewForEnemy(R.drawable.thumbnail_wizard);
-                viewModel.createWizard();
-                enemies.put(wizard, viewModel.getWizard());
-                break;
-            case 1:
-                ImageView olaf = instantiateImageViewForEnemy(R.drawable.thumbnail_olaf);
-                viewModel.createOlaf();
-                enemies.put(olaf, viewModel.getOlaf());
+            ImageView wizard = instantiateImageViewForEnemy(R.drawable.thumbnail_wizard);
+            viewModel.createWizard();
+            enemies.put(wizard, viewModel.getWizard());
+            break;
+        case 1:
+            ImageView olaf = instantiateImageViewForEnemy(R.drawable.thumbnail_olaf);
+            viewModel.createOlaf();
+            enemies.put(olaf, viewModel.getOlaf());
 
-                ImageView skeleton = instantiateImageViewForEnemy(R.drawable.thumbnail_skeleton);
-                viewModel.createSkeleton();
-                enemies.put(skeleton, viewModel.getSkeleton());
-                break;
-            case 2:
-                ImageView undead = instantiateImageViewForEnemy(R.drawable.undead);
-                viewModel.createUndead();
-                enemies.put(undead, viewModel.getUndead());
+            ImageView skeleton = instantiateImageViewForEnemy(R.drawable.thumbnail_skeleton);
+            viewModel.createSkeleton();
+            enemies.put(skeleton, viewModel.getSkeleton());
+            break;
+        case 2:
+            ImageView undead = instantiateImageViewForEnemy(R.drawable.undead);
+            viewModel.createUndead();
+            enemies.put(undead, viewModel.getUndead());
 
-                ImageView boss = instantiateImageViewForEnemy(R.drawable.boss);
-                viewModel.createBoss();
-                enemies.put(boss, viewModel.getBoss());
-                break;
-            default:
-                throw new RuntimeException("Invalid room index");
+            ImageView boss = instantiateImageViewForEnemy(R.drawable.boss);
+            viewModel.createBoss();
+            enemies.put(boss, viewModel.getBoss());
+            break;
+        default:
+            throw new RuntimeException("Invalid room index");
         }
 
         // set the enemy sprites to be above the map
@@ -168,7 +163,8 @@ public class InitialGameScreen extends AppCompatActivity {
     protected void moveEnemy() {
         enemies.forEach((imageView, enemyController) -> {
             viewModel.moveEnemy(enemyController);
-            Log.i("MVMT", "Moving enemy" + enemyController.getClass() + " to: " + viewModel.getEnemyX(enemyController)
+            Log.i("MVMT", "Moving enemy" + enemyController.getClass() + " to: "
+                    + viewModel.getEnemyX(enemyController)
                     + ", " + viewModel.getEnemyY(enemyController));
             imageView.setX(viewModel.getEnemyX(enemyController));
             imageView.setY(viewModel.getEnemyY(enemyController));
@@ -193,19 +189,22 @@ public class InitialGameScreen extends AppCompatActivity {
 
         roomManager.addRoom(
                 RoomMapTile.fromTileStyle(
-                                R.drawable.wooden_plank, R.drawable.wood, R.drawable.iron_door,
+                                R.drawable.wooden_plank, R.drawable.wood,
+                                R.drawable.iron_door,
                                 screenWidth / 2, screenHeight / 2)
                         .build(10, 15, this));
 
         roomManager.addRoom(
                 RoomMapTile.fromTileStyle(
-                                R.drawable.stone_brick, R.drawable.smooth_stone, R.drawable.iron_door,
+                                R.drawable.stone_brick, R.drawable.smooth_stone,
+                                R.drawable.iron_door,
                                 screenWidth / 2, screenHeight / 2)
                         .build(10, 15, this));
 
         roomManager.addRoom(
                 RoomMapTile.fromTileStyle(
-                                R.drawable.sandstone, R.drawable.better_sandstone, R.drawable.oak_door,
+                                R.drawable.sandstone, R.drawable.better_sandstone,
+                                R.drawable.oak_door,
                                 screenWidth / 2, screenHeight / 2)
                         .build(10, 15, this));
 
@@ -290,6 +289,7 @@ public class InitialGameScreen extends AppCompatActivity {
             }
 
             collidingTiles.forEach((collisionInfo) -> {
+                Log.i("COLLISION", "Player coordinates: " + player.getX() + ", " + player.getY());
                 Log.i("COLLISION", "Colliding with tile: "
                         + collisionInfo.getTile().getType());
                 player.resolveCollision(collisionInfo);
@@ -319,34 +319,24 @@ public class InitialGameScreen extends AppCompatActivity {
                 player.setHealthPoints(player.getHealthPoints() - 10);
             }
         }
-        /*
-         Could implement this in the future,
-         right now it bugs out when I run this.
-         If we implement this then there is no
-         need for the first line of this method.
-
-         if (player.getScore() <= 0) {
-            setContentView(R.layout.loss_by_enemy);
-        } */
-
     }
 
-        @Override
-        public boolean onKeyDown ( int keyCode, KeyEvent event){
-            // move player
-            viewModel.movePlayer(keyCode);
-            if(player.getHealthPoints() <= 0) {
-                Intent intent = new Intent(InitialGameScreen.this, GameOverScreen.class);
-                startActivity(intent);
-            }
-            return super.onKeyDown(keyCode, event);
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        // move player
+        viewModel.movePlayer(keyCode);
+        if (player.getScore() <= 0) {
+            Intent intent = new Intent(InitialGameScreen.this, GameOverScreen.class);
+            startActivity(intent);
         }
-
-        @Override
-        protected void onStart () {
-            super.onStart();
-
-            RelativeLayout layout = findViewById(R.id.gameLayout);
-            roomManager.drawRoom(layout);
-        }
+        return super.onKeyDown(keyCode, event);
     }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        RelativeLayout layout = findViewById(R.id.gameLayout);
+        roomManager.drawRoom(layout);
+    }
+}

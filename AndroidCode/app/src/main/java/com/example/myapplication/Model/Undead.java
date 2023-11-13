@@ -1,6 +1,6 @@
 package com.example.myapplication.Model;
 
-public class Undead implements Enemy{
+public class Undead implements Enemy {
     private int spriteId;
     private int x;
     private int y;
@@ -8,6 +8,7 @@ public class Undead implements Enemy{
     private int attackDamage;
     private int speed;
     private int direction;
+    private boolean reverseDirection;
 
     public int getSpriteId() {
         return spriteId;
@@ -57,6 +58,7 @@ public class Undead implements Enemy{
     }
     @Override
     public void startPos() {
+        reverseDirection = false;
         this.setX(600);
         this.setY(950);
     }
@@ -69,31 +71,30 @@ public class Undead implements Enemy{
 
     @Override
     public void movement() {
-        /* this.setSpeed(10);
-        this.setX(this.getX() + 10);
-        this.setY(this.getY() - 10); */
-        switch (direction) {
-            case 0:
-                // move up
-                this.setY(this.getY() - 21);
-                direction++;
-                break;
-            case 1:
-                // move down
-                this.setY(this.getY() + 21);
-                direction++;
-                break;
-            case 2:
-                // move left
-                this.setX(this.getX() - 21);
-                direction++;
-                break;
-            case 3:
-                this.setX(this.getX() + 21);
-                direction = 0;
-                break;
-            default:
-                break;
+
+        /*
+        bot left:
+        210, 2240
+
+        bot right:
+        1170, 2240
+
+        top right
+        1170, 634
+
+        top left
+        210, 634
+         */
+        if (getX() > 550) {
+            reverseDirection = true;
+        }
+        if (getX() < 300) {
+            reverseDirection = false;
+        }
+        if (reverseDirection) {
+            setX(getX() - 70);
+        } else {
+            setX(getX() + 70);
         }
     }
 }
