@@ -10,6 +10,8 @@ public class Boss implements Enemy {
 
     private int direction;
 
+    private boolean reverseDirection;
+
     public int getSpriteId() {
         return spriteId;
     }
@@ -58,8 +60,9 @@ public class Boss implements Enemy {
 
     @Override
     public void startPos() {
+        reverseDirection = false;
         this.setX(600);
-        this.setY(950);
+        this.setY(630);
     }
 
     // Enemy's attack pattern
@@ -82,28 +85,16 @@ public class Boss implements Enemy {
             this.setSpeed(10);
         } */
 
-        switch (direction) {
-            case 0:
-                // move up
-                this.setY(this.getY() - 21);
-                direction++;
-                break;
-            case 1:
-                // move down
-                this.setY(this.getY() + 21);
-                direction++;
-                break;
-            case 2:
-                // move left
-                this.setX(this.getX() - 21);
-                direction++;
-                break;
-            case 3:
-                this.setX(this.getX() + 21);
-                direction = 0;
-                break;
-            default:
-                break;
+        if (getX() > 550) {
+            reverseDirection = true;
+        }
+        if (getX() < 300) {
+            reverseDirection = false;
+        }
+        if (reverseDirection) {
+            setX(getX() - 100);
+        } else {
+            setX(getX() + 100);
         }
 
     }

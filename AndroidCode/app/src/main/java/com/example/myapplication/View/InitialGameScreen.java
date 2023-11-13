@@ -290,6 +290,7 @@ public class InitialGameScreen extends AppCompatActivity {
             }
 
             collidingTiles.forEach((collisionInfo) -> {
+                Log.i("COLLISION", "Player coordinates: " + player.getX() + ", " + player.getY());
                 Log.i("COLLISION", "Colliding with tile: "
                         + collisionInfo.getTile().getType());
                 player.resolveCollision(collisionInfo);
