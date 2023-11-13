@@ -8,9 +8,6 @@ import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.myapplication.Leaderboard;
-
-import java.util.Calendar;
 import com.example.myapplication.Model.Player;
 import com.example.myapplication.R;
 
@@ -34,7 +31,7 @@ public class GameOverScreen extends AppCompatActivity {
 
         Button leaderBoardButton = findViewById(R.id.button4);
         leaderBoardButton.setText("LeaderBoard");
-        leaderBoardButton.setOnClickListener(new View.OnClickListener(){
+        leaderBoardButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent(GameOverScreen.this, EndScreen.class);
                 startActivity(intent);

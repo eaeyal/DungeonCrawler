@@ -1,6 +1,6 @@
 package com.example.myapplication.Model;
 
-public class Undead implements Enemy{
+public class Undead implements Enemy {
     private int spriteId;
     private int x;
     private int y;
@@ -85,7 +85,6 @@ public class Undead implements Enemy{
         top left
         210, 634
          */
-//        if (getX() >= 210 && getX() <= 600 && getY() == 634) {
         if (getX() > 550) {
             reverseDirection = true;
         }
@@ -97,6 +96,5 @@ public class Undead implements Enemy{
         } else {
             setX(getX() + 70);
         }
-//        }
     }
 }
