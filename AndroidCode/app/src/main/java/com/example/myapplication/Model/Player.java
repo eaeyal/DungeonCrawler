@@ -126,6 +126,7 @@ public class Player implements CollisionResolutionStrategy {
         return y;
     }
 
+
     private static Player instance = null;
 
     public static Player getInstance() {

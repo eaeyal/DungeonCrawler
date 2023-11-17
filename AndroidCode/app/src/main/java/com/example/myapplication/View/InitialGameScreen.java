@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.myapplication.GameContext;
 import com.example.myapplication.Leaderboard;
 import com.example.myapplication.Model.EnemyController;
+import com.example.myapplication.Model.ExtraHealthPoints;
 import com.example.myapplication.Model.Player;
 import com.example.myapplication.Physics.CollisionInfo;
 import com.example.myapplication.Physics.RoomManager;
@@ -45,21 +46,6 @@ public class InitialGameScreen extends AppCompatActivity {
     private RoomManager roomManager;
 
     private ImageView playerSprite;
-    private ImageView enemy1Sprite;
-    private ImageView enemy2Sprite;
-    private ImageView slimeSprite;
-    private ImageView undeadSprite;
-
-    private boolean shouldChangeRoom;
-
-
-    public int getScreenWidth() {
-        return screenWidth;
-    }
-
-    public int getScreenHeight() {
-        return screenHeight;
-    }
 
     protected void rebuildUi() {
         TextView playerName = findViewById(R.id.playerNameTextView);
@@ -78,6 +64,7 @@ public class InitialGameScreen extends AppCompatActivity {
         RelativeLayout layout = findViewById(R.id.gameLayout);
 
         roomManager.drawRoom(layout);
+
     }
 
     protected void gotoEndScreen() {
@@ -93,6 +80,19 @@ public class InitialGameScreen extends AppCompatActivity {
     protected ImageView instantiateImageViewForEnemy(int spriteId) {
         // weird stuff happens if a new instance of image view isn't recreated
         // and there is a significant change in replacement asset size
+        RelativeLayout layout = findViewById(R.id.gameLayout);
+        ImageView imageView = new ImageView(this);
+
+        imageView.setImageResource(spriteId);
+        imageView.setAdjustViewBounds(true);
+        imageView.setMaxWidth(156);
+        imageView.setMaxHeight(156);
+        imageView.setTranslationZ(1f);
+        layout.addView(imageView);
+        return imageView;
+    }
+
+    protected ImageView instantiateImageViewForPowerUp(int spriteId) {
         RelativeLayout layout = findViewById(R.id.gameLayout);
         ImageView imageView = new ImageView(this);
 
@@ -129,6 +129,13 @@ public class InitialGameScreen extends AppCompatActivity {
             ImageView wizard = instantiateImageViewForEnemy(R.drawable.thumbnail_wizard);
             viewModel.createWizard();
             enemies.put(wizard, viewModel.getWizard());
+
+            viewModel.setExtraHealthPoints(50, 50);
+            ImageView extraHealthPoints = instantiateImageViewForPowerUp(R.drawable.powerup);
+            extraHealthPoints.setX(viewModel.getExtraHealthPointsX());
+            extraHealthPoints.setY(viewModel.getExtraHealthPointsY());
+
+
             break;
         case 1:
             ImageView olaf = instantiateImageViewForEnemy(R.drawable.thumbnail_olaf);
@@ -172,6 +179,7 @@ public class InitialGameScreen extends AppCompatActivity {
         });
     }
 
+
     /**
      * @noinspection checkstyle:OperatorWrap
      */
@@ -209,7 +217,6 @@ public class InitialGameScreen extends AppCompatActivity {
                                 screenWidth / 2, screenHeight / 2)
                         .build(10, 15, this));
 
-
         playerSprite = findViewById(R.id.playerSprite); //Player Sprite image set
         playerSprite.setMaxWidth(56);
         playerSprite.setMaxHeight(56);
@@ -230,9 +237,7 @@ public class InitialGameScreen extends AppCompatActivity {
             @Override
             public void run() {
                 runOnUiThread(() -> viewModel.updateScore());
-
                 checkCollision();
-
                 moveEnemy();
             }
         }, 0, 1000); // Check every .5 seconds
@@ -299,6 +304,10 @@ public class InitialGameScreen extends AppCompatActivity {
         });
         // initialize the player coordinate to the center of the screen
         player.setCoordinates(screenWidth / 2, screenHeight / 2);
+
+
+
+
     }
 
     public boolean isCollisionWithEnemy(ImageView player, ImageView enemy) {
@@ -322,15 +331,20 @@ public class InitialGameScreen extends AppCompatActivity {
         }
     }
 
+
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         // move player
         viewModel.movePlayer(keyCode);
+        viewModel.powerUps();
+
         if (player.getHealthPoints() <= 0) {
             Intent intent = new Intent(InitialGameScreen.this, GameOverScreen.class);
             startActivity(intent);
         }
         return super.onKeyDown(keyCode, event);
+
     }
 
     @Override

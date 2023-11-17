@@ -1,5 +1,9 @@
 package com.example.myapplication.ViewModel;
 
+import com.example.myapplication.Model.ExtraHealthPoints;
+import com.example.myapplication.Model.EnemyFreeze;
+
+
 import android.view.KeyEvent;
 
 import com.example.myapplication.Model.BossController;
@@ -20,6 +24,8 @@ public class InitialGameScreenViewModel {
     private EnemyController undead;
     private EnemyController olaf;
     private EnemyController wizard;
+
+    private ExtraHealthPoints extraHealthPoints;
     public InitialGameScreenViewModel() {
         this.player = Player.getInstance();
         this.player.setScore(100);
@@ -149,6 +155,25 @@ public class InitialGameScreenViewModel {
         enemyC.movement();
     }
 
+    public void setExtraHealthPoints(int X, int Y) {
+        extraHealthPoints.setPosition(X, Y);
+    }
+
+    public int getExtraHealthPointsX() {
+        return extraHealthPoints.getX();
+    }
+    public int getExtraHealthPointsY() {
+        return extraHealthPoints.getY();
+    }
+    public void powerUps() {
+
+        if (Player.getInstance().getX() >= extraHealthPoints.getX() && Player.getInstance().getX() <= extraHealthPoints.getX() + 10 &&
+                Player.getInstance().getY() >= extraHealthPoints.getY() && Player.getInstance().getX() <= extraHealthPoints.getY() + 10) { //TODO change nums if necessary
+            extraHealthPoints.setPowerUps(true);
+            //apply the decorator
+            extraHealthPoints.action();
+        }
+    }
 
 
 }

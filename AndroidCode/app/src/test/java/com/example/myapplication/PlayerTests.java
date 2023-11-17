@@ -311,4 +311,17 @@ public class PlayerTests {
         assertEquals(460, gameViewModel.getEnemyX(gameViewModel.getUndead()));
         assertEquals(950, gameViewModel.getEnemyY(gameViewModel.getUndead()));
     }
+
+    @Test
+    public void testBoss() {
+        gameViewModel = new InitialGameScreenViewModel();
+        gameViewModel.createBoss();
+        gameViewModel.setEnemyX(50, gameViewModel.getBoss());
+        gameViewModel.setEnemyX(50, gameViewModel.getBoss());
+        assertEquals(40, gameViewModel.getEnemyX(gameViewModel.getBoss()));
+        assertEquals(40, gameViewModel.getEnemyX(gameViewModel.getBoss()));
+    }
+
+
+
 }
