@@ -1,8 +1,5 @@
 package com.example.myapplication.Model;
 
-import java.util.Timer;
-import java.util.TimerTask;
-
 public class Skeleton implements Enemy {
     private int spriteId; // Set skeleton sprite
     private int x;
@@ -11,7 +8,7 @@ public class Skeleton implements Enemy {
     private int attackDamage;
     private int speed;
     private int direction;
-
+    private boolean reverseDirection;
 
     public int getSpriteId() {
         return spriteId;
@@ -61,6 +58,7 @@ public class Skeleton implements Enemy {
 
     @Override
     public void startPos() {
+        reverseDirection = false;
         this.setX(600);
         this.setY(950);
     }
@@ -75,31 +73,32 @@ public class Skeleton implements Enemy {
     @Override
     public void movement() {
         /*
-        this.setSpeed(5);
-        this.setCoordinates(this.getX() + 10, this.getX() + 10);
-        */
-        switch (direction) {
-            case 0:
-                // move up
-                this.setY(this.getY() - 21);
-                direction++;
-                break;
-            case 1:
-                // move down
-                this.setY(this.getY() + 21);
-                direction++;
-                break;
-            case 2:
-                // move left
-                this.setX(this.getX() - 21);
-                direction++;
-                break;
-            case 3:
-                this.setX(this.getX() + 21);
-                direction = 0;
-                break;
-            default:
-                break;
+        bot left:
+        210, 2240
+
+        bot right:
+        1170, 2240
+
+        top right
+        1170, 634
+
+        top left
+        210, 634
+         */
+
+        // move left to right
+        if (getX() >= 210 && getX() <= 1170 && getY() == 950) {
+            if (getX() == 1170) {
+                reverseDirection = true;
+            }
+            if (getX() == 210) {
+                reverseDirection = false;
+            }
+            if (reverseDirection) {
+                setX(getX() - 30);
+            } else {
+                setX(getX() + 30);
+            }
         }
     }
 }

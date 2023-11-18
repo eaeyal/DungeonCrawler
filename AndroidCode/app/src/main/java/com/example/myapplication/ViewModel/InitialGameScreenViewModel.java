@@ -3,13 +3,11 @@ package com.example.myapplication.ViewModel;
 import android.view.KeyEvent;
 
 import com.example.myapplication.Model.BossController;
-import com.example.myapplication.Model.Enemy;
-import com.example.myapplication.Model.Player;
 import com.example.myapplication.Model.EnemyController;
-import com.example.myapplication.Model.Skeleton;
+import com.example.myapplication.Model.OlafController;
+import com.example.myapplication.Model.Player;
 import com.example.myapplication.Model.SkeletonController;
 import com.example.myapplication.Model.SlimeController;
-import com.example.myapplication.Model.Undead;
 import com.example.myapplication.Model.UndeadController;
 import com.example.myapplication.Model.WizardController;
 
@@ -99,7 +97,7 @@ public class InitialGameScreenViewModel {
     }
 
     public void createOlaf() {
-        olaf = new UndeadController();
+        olaf = new OlafController();
         olaf.render();
     }
 
@@ -109,20 +107,20 @@ public class InitialGameScreenViewModel {
     }
 
     public int getEnemyX(EnemyController enemyC) {
-       return enemyC.enemy.getX();
+        return enemyC.getEnemy().getX();
     }
     public int getEnemyY(EnemyController enemyC) {
-        return enemyC.enemy.getY();
+        return enemyC.getEnemy().getY();
     }
 
     // SetEnemy's shouldn't be used. If want to move enemy, can put logic into the Enemy class
     // movement() method. Is here for testing.
     public void setEnemyX(int x, EnemyController enemyC) {
-        enemyC.enemy.setX(x);
+        enemyC.getEnemy().setX(x);
     }
 
     public void setEnemyY(int y, EnemyController enemyC) {
-        enemyC.enemy.setY(y);
+        enemyC.getEnemy().setY(y);
     }
     public EnemyController getSkeleton() {
         return skeleton;
@@ -140,8 +138,13 @@ public class InitialGameScreenViewModel {
         return undead;
     }
 
-    public EnemyController getOlaf() { return olaf; }
-    public EnemyController getWizard() {return wizard; }
+    public EnemyController getOlaf() {
+        return olaf;
+    }
+
+    public EnemyController getWizard() {
+        return wizard;
+    }
     public void moveEnemy(EnemyController enemyC) {
         enemyC.movement();
     }

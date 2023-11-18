@@ -1,13 +1,13 @@
 package com.example.myapplication.Model;
 
-public class Wizard implements Enemy{
+public class Wizard implements Enemy {
     private int spriteId;
     private int x;
     private int y;
     private int healthPoints;
     private int attackDamage;
     private int speed;
-    private int direction;
+    private boolean reverseDirection;
 
     public int getSpriteId() {
         return spriteId;
@@ -52,6 +52,7 @@ public class Wizard implements Enemy{
     }
 
     public void setCoordinates(int x, int y) {
+        reverseDirection = false;
         this.x = x;
         this.y = y;
     }
@@ -69,32 +70,30 @@ public class Wizard implements Enemy{
 
     @Override
     public void movement() {
-       /* this.setSpeed(15);
-        this.setX(this.getX() + 1);
-        this.setY(this.getY() - 4); */
-        switch (direction) {
-            case 0:
-                // move up
-                this.setY(this.getY() - 21);
-                direction++;
-                break;
-            case 1:
-                // move down
-                this.setY(this.getY() + 21);
-                direction++;
-                break;
-            case 2:
-                // move left
-                this.setX(this.getX() - 21);
-                direction++;
-                break;
-            case 3:
-                this.setX(this.getX() + 21);
-                direction = 0;
-                break;
-            default:
-                break;
-        }
+        // move top to bottom
+        /*
+        bot left:
+        210, 2240
 
+        bot right:
+        1170, 2240
+
+        top right
+        1170, 634
+
+        top left
+        210, 634
+         */
+        if (getY() > 2240) {
+            reverseDirection = true;
+        }
+        if (getY() < 634) {
+            reverseDirection = false;
+        }
+        if (reverseDirection) {
+            setY(getY() - 50);
+        } else {
+            setY(getY() + 50);
+        }
     }
 }

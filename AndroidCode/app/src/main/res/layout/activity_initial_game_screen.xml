@@ -56,16 +56,4 @@
         android:textSize="16sp"
         android:visibility="visible" />
 
-    <ImageView
-        android:id="@+id/enemySprite1"
-        android:layout_width="56dp"
-        android:layout_height="45dp"
-        app:srcCompat="@drawable/thumbnail_wizard" />
-
-    <ImageView
-        android:id="@+id/enemySprite2"
-        android:layout_width="wrap_content"
-        android:layout_height="25dp"
-        app:srcCompat="@drawable/thumbnail_slime" />
-
 </RelativeLayout>
