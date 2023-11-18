@@ -215,8 +215,8 @@ public class PlayerTests {
     public void creatingEnemy() {
         gameViewModel = new InitialGameScreenViewModel();
         gameViewModel.createSkeleton();
-        assertEquals(100, gameViewModel.getEnemyX(gameViewModel.getSkeleton()));
-        assertEquals(100, gameViewModel.getEnemyY(gameViewModel.getSkeleton()));
+        assertEquals(600, gameViewModel.getEnemyX(gameViewModel.getSkeleton()));
+        assertEquals(950, gameViewModel.getEnemyY(gameViewModel.getSkeleton()));
     }
     @Test
     public void basicEnemyMovement() {
