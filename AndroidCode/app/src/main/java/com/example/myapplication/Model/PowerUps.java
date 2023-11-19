@@ -1,7 +1,8 @@
 package com.example.myapplication.Model;
 
 public abstract class PowerUps {
-    abstract void setPosition(int X, int Y);
+    abstract void setX(int X);
+    abstract void setY(int Y);
     abstract int getX();
     abstract int getY();
 

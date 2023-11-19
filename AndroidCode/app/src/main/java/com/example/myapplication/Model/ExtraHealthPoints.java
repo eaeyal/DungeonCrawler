@@ -10,19 +10,22 @@ public class ExtraHealthPoints extends  PowerUps{
     }
 
     @Override
-    public void setPosition(int X, int Y) {
-        this.X = 50;
-        this.Y = 50;
+    public void setX(int X) {
+        this.X = X;
     }
 
     @Override
+    public void setY(int Y) {
+        this.Y = Y;
+    }
+    @Override
     public int getX() {
-        return X;
+        return this.X;
     }
 
     @Override
     public int getY() {
-        return Y;
+        return this.Y;
     }
 
     @Override
