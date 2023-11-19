@@ -118,6 +118,7 @@ public class InitialGameScreen extends AppCompatActivity {
             enemies.clear();
         }
 
+        ImageView extraHealthPointsImageView = null;
         // instantiate enemies based on the rooms we are currently in
         // (Can use factory method for this)
         switch (roomManager.getCurrentRoomIndex()) {
@@ -132,13 +133,13 @@ public class InitialGameScreen extends AppCompatActivity {
 
             viewModel.setExtraHealthPointsXPosition(600); //setting position X
             viewModel.setExtraHealthPointsYPosition(500); //setting position Y
-            ImageView extraHealthPointsImageView = instantiateImageViewForPowerUp(R.drawable.powerup);
+            extraHealthPointsImageView = instantiateImageViewForPowerUp(R.drawable.powerup);
             extraHealthPointsImageView.setX(viewModel.getExtraHealthPointsX());
             extraHealthPointsImageView.setY(viewModel.getExtraHealthPointsY());
 
-
             break;
         case 1:
+
             ImageView olaf = instantiateImageViewForEnemy(R.drawable.thumbnail_olaf);
             viewModel.createOlaf();
             enemies.put(olaf, viewModel.getOlaf());
@@ -146,6 +147,13 @@ public class InitialGameScreen extends AppCompatActivity {
             ImageView skeleton = instantiateImageViewForEnemy(R.drawable.thumbnail_skeleton);
             viewModel.createSkeleton();
             enemies.put(skeleton, viewModel.getSkeleton());
+
+            viewModel.setEnemyFreezePositionX(600); //setting position X
+            viewModel.setEnemyFreezePositionY(500); //setting position Y
+            ImageView enemyFreezeImageView = instantiateImageViewForPowerUp(R.drawable.snowflake);
+            enemyFreezeImageView.setX(viewModel.getEnemyFreezePositionX());
+            enemyFreezeImageView.setY(viewModel.getEnemyFreezePositionY());
+
             break;
         case 2:
             ImageView undead = instantiateImageViewForEnemy(R.drawable.undead);
