@@ -11,6 +11,7 @@ import com.example.myapplication.Model.OlafController;
 import com.example.myapplication.Model.Player;
 import com.example.myapplication.Model.SkeletonController;
 import com.example.myapplication.Model.SlimeController;
+import com.example.myapplication.Model.SuperSpeed;
 import com.example.myapplication.Model.UndeadController;
 import com.example.myapplication.Model.WizardController;
 
@@ -25,6 +26,7 @@ public class InitialGameScreenViewModel {
     private EnemyController wizard;
 
     private ExtraHealthPoints extraHealthPoints = new ExtraHealthPoints(0, 0);
+    private SuperSpeed superSpeed = new SuperSpeed();
     public InitialGameScreenViewModel() {
         this.player = Player.getInstance();
         this.player.setScore(100);
@@ -58,21 +60,23 @@ public class InitialGameScreenViewModel {
     public void movePlayer(int keyCode) {
         Player player = Player.getInstance();
         // prospect player coordinates
+        player.setSpeed(5); //TODO put an if/else statement if player has powerup
+        int speed = player.getSpeed();
 
         int playerX = player.getXCoordinate();
         int playerY = player.getYCoordinate();
 
         if (keyCode == KeyEvent.KEYCODE_A) {
-            player.setXCoordinate(player.getXCoordinate() - 10);
+            player.setXCoordinate(player.getXCoordinate() - speed);
         }
         if (keyCode == KeyEvent.KEYCODE_D) {
-            player.setXCoordinate(player.getXCoordinate() + 10);
+            player.setXCoordinate(player.getXCoordinate() + speed);
         }
         if (keyCode == KeyEvent.KEYCODE_W) {
-            player.setYCoordinate(player.getYCoordinate() - 10);
+            player.setYCoordinate(player.getYCoordinate() - speed);
         }
         if (keyCode == KeyEvent.KEYCODE_S) {
-            player.setYCoordinate(player.getYCoordinate() + 10);
+            player.setYCoordinate(player.getYCoordinate() + speed);
         }
     }
 
@@ -168,8 +172,21 @@ public class InitialGameScreenViewModel {
     public int getExtraHealthPointsY() {
         return extraHealthPoints.getY();
     }
+
+    public void setSuperSpeedXPosition(int X) {
+        superSpeed.setX(X);
+    }
+    public int getSuperSpeedXPosition() {
+        return superSpeed.getX();
+    }
+    public void setSuperSpeedYPosition(int Y) {
+        superSpeed.setY(Y);
+    }
+    public int getSuperSpeedYPosition() {
+        return superSpeed.getY();
+    }
     public void powerUps() {
-        //in the process of implementing
+        //TODO implement
     }
 
 
