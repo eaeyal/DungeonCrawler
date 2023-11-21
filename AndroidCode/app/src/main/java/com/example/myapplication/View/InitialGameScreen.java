@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.myapplication.GameContext;
 import com.example.myapplication.Leaderboard;
 import com.example.myapplication.Model.EnemyController;
+import com.example.myapplication.Model.ExtraHealthPoints;
 import com.example.myapplication.Model.Player;
 import com.example.myapplication.Physics.CollisionInfo;
 import com.example.myapplication.Physics.RoomManager;
@@ -45,25 +46,10 @@ public class InitialGameScreen extends AppCompatActivity {
     private RoomManager roomManager;
 
     private ImageView playerSprite;
-    private ImageView enemy1Sprite;
-    private ImageView enemy2Sprite;
-    private ImageView slimeSprite;
-    private ImageView undeadSprite;
     private ImageView redPower;
     private ImageView bluePower;
     private ImageView greenPower;
-
-    private boolean shouldChangeRoom;
     private String powerupType;
-
-
-    public int getScreenWidth() {
-        return screenWidth;
-    }
-
-    public int getScreenHeight() {
-        return screenHeight;
-    }
 
     protected void rebuildUi() {
         TextView playerName = findViewById(R.id.playerNameTextView);
@@ -82,6 +68,7 @@ public class InitialGameScreen extends AppCompatActivity {
         RelativeLayout layout = findViewById(R.id.gameLayout);
 
         roomManager.drawRoom(layout);
+
     }
 
     protected void gotoEndScreen() {
@@ -109,6 +96,19 @@ public class InitialGameScreen extends AppCompatActivity {
         return imageView;
     }
 
+    protected ImageView instantiateImageViewForPowerUp(int spriteId) {
+        RelativeLayout layout = findViewById(R.id.gameLayout);
+        ImageView imageView = new ImageView(this);
+
+        imageView.setImageResource(spriteId);
+        imageView.setAdjustViewBounds(true);
+        imageView.setMaxWidth(156);
+        imageView.setMaxHeight(156);
+        imageView.setTranslationZ(1f);
+        layout.addView(imageView);
+        return imageView;
+    }
+
     protected void instantiateEnemies() {
         // we already have enemies instantiated,
         // destroy them first (derender them)
@@ -122,6 +122,7 @@ public class InitialGameScreen extends AppCompatActivity {
             enemies.clear();
         }
 
+        ImageView extraHealthPointsImageView = null;
         // instantiate enemies based on the rooms we are currently in
         // (Can use factory method for this)
         switch (roomManager.getCurrentRoomIndex()) {
@@ -133,8 +134,22 @@ public class InitialGameScreen extends AppCompatActivity {
             ImageView wizard = instantiateImageViewForEnemy(R.drawable.thumbnail_wizard);
             viewModel.createWizard();
             enemies.put(wizard, viewModel.getWizard());
+
+            viewModel.setExtraHealthPointsXPosition(600); //setting position X
+            viewModel.setExtraHealthPointsYPosition(500); //setting position Y
+            extraHealthPointsImageView = instantiateImageViewForPowerUp(R.drawable.powerup);
+            extraHealthPointsImageView.setX(viewModel.getExtraHealthPointsX());
+            extraHealthPointsImageView.setY(viewModel.getExtraHealthPointsY());
+
+            viewModel.setSuperSpeedXPosition(500);
+            viewModel.setSuperSpeedYPosition(1500);
+            ImageView superSpeedImageView = instantiateImageViewForPowerUp(R.drawable.superspeed);
+            superSpeedImageView.setX(viewModel.getSuperSpeedXPosition());
+            superSpeedImageView.setY(viewModel.getSuperSpeedYPosition());
+
             break;
         case 1:
+
             ImageView olaf = instantiateImageViewForEnemy(R.drawable.thumbnail_olaf);
             viewModel.createOlaf();
             enemies.put(olaf, viewModel.getOlaf());
@@ -142,6 +157,13 @@ public class InitialGameScreen extends AppCompatActivity {
             ImageView skeleton = instantiateImageViewForEnemy(R.drawable.thumbnail_skeleton);
             viewModel.createSkeleton();
             enemies.put(skeleton, viewModel.getSkeleton());
+
+            viewModel.setEnemyFreezePositionX(600); //setting position X
+            viewModel.setEnemyFreezePositionY(500); //setting position Y
+            ImageView enemyFreezeImageView = instantiateImageViewForPowerUp(R.drawable.snowflake);
+            enemyFreezeImageView.setX(viewModel.getEnemyFreezePositionX());
+            enemyFreezeImageView.setY(viewModel.getEnemyFreezePositionY());
+
             break;
         case 2:
             ImageView undead = instantiateImageViewForEnemy(R.drawable.undead);
@@ -191,7 +213,8 @@ public class InitialGameScreen extends AppCompatActivity {
         return imageView;
     }
 
-    //destroys powerup (must check for collision first, can't figure out how)
+    //destroys powerup (must check for collision first then call powerup logic,
+    //not sure where to do that)
     protected void destroyPowerup() {
         RelativeLayout layout = findViewById(R.id.gameLayout);
         if(powerupType == "red")
@@ -260,7 +283,6 @@ public class InitialGameScreen extends AppCompatActivity {
                                 screenWidth / 2, screenHeight / 2)
                         .build(10, 15, this));
 
-
         playerSprite = findViewById(R.id.playerSprite); //Player Sprite image set
         playerSprite.setMaxWidth(56);
         playerSprite.setMaxHeight(56);
@@ -282,9 +304,7 @@ public class InitialGameScreen extends AppCompatActivity {
             @Override
             public void run() {
                 runOnUiThread(() -> viewModel.updateScore());
-
                 checkCollision();
-
                 moveEnemy();
             }
         }, 0, 1000); // Check every .5 seconds
@@ -352,6 +372,10 @@ public class InitialGameScreen extends AppCompatActivity {
         });
         // initialize the player coordinate to the center of the screen
         player.setCoordinates(screenWidth / 2, screenHeight / 2);
+
+
+
+
     }
 
     public boolean isCollisionWithEnemy(ImageView player, ImageView enemy) {
@@ -375,15 +399,20 @@ public class InitialGameScreen extends AppCompatActivity {
         }
     }
 
+
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         // move player
         viewModel.movePlayer(keyCode);
+        viewModel.powerUps();
+
         if (player.getHealthPoints() <= 0) {
             Intent intent = new Intent(InitialGameScreen.this, GameOverScreen.class);
             startActivity(intent);
         }
         return super.onKeyDown(keyCode, event);
+
     }
 
     @Override
