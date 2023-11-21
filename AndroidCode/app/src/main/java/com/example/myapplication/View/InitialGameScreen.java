@@ -6,11 +6,13 @@ import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModel;
 
 import com.example.myapplication.GameContext;
 import com.example.myapplication.Leaderboard;
@@ -118,7 +120,11 @@ public class InitialGameScreen extends AppCompatActivity {
             enemies.clear();
         }
 
-        ImageView extraHealthPointsImageView = null;
+        ImageView extraHealthPointsImageView = instantiateImageViewForPowerUp(R.drawable.powerup);
+        extraHealthPointsImageView.setVisibility(View.INVISIBLE);
+        ImageView enemyFreezeImageView = instantiateImageViewForPowerUp(R.drawable.snowflake);
+        enemyFreezeImageView.setVisibility(View.INVISIBLE);
+
         // instantiate enemies based on the rooms we are currently in
         // (Can use factory method for this)
         switch (roomManager.getCurrentRoomIndex()) {
@@ -131,15 +137,14 @@ public class InitialGameScreen extends AppCompatActivity {
             viewModel.createWizard();
             enemies.put(wizard, viewModel.getWizard());
 
+            extraHealthPointsImageView.setVisibility(View.VISIBLE);//?
             viewModel.setExtraHealthPointsXPosition(600); //setting position X
             viewModel.setExtraHealthPointsYPosition(500); //setting position Y
-            extraHealthPointsImageView = instantiateImageViewForPowerUp(R.drawable.powerup);
             extraHealthPointsImageView.setX(viewModel.getExtraHealthPointsX());
             extraHealthPointsImageView.setY(viewModel.getExtraHealthPointsY());
 
             break;
         case 1:
-
             ImageView olaf = instantiateImageViewForEnemy(R.drawable.thumbnail_olaf);
             viewModel.createOlaf();
             enemies.put(olaf, viewModel.getOlaf());
@@ -148,14 +153,18 @@ public class InitialGameScreen extends AppCompatActivity {
             viewModel.createSkeleton();
             enemies.put(skeleton, viewModel.getSkeleton());
 
-            viewModel.setEnemyFreezePositionX(600); //setting position X
-            viewModel.setEnemyFreezePositionY(500); //setting position Y
-            ImageView enemyFreezeImageView = instantiateImageViewForPowerUp(R.drawable.snowflake);
+            extraHealthPointsImageView.setVisibility(View.INVISIBLE);//?
+
+            enemyFreezeImageView.setVisibility(View.VISIBLE);//?
+            viewModel.setEnemyFreezePositionX(822); //setting position X
+            viewModel.setEnemyFreezePositionY(1505); //setting position Y
             enemyFreezeImageView.setX(viewModel.getEnemyFreezePositionX());
             enemyFreezeImageView.setY(viewModel.getEnemyFreezePositionY());
 
             break;
         case 2:
+
+
             ImageView undead = instantiateImageViewForEnemy(R.drawable.undead);
             viewModel.createUndead();
             enemies.put(undead, viewModel.getUndead());
@@ -163,6 +172,9 @@ public class InitialGameScreen extends AppCompatActivity {
             ImageView boss = instantiateImageViewForEnemy(R.drawable.boss);
             viewModel.createBoss();
             enemies.put(boss, viewModel.getBoss());
+
+            extraHealthPointsImageView.setVisibility(View.INVISIBLE);
+
             break;
         default:
             throw new RuntimeException("Invalid room index");
@@ -174,6 +186,7 @@ public class InitialGameScreen extends AppCompatActivity {
             enemyController.movement();
             imageView.setX(viewModel.getEnemyX(enemyController));
             imageView.setY(viewModel.getEnemyY(enemyController));
+
         });
     }
 

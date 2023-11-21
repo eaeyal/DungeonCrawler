@@ -27,7 +27,7 @@ public class PowerupsEnemyFreeze extends PowerUps {
 
     @Override
     public void action() {
-
+        //implementation
     }
 
     @Override
