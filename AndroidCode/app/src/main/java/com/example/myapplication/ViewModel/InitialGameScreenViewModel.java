@@ -1,5 +1,8 @@
 package com.example.myapplication.ViewModel;
 
+import com.example.myapplication.Model.ExtraHealthPoints;
+
+
 import android.view.KeyEvent;
 
 import com.example.myapplication.Model.BossController;
@@ -20,6 +23,8 @@ public class InitialGameScreenViewModel {
     private EnemyController undead;
     private EnemyController olaf;
     private EnemyController wizard;
+
+    private ExtraHealthPoints extraHealthPoints = new ExtraHealthPoints(0, 0);
     public InitialGameScreenViewModel() {
         this.player = Player.getInstance();
         this.player.setScore(100);
@@ -149,6 +154,23 @@ public class InitialGameScreenViewModel {
         enemyC.movement();
     }
 
+    //setting initialize position
+    public void setExtraHealthPointsXPosition(int X) {
+        extraHealthPoints.setX(X);
+    }
+    public int getExtraHealthPointsX() {
+        return extraHealthPoints.getX();
+    }
+
+    public void setExtraHealthPointsYPosition(int Y) {
+        extraHealthPoints.setY(Y);
+    }
+    public int getExtraHealthPointsY() {
+        return extraHealthPoints.getY();
+    }
+    public void powerUps() {
+        //in the process of implementing
+    }
 
 
 }
