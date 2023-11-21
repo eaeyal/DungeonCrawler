@@ -9,6 +9,7 @@ import com.example.myapplication.Model.BossController;
 import com.example.myapplication.Model.EnemyController;
 import com.example.myapplication.Model.OlafController;
 import com.example.myapplication.Model.Player;
+import com.example.myapplication.Model.PowerupsEnemyFreeze;
 import com.example.myapplication.Model.SkeletonController;
 import com.example.myapplication.Model.SlimeController;
 import com.example.myapplication.Model.SuperSpeed;
@@ -26,7 +27,11 @@ public class InitialGameScreenViewModel {
     private EnemyController wizard;
 
     private ExtraHealthPoints extraHealthPoints = new ExtraHealthPoints(0, 0);
+
+    private PowerupsEnemyFreeze enemyFreeze = new PowerupsEnemyFreeze();
+
     private SuperSpeed superSpeed = new SuperSpeed();
+
     public InitialGameScreenViewModel() {
         this.player = Player.getInstance();
         this.player.setScore(100);
@@ -171,6 +176,20 @@ public class InitialGameScreenViewModel {
     }
     public int getExtraHealthPointsY() {
         return extraHealthPoints.getY();
+    }
+
+
+    public void setEnemyFreezePositionX(int X) {
+        enemyFreeze.setX(X);
+    }
+    public int getEnemyFreezePositionX() {
+        return enemyFreeze.getX();
+    }
+    public void setEnemyFreezePositionY(int Y) {
+        enemyFreeze.setY(Y);
+    }
+    public int getEnemyFreezePositionY() {
+        return enemyFreeze.getY();
     }
 
     public void setSuperSpeedXPosition(int X) {
