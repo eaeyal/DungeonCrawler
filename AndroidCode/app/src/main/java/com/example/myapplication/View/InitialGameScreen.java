@@ -137,6 +137,12 @@ public class InitialGameScreen extends AppCompatActivity {
             extraHealthPointsImageView.setX(viewModel.getExtraHealthPointsX());
             extraHealthPointsImageView.setY(viewModel.getExtraHealthPointsY());
 
+            viewModel.setSuperSpeedXPosition(500);
+            viewModel.setSuperSpeedYPosition(1500);
+            ImageView superSpeedImageView = instantiateImageViewForPowerUp(R.drawable.superspeed);
+            superSpeedImageView.setX(viewModel.getSuperSpeedXPosition());
+            superSpeedImageView.setY(viewModel.getSuperSpeedYPosition());
+
             break;
         case 1:
 
