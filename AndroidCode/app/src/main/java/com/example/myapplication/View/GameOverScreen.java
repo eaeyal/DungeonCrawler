@@ -8,9 +8,6 @@ import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.myapplication.Leaderboard;
-
-import java.util.Calendar;
 import com.example.myapplication.Model.Player;
 import com.example.myapplication.R;
 
@@ -24,7 +21,7 @@ public class GameOverScreen extends AppCompatActivity {
         setContentView(R.layout.loss_by_enemy);
 
         Button backButton = findViewById(R.id.button3);
-        backButton.setText("Return");
+        backButton.setText("TRY AGAIN");
         backButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent(GameOverScreen.this, MainActivity.class);
@@ -33,8 +30,8 @@ public class GameOverScreen extends AppCompatActivity {
         });
 
         Button leaderBoardButton = findViewById(R.id.button4);
-        leaderBoardButton.setText("LeaderBoard");
-        leaderBoardButton.setOnClickListener(new View.OnClickListener(){
+        leaderBoardButton.setText("Leaderboard");
+        leaderBoardButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 Intent intent = new Intent(GameOverScreen.this, EndScreen.class);
                 startActivity(intent);

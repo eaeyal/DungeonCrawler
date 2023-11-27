@@ -215,8 +215,8 @@ public class PlayerTests {
     public void creatingEnemy() {
         gameViewModel = new InitialGameScreenViewModel();
         gameViewModel.createSkeleton();
-        assertEquals(100, gameViewModel.getEnemyX(gameViewModel.getSkeleton()));
-        assertEquals(100, gameViewModel.getEnemyY(gameViewModel.getSkeleton()));
+        assertEquals(600, gameViewModel.getEnemyX(gameViewModel.getSkeleton()));
+        assertEquals(950, gameViewModel.getEnemyY(gameViewModel.getSkeleton()));
     }
     @Test
     public void basicEnemyMovement() {
@@ -257,4 +257,71 @@ public class PlayerTests {
         gameViewModel.setEnemyY(499, gameViewModel.getWizard());
         assertFalse(player.getScore() < 0);
     }
+    public void SkeletonMovementPattern() {
+        gameViewModel = new InitialGameScreenViewModel();
+        gameViewModel.createSkeleton();
+        gameViewModel.moveEnemy(gameViewModel.getSkeleton());
+        gameViewModel.moveEnemy(gameViewModel.getSkeleton());
+        assertEquals(660, gameViewModel.getEnemyX(gameViewModel.getSkeleton()));
+        assertEquals(950, gameViewModel.getEnemyY(gameViewModel.getSkeleton()));
+    }
+
+    @Test
+    public void SlimeMovementPattern() {
+        gameViewModel = new InitialGameScreenViewModel();
+        gameViewModel.createSlime();
+        gameViewModel.moveEnemy(gameViewModel.getSlime());
+        gameViewModel.moveEnemy(gameViewModel.getSlime());
+        assertEquals(230, gameViewModel.getEnemyX(gameViewModel.getSlime()));
+        assertEquals(634, gameViewModel.getEnemyY(gameViewModel.getSlime()));
+    }
+    @Test
+    public void OlafMovementPattern() {
+        gameViewModel = new InitialGameScreenViewModel();
+        gameViewModel.createOlaf();
+        gameViewModel.moveEnemy(gameViewModel.getOlaf());
+        gameViewModel.moveEnemy(gameViewModel.getOlaf());
+        assertEquals(310, gameViewModel.getEnemyX(gameViewModel.getOlaf()));
+        assertEquals(634, gameViewModel.getEnemyY(gameViewModel.getOlaf()));
+    }
+    @Test
+    public void BossMovementPattern() {
+        gameViewModel = new InitialGameScreenViewModel();
+        gameViewModel.createBoss();
+        gameViewModel.moveEnemy(gameViewModel.getBoss());
+        gameViewModel.moveEnemy(gameViewModel.getBoss());
+        assertEquals(400, gameViewModel.getEnemyX(gameViewModel.getBoss()));
+        assertEquals(630, gameViewModel.getEnemyY(gameViewModel.getBoss()));
+    }
+    @Test
+    public void WizardMovementPattern() {
+        gameViewModel = new InitialGameScreenViewModel();
+        gameViewModel.createWizard();
+        gameViewModel.moveEnemy(gameViewModel.getWizard());
+        gameViewModel.moveEnemy(gameViewModel.getWizard());
+        assertEquals(600, gameViewModel.getEnemyX(gameViewModel.getWizard()));
+        assertEquals(1050, gameViewModel.getEnemyY(gameViewModel.getWizard()));
+    }
+    @Test
+    public void UndeadMovementPattern() {
+        gameViewModel = new InitialGameScreenViewModel();
+        gameViewModel.createUndead();
+        gameViewModel.moveEnemy(gameViewModel.getUndead());
+        gameViewModel.moveEnemy(gameViewModel.getUndead());
+        assertEquals(460, gameViewModel.getEnemyX(gameViewModel.getUndead()));
+        assertEquals(950, gameViewModel.getEnemyY(gameViewModel.getUndead()));
+    }
+
+    @Test
+    public void testBoss() {
+        gameViewModel = new InitialGameScreenViewModel();
+        gameViewModel.createBoss();
+        gameViewModel.setEnemyX(50, gameViewModel.getBoss());
+        gameViewModel.setEnemyX(50, gameViewModel.getBoss());
+        assertEquals(40, gameViewModel.getEnemyX(gameViewModel.getBoss()));
+        assertEquals(40, gameViewModel.getEnemyX(gameViewModel.getBoss()));
+    }
+
+
+
 }
