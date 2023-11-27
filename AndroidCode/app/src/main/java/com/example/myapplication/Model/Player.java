@@ -53,7 +53,7 @@ public class Player implements CollisionResolutionStrategy {
         return image;
     }
 
-    public void setCoordinatesNoNotify(int x, int y) {
+    public void updateCoordinatesWithoutNotification(int x, int y) {
         this.x = x;
         this.y = y;
     }
