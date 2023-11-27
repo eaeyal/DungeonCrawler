@@ -274,6 +274,7 @@ public class InitialGameScreen extends AppCompatActivity {
 
     //destroys powerup (must check for collision first then call powerup logic,
     //not sure where to do that)
+    /*
     protected void destroyPowerup() {
         RelativeLayout layout = findViewById(R.id.gameLayout);
         if(powerupType == "red")
@@ -304,6 +305,7 @@ public class InitialGameScreen extends AppCompatActivity {
         }
 
     }
+    /*
 
 
 
@@ -358,7 +360,7 @@ public class InitialGameScreen extends AppCompatActivity {
         }
 
         instantiateEnemies();
-        instantiatePowerups();
+        //instantiatePowerups();
 
         scoreTimer1 = new Timer();
         scoreTimer1.schedule(new TimerTask() {
@@ -419,7 +421,7 @@ public class InitialGameScreen extends AppCompatActivity {
                 player.updateCoordinatesWithoutNotification(screenWidth / 2, screenHeight / 2);
                 player.setCoordinates(screenWidth / 2, screenHeight / 2);
                 instantiateEnemies();
-                instantiatePowerups();
+                //instantiatePowerups();
                 rebuildUi();
             }
 
