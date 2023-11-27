@@ -20,7 +20,7 @@ public class Sword {
     public void setY(int y) {
         this.y = y;
     }
-    
+
     public void attack() {
 
     }
