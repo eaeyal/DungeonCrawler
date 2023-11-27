@@ -4,7 +4,6 @@ public class Sword {
     private int x;
 
     private int y;
-
     public int getX() {
         return x;
     }
@@ -21,7 +20,4 @@ public class Sword {
         this.y = y;
     }
 
-    public void attack() {
-
-    }
 }
