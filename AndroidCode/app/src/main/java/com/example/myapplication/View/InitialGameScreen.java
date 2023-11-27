@@ -319,15 +319,6 @@ public class InitialGameScreen extends AppCompatActivity {
                 player.setHealthPoints(player.getHealthPoints() - 10);
             }
         }
-        /*
-         Could implement this in the future,
-         right now it bugs out when I run this.
-         If we implement this then there is no
-         need for the first line of this method.
-
-         if (player.getScore() <= 0) {
-            setContentView(R.layout.loss_by_enemy);
-        } */
 
     }
 
