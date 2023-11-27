@@ -355,7 +355,7 @@ public class InitialGameScreen extends AppCompatActivity {
                 roomManager.changeRoom(nextRoomIndex);
 
                 // rest the player's coordinates to the center of the screen
-                player.setCoordinatesNoNotify(screenWidth / 2, screenHeight / 2);
+                player.updateCoordinatesWithoutNotification(screenWidth / 2, screenHeight / 2);
                 player.setCoordinates(screenWidth / 2, screenHeight / 2);
                 instantiateEnemies();
                 instantiatePowerups();
