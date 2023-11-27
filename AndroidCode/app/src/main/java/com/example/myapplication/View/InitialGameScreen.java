@@ -384,7 +384,10 @@ public class InitialGameScreen extends AppCompatActivity {
                 runOnUiThread(() -> viewModel.updateScore());
                 checkCollision();
                 moveEnemy();
+                checkCollisionWithSlash();
                 slashSprite.setVisibility(View.INVISIBLE);
+                slashSprite.setX(0);
+                slashSprite.setY(0);
             }
         }, 0, 1000); // Check every .5 seconds
 
@@ -474,10 +477,21 @@ public class InitialGameScreen extends AppCompatActivity {
             this.enemies.forEach((imageView, enemyController) -> {
                 if (isCollisionWithEnemy(playerSprite, imageView)) {
                     int diff = GameContext.getInstance().getDifficulty();
-                    player.setHealthPoints(player.getHealthPoints() - 10 * diff);
+                    player.setHealthPoints(player.getHealthPoints() -
+                            enemyController.getEnemy().getAttackDamage() * diff);
                 }
             });
         }
+    }
+
+    public void checkCollisionWithSlash() {
+        this.enemies.forEach((imageView, enemyController) -> {
+            if (isCollisionWithEnemy(slashSprite, imageView)) {
+                imageView.setVisibility(View.INVISIBLE);
+                enemyController.getEnemy().setAttackDamage(0);
+            }
+        });
+
     }
 
     public void swordSlash() {
