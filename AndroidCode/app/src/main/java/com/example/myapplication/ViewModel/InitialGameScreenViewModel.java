@@ -33,12 +33,16 @@ public class InitialGameScreenViewModel {
 
     private SuperSpeed superSpeed = new SuperSpeed();
 
+    private Sword sword = new Sword();
+
+    public Sword getSword() {
+        return this.sword;
+    }
+
     public InitialGameScreenViewModel() {
         this.player = Player.getInstance();
         this.player.setScore(100);
     }
-
-
 
     public Player getPlayer() {
         return player;
@@ -208,6 +212,9 @@ public class InitialGameScreenViewModel {
     public void powerUps() {
         //TODO implement
     }
-
+    public void updateSwordPos() {
+        sword.setX(player.getX() + 60);
+        sword.setY(player.getY() + 20);
+    }
 
 }

@@ -51,6 +51,8 @@ public class InitialGameScreen extends AppCompatActivity {
     private ImageView greenPower;
     private String powerupType;
 
+    private ImageView swordSprite;
+
     protected void rebuildUi() {
         TextView playerName = findViewById(R.id.playerNameTextView);
         TextView playerHealth = findViewById(R.id.playerHealthTextView);
@@ -104,6 +106,19 @@ public class InitialGameScreen extends AppCompatActivity {
         imageView.setAdjustViewBounds(true);
         imageView.setMaxWidth(156);
         imageView.setMaxHeight(156);
+        imageView.setTranslationZ(1f);
+        layout.addView(imageView);
+        return imageView;
+    }
+
+    protected ImageView instantiateImageViewForSword(int spriteId) {
+        RelativeLayout layout = findViewById(R.id.gameLayout);
+        ImageView imageView = new ImageView(this);
+
+        imageView.setImageResource(spriteId);
+        imageView.setAdjustViewBounds(true);
+        imageView.setMaxWidth(80);
+        imageView.setMaxHeight(80);
         imageView.setTranslationZ(1f);
         layout.addView(imageView);
         return imageView;
@@ -373,9 +388,10 @@ public class InitialGameScreen extends AppCompatActivity {
         // initialize the player coordinate to the center of the screen
         player.setCoordinates(screenWidth / 2, screenHeight / 2);
 
-
-
-
+        swordSprite = instantiateImageViewForSword(R.drawable.sword);
+        viewModel.updateSwordPos();
+        swordSprite.setX(viewModel.getSword().getX());
+        swordSprite.setY(viewModel.getSword().getY());
     }
 
     public boolean isCollisionWithEnemy(ImageView player, ImageView enemy) {
@@ -406,6 +422,9 @@ public class InitialGameScreen extends AppCompatActivity {
         // move player
         viewModel.movePlayer(keyCode);
         viewModel.powerUps();
+        viewModel.updateSwordPos();
+        swordSprite.setX(viewModel.getSword().getX());
+        swordSprite.setY(viewModel.getSword().getY());
 
         if (player.getHealthPoints() <= 0) {
             Intent intent = new Intent(InitialGameScreen.this, GameOverScreen.class);
