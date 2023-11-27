@@ -5,7 +5,7 @@ public class PowerupsEnemyFreeze extends PowerUps {
     int Y;
     boolean hasPowerUp;
 
-    public PowerupsEnemyFreeze(Player decoratedPlayer) {
+    public PowerupsEnemyFreeze(PowerUpInterface decoratedPlayer) {
         super(decoratedPlayer);
     }
 

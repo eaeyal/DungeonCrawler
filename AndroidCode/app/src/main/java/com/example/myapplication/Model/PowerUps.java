@@ -1,9 +1,10 @@
 package com.example.myapplication.Model;
 
 //player decorator
-public abstract class PowerUps implements PlayerInterface {
-    protected PlayerInterface decoratedPlayer;
-    public PowerUps(PlayerInterface decoratedPlayer) {
+public abstract class PowerUps implements PowerUpInterface {
+    boolean hasPowerUp;
+    protected PowerUpInterface decoratedPlayer;
+    public PowerUps(PowerUpInterface decoratedPlayer) {
         this.decoratedPlayer = decoratedPlayer;
     }
     public void setXCoordinate(int x) {
@@ -19,11 +20,15 @@ public abstract class PowerUps implements PlayerInterface {
         return decoratedPlayer.getYCoordinate();
     }
 
-    public int getHealthPoints() {
-        return decoratedPlayer.getHealthPoints();
+    public int powerUp() {
+        return 0;
     }
 
-    abstract void setPowerUps(boolean havePowerUps);
+    public void setPowerUps(boolean havePowerUps) {
+        this.hasPowerUp = havePowerUps;
+    }
 
-    abstract boolean getPowerUps();
+    public boolean getPowerUps() {
+        return this.hasPowerUp;
+    }
 }

@@ -2,7 +2,7 @@ package com.example.myapplication.Model;
 
 public class SuperSpeed extends PowerUps{
 
-    public SuperSpeed(Player decoratedPlayer) {
+    public SuperSpeed(PowerUpInterface decoratedPlayer) {
         super(decoratedPlayer);
     }
 

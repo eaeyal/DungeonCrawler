@@ -153,13 +153,15 @@ public class InitialGameScreen extends AppCompatActivity {
             viewModel.createSkeleton();
             enemies.put(skeleton, viewModel.getSkeleton());
 
-
+            /*
             //super speed power up
             viewModel.setSuperSpeedXPosition(500);
             viewModel.setSuperSpeedYPosition(1500);
             ImageView superSpeedImageView = instantiateImageViewForPowerUp(R.drawable.superspeed);
             superSpeedImageView.setX(viewModel.getSuperSpeedXPosition());
             superSpeedImageView.setY(viewModel.getSuperSpeedYPosition());
+
+             */
 
             /*
             //enemy freeze power up

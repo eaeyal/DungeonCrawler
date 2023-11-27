@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class Player implements CollisionResolutionStrategy, PlayerInterface {
+public class Player implements CollisionResolutionStrategy {
     private String name;
     private ArrayList<String> roomsVisited;
     private boolean winner;
@@ -66,7 +66,6 @@ public class Player implements CollisionResolutionStrategy, PlayerInterface {
         this.previousY = this.y;
     }
 
-    @Override
     public void setXCoordinate(int x) {
         savePrevCoord();
         this.x = x;
@@ -110,6 +109,7 @@ public class Player implements CollisionResolutionStrategy, PlayerInterface {
     public int getYCoordinate() {
         return y;
     }
+
 
 
     public void setSpeed(int speed) {

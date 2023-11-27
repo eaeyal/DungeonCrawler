@@ -6,21 +6,17 @@ public class ExtraHealthPoints extends PowerUps {
     int Y = 0;
     boolean havePowerUp = false;
 
-    public ExtraHealthPoints(PlayerInterface decoratedPlayer) {
+    public ExtraHealthPoints(PowerUpInterface decoratedPlayer) {
         super(decoratedPlayer);
     }
 
-    @Override
-    public void setPowerUps(boolean havePowerUp) {
-        this.havePowerUp = havePowerUp;
-    }
 
     @Override
-    public boolean getPowerUps() {
-        return havePowerUp;
-    }
-    @Override
-    public int getHealthPoints() {
-        return super.getHealthPoints() + heathPoints;
+    public int powerUp() {
+        Player.getInstance().setSpeed(200);
+        Player.getInstance().setHealthPoints(Player.getInstance().getHealthPoints() +
+                this.heathPoints);
+        havePowerUp = true;
+        return Player.getInstance().getHealthPoints() + this.heathPoints;
     }
 }

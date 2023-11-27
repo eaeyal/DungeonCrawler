@@ -5,8 +5,8 @@ public class PowerupsPlayerJumpEnemy extends PowerUps {
     int Y = 0;
     boolean hasPowerUp;
 
-    public PowerupsPlayerJumpEnemy(Player decoratedPlayer) {
-        super(decoratedPlayer);
+    public PowerupsPlayerJumpEnemy(PowerUpInterface decoratedPlayer) {
+       super(decoratedPlayer);
     }
 
 
@@ -18,6 +18,11 @@ public class PowerupsPlayerJumpEnemy extends PowerUps {
     @Override
     public boolean getPowerUps() {
         return hasPowerUp;
+    }
+
+    @Override
+    public int powerUp() {
+        return 0;
     }
 }
 
