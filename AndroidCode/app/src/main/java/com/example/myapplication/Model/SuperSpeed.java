@@ -27,7 +27,7 @@ public class SuperSpeed extends PowerUps{
 
     @Override
     public void action() {
-        Player.getInstance().setSpeed(15);
+        Player.getInstance().setSpeed(Player.getInstance().getSpeed() + 10);
     }
 
     @Override
