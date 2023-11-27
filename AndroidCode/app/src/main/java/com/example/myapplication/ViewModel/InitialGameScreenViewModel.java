@@ -15,6 +15,7 @@ import com.example.myapplication.Model.SlimeController;
 import com.example.myapplication.Model.SuperSpeed;
 import com.example.myapplication.Model.UndeadController;
 import com.example.myapplication.Model.WizardController;
+import com.example.myapplication.Model.Sword;
 
 public class InitialGameScreenViewModel {
     private Player player;
