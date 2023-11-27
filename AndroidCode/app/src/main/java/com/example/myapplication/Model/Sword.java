@@ -17,8 +17,11 @@ public class Sword {
         this.x = x;
     }
 
-    public int setY(int y) {
+    public void setY(int y) {
         this.y = y;
     }
+    
+    public void attack() {
 
+    }
 }
