@@ -5,6 +5,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import com.example.myapplication.Model.ExtraHealthPoints;
+import com.example.myapplication.Model.PlayerInterface;
 import com.example.myapplication.R;
 import android.view.KeyEvent;
 
@@ -322,6 +324,12 @@ public class PlayerTests {
         assertEquals(40, gameViewModel.getEnemyX(gameViewModel.getBoss()));
     }
 
+    @Test
+    public void testPlayerExtraHealthPoints() {
+        PlayerInterface player = Player.getInstance();
+        PlayerInterface playerWithExtraHealthPoints = new ExtraHealthPoints(player);
+        assertEquals(115, playerWithExtraHealthPoints.getHealthPoints());
+    }
 
 
 }

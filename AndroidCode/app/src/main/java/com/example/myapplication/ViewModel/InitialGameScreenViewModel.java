@@ -9,7 +9,9 @@ import com.example.myapplication.Model.BossController;
 import com.example.myapplication.Model.EnemyController;
 import com.example.myapplication.Model.OlafController;
 import com.example.myapplication.Model.Player;
+import com.example.myapplication.Model.PlayerInterface;
 import com.example.myapplication.Model.PowerupsEnemyFreeze;
+import com.example.myapplication.Model.PowerupsPlayerJumpEnemy;
 import com.example.myapplication.Model.SkeletonController;
 import com.example.myapplication.Model.SlimeController;
 import com.example.myapplication.Model.SuperSpeed;
@@ -25,19 +27,16 @@ public class InitialGameScreenViewModel {
     private EnemyController undead;
     private EnemyController olaf;
     private EnemyController wizard;
+    private Player playerInstance = Player.getInstance();
 
-    private ExtraHealthPoints extraHealthPoints = new ExtraHealthPoints(0, 0);
-
-    private PowerupsEnemyFreeze enemyFreeze = new PowerupsEnemyFreeze();
-
-    private SuperSpeed superSpeed = new SuperSpeed();
+    PlayerInterface playerWithExtraHealth = new ExtraHealthPoints(playerInstance);
+    PlayerInterface playerWithSuperSpeed = new SuperSpeed(playerInstance);
+    //private PowerupsPlayerJumpEnemy playerJumpEnemy = new PowerupsPlayerJumpEnemy();
 
     public InitialGameScreenViewModel() {
         this.player = Player.getInstance();
         this.player.setScore(100);
     }
-
-
 
     public Player getPlayer() {
         return player;
@@ -63,9 +62,8 @@ public class InitialGameScreenViewModel {
     }
 
     public void movePlayer(int keyCode) {
-        Player player = Player.getInstance();
         // prospect player coordinates
-        player.setSpeed(5); //TODO put an if/else statement if player has powerup
+        player.setSpeed(5); //TODO put an if/else statement if player has power up
         int speed = player.getSpeed();
 
         int playerX = player.getXCoordinate();
@@ -88,38 +86,31 @@ public class InitialGameScreenViewModel {
     public void onUpdatedCallback(Runnable r) {
         updatedCallback = r;
     }
-
     // Enemy Controller Methods
     public void createSkeleton() {
         skeleton = new SkeletonController();
         skeleton.render();
     }
-
     public void createBoss() {
         boss = new BossController();
         boss.render();
     }
-
     public void createSlime() {
         slime = new SlimeController();
         slime.render();
     }
-
     public void createUndead() {
         undead = new UndeadController();
         undead.render();
     }
-
     public void createOlaf() {
         olaf = new OlafController();
         olaf.render();
     }
-
     public void createWizard() {
         wizard = new WizardController();
         wizard.render();
     }
-
     public int getEnemyX(EnemyController enemyC) {
         return enemyC.getEnemy().getX();
     }
@@ -139,46 +130,47 @@ public class InitialGameScreenViewModel {
     public EnemyController getSkeleton() {
         return skeleton;
     }
-
     public EnemyController getBoss() {
         return boss;
     }
-
     public EnemyController getSlime() {
         return slime;
     }
-
     public EnemyController getUndead() {
         return undead;
     }
-
     public EnemyController getOlaf() {
         return olaf;
     }
-
     public EnemyController getWizard() {
         return wizard;
     }
     public void moveEnemy(EnemyController enemyC) {
-        enemyC.movement();
+        enemyC.movement(); //TODO freeze enemies maybe put a timer
+        /*if (enemyFreeze.getPowerUps() == false) {
+            enemyC.movement();
+        } else {
+
+         */
+
+        //}
     }
 
     //setting initialize position
     public void setExtraHealthPointsXPosition(int X) {
-        extraHealthPoints.setX(X);
+        playerWithExtraHealth.setXCoordinate(X);
     }
     public int getExtraHealthPointsX() {
-        return extraHealthPoints.getX();
+        return playerWithExtraHealth.getXCoordinate();
     }
-
     public void setExtraHealthPointsYPosition(int Y) {
-        extraHealthPoints.setY(Y);
+        playerWithExtraHealth.setYCoordinate(Y);
     }
     public int getExtraHealthPointsY() {
-        return extraHealthPoints.getY();
+        return playerWithExtraHealth.getYCoordinate();
     }
 
-
+    /*
     public void setEnemyFreezePositionX(int X) {
         enemyFreeze.setX(X);
     }
@@ -192,21 +184,36 @@ public class InitialGameScreenViewModel {
         return enemyFreeze.getY();
     }
 
+     */
+
     public void setSuperSpeedXPosition(int X) {
-        superSpeed.setX(X);
+        playerWithSuperSpeed.setXCoordinate(X);
     }
     public int getSuperSpeedXPosition() {
-        return superSpeed.getX();
+        return playerWithSuperSpeed.getXCoordinate();
     }
     public void setSuperSpeedYPosition(int Y) {
-        superSpeed.setY(Y);
+        playerWithSuperSpeed.setYCoordinate(Y);
     }
     public int getSuperSpeedYPosition() {
-        return superSpeed.getY();
+        return playerWithSuperSpeed.getYCoordinate();
     }
+/*
+    public void setPlayerJumpEnemyPositionX(int X) { playerJumpEnemy.setX(X); }
+    public int getPlayerJumpEnemyPositionX() {
+        return playerJumpEnemy.getX();
+    }
+    public void setPlayerJumpEnemyPositionY(int Y) {
+        playerJumpEnemy.setY(Y);
+    }
+    public int getPlayerJumpEnemyPositionY() {
+        return playerJumpEnemy.getY();
+    }
+
+ */
     public void powerUps() {
-        //TODO implement
+        if (playerInstance.getX() == playerWithExtraHealth.getXCoordinate()) {
+            playerWithExtraHealth.getHealthPoints();
+        }
     }
-
-
 }

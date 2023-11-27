@@ -96,4 +96,9 @@ public class Wizard implements Enemy {
             setY(getY() + 50);
         }
     }
+
+    @Override
+    public void noMovement() {
+        speed = 0; //ToDo
+    }
 }

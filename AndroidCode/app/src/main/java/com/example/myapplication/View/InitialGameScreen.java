@@ -39,16 +39,11 @@ public class InitialGameScreen extends AppCompatActivity {
     private Timer scoreTimer1;
     private Timer scoreTimer2;
     private TextView scoreText;
-
     private int screenWidth;
     private int screenHeight;
-
     private InitialGameScreenViewModel viewModel;
-
     private RoomManager roomManager;
-
     private ImageView playerSprite;
-
     protected void rebuildUi() {
         TextView playerName = findViewById(R.id.playerNameTextView);
         TextView playerHealth = findViewById(R.id.playerHealthTextView);
@@ -66,7 +61,6 @@ public class InitialGameScreen extends AppCompatActivity {
         RelativeLayout layout = findViewById(R.id.gameLayout);
 
         roomManager.drawRoom(layout);
-
     }
 
     protected void gotoEndScreen() {
@@ -120,56 +114,77 @@ public class InitialGameScreen extends AppCompatActivity {
             enemies.clear();
         }
 
-        ImageView extraHealthPointsImageView = instantiateImageViewForPowerUp(R.drawable.powerup);
-        extraHealthPointsImageView.setVisibility(View.INVISIBLE);
-        ImageView enemyFreezeImageView = instantiateImageViewForPowerUp(R.drawable.snowflake);
-        enemyFreezeImageView.setVisibility(View.INVISIBLE);
+
+        //extraHealthPointsImageView.setVisibility(View.INVISIBLE); //TODO Richard
+
+        //enemyFreezeImageView.setVisibility(View.INVISIBLE);
+
 
         // instantiate enemies based on the rooms we are currently in
         // (Can use factory method for this)
         switch (roomManager.getCurrentRoomIndex()) {
         case 0:
+            //creating slime
             ImageView slime = instantiateImageViewForEnemy(R.drawable.thumbnail_slime);
             viewModel.createSlime();
             enemies.put(slime, viewModel.getSlime());
 
+            //creating wizard
             ImageView wizard = instantiateImageViewForEnemy(R.drawable.thumbnail_wizard);
             viewModel.createWizard();
             enemies.put(wizard, viewModel.getWizard());
 
-            extraHealthPointsImageView.setVisibility(View.VISIBLE);//?
+            //extra health power up
             viewModel.setExtraHealthPointsXPosition(600); //setting position X
             viewModel.setExtraHealthPointsYPosition(500); //setting position Y
+            ImageView extraHealthPointsImageView = instantiateImageViewForPowerUp(R.drawable.powerup);
             extraHealthPointsImageView.setX(viewModel.getExtraHealthPointsX());
             extraHealthPointsImageView.setY(viewModel.getExtraHealthPointsY());
 
+            break;
+        case 1:
+            //creating olaf enemy
+            ImageView olaf = instantiateImageViewForEnemy(R.drawable.thumbnail_olaf);
+            viewModel.createOlaf();
+            enemies.put(olaf, viewModel.getOlaf());
+
+            //creating skeleton enemy
+            ImageView skeleton = instantiateImageViewForEnemy(R.drawable.thumbnail_skeleton);
+            viewModel.createSkeleton();
+            enemies.put(skeleton, viewModel.getSkeleton());
+
+
+            //super speed power up
             viewModel.setSuperSpeedXPosition(500);
             viewModel.setSuperSpeedYPosition(1500);
             ImageView superSpeedImageView = instantiateImageViewForPowerUp(R.drawable.superspeed);
             superSpeedImageView.setX(viewModel.getSuperSpeedXPosition());
             superSpeedImageView.setY(viewModel.getSuperSpeedYPosition());
 
-            break;
-        case 1:
-            ImageView olaf = instantiateImageViewForEnemy(R.drawable.thumbnail_olaf);
-            viewModel.createOlaf();
-            enemies.put(olaf, viewModel.getOlaf());
-
-            ImageView skeleton = instantiateImageViewForEnemy(R.drawable.thumbnail_skeleton);
-            viewModel.createSkeleton();
-            enemies.put(skeleton, viewModel.getSkeleton());
-
-            extraHealthPointsImageView.setVisibility(View.INVISIBLE);//?
-
-            enemyFreezeImageView.setVisibility(View.VISIBLE);//?
+            /*
+            //enemy freeze power up
             viewModel.setEnemyFreezePositionX(822); //setting position X
             viewModel.setEnemyFreezePositionY(1505); //setting position Y
+            ImageView enemyFreezeImageView = instantiateImageViewForPowerUp(R.drawable.snowflake);
             enemyFreezeImageView.setX(viewModel.getEnemyFreezePositionX());
             enemyFreezeImageView.setY(viewModel.getEnemyFreezePositionY());
 
+            //TODO fix
+            //player jump over enemy
+            viewModel.setPlayerJumpEnemyPositionX(822);
+            viewModel.setPlayerJumpEnemyPositionY(1500);
+            ImageView playerJumpEnemyImageView = instantiateImageViewForPowerUp(R.drawable.snowflake);
+            playerJumpEnemyImageView.setX(viewModel.getPlayerJumpEnemyPositionX());
+            playerJumpEnemyImageView.setY(viewModel.getPlayerJumpEnemyPositionY());
+
+
+             */
+
+            //enemyFreezeImageView.setVisibility(View.VISIBLE);//?
+
+
             break;
         case 2:
-
 
             ImageView undead = instantiateImageViewForEnemy(R.drawable.undead);
             viewModel.createUndead();
@@ -179,7 +194,24 @@ public class InitialGameScreen extends AppCompatActivity {
             viewModel.createBoss();
             enemies.put(boss, viewModel.getBoss());
 
-            extraHealthPointsImageView.setVisibility(View.INVISIBLE);
+            //extraHealthPointsImageView.setVisibility(View.INVISIBLE);
+
+            /*
+            //player jump over enemy
+            viewModel.setPlayerJumpEnemyPositionX(1500);
+            viewModel.setPlayerJumpEnemyPositionY(500);
+            playerJumpEnemyImageView = instantiateImageViewForPowerUp(R.drawable.playerjumpenemy);
+            playerJumpEnemyImageView.setX(viewModel.getPlayerJumpEnemyPositionX());
+            playerJumpEnemyImageView.setY(viewModel.getPlayerJumpEnemyPositionY());
+
+
+             */
+            //extra health points
+            extraHealthPointsImageView = instantiateImageViewForPowerUp(R.drawable.powerup);
+            viewModel.setExtraHealthPointsXPosition(900); //setting position X
+            viewModel.setExtraHealthPointsYPosition(823); //setting position Y
+            extraHealthPointsImageView.setX(viewModel.getExtraHealthPointsX());
+            extraHealthPointsImageView.setY(viewModel.getExtraHealthPointsY());
 
             break;
         default:
@@ -333,9 +365,6 @@ public class InitialGameScreen extends AppCompatActivity {
         // initialize the player coordinate to the center of the screen
         player.setCoordinates(screenWidth / 2, screenHeight / 2);
 
-
-
-
     }
 
     public boolean isCollisionWithEnemy(ImageView player, ImageView enemy) {
@@ -358,8 +387,6 @@ public class InitialGameScreen extends AppCompatActivity {
             });
         }
     }
-
-
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
