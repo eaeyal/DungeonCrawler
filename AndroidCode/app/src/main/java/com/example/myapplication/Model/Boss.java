@@ -98,4 +98,9 @@ public class Boss implements Enemy {
         }
 
     }
+
+    @Override
+    public void noMovement() {
+        speed = 0; //TODO check implementation
+    }
 }

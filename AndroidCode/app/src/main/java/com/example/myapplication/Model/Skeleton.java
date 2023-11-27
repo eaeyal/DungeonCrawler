@@ -101,4 +101,9 @@ public class Skeleton implements Enemy {
             }
         }
     }
+
+    @Override
+    public void noMovement() {
+        speed = 0;
+    }
 }
