@@ -375,7 +375,6 @@ public class InitialGameScreen extends AppCompatActivity {
 
 
 
-
     }
 
     public boolean isCollisionWithEnemy(ImageView player, ImageView enemy) {
@@ -397,8 +396,8 @@ public class InitialGameScreen extends AppCompatActivity {
                 }
             });
         }
-      
 
+    }
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         // move player
