@@ -47,6 +47,8 @@ public class InitialGameScreen extends AppCompatActivity {
 
     private ImageView swordSprite;
 
+    private ImageView slashSprite;
+
     protected void rebuildUi() {
         TextView playerName = findViewById(R.id.playerNameTextView);
         TextView playerHealth = findViewById(R.id.playerHealthTextView);
@@ -113,6 +115,20 @@ public class InitialGameScreen extends AppCompatActivity {
         imageView.setMaxWidth(80);
         imageView.setMaxHeight(80);
         imageView.setTranslationZ(1f);
+        layout.addView(imageView);
+        return imageView;
+    }
+
+    protected ImageView instantiateImageViewForSlash(int spriteId) {
+        RelativeLayout layout = findViewById(R.id.gameLayout);
+        ImageView imageView = new ImageView(this);
+
+        imageView.setImageResource(spriteId);
+        imageView.setAdjustViewBounds(true);
+        imageView.setMaxWidth(80);
+        imageView.setMaxHeight(80);
+        imageView.setTranslationZ(1f);
+        imageView.setVisibility(View.INVISIBLE);
         layout.addView(imageView);
         return imageView;
     }
@@ -369,6 +385,7 @@ public class InitialGameScreen extends AppCompatActivity {
                 runOnUiThread(() -> viewModel.updateScore());
                 checkCollision();
                 moveEnemy();
+                slashSprite.setVisibility(View.INVISIBLE);
             }
         }, 0, 1000); // Check every .5 seconds
 
@@ -440,6 +457,8 @@ public class InitialGameScreen extends AppCompatActivity {
         viewModel.updateSwordPos();
         swordSprite.setX(viewModel.getSword().getX());
         swordSprite.setY(viewModel.getSword().getY());
+
+        slashSprite = instantiateImageViewForSlash(R.drawable.slash);
     }
 
     public boolean isCollisionWithEnemy(ImageView player, ImageView enemy) {
@@ -463,6 +482,12 @@ public class InitialGameScreen extends AppCompatActivity {
         }
     }
 
+    public void swordSlash() {
+        slashSprite.setVisibility(View.VISIBLE);
+        slashSprite.setX(viewModel.getSword().getX() + 85);
+        slashSprite.setY(viewModel.getSword().getY());
+    }
+
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
@@ -472,7 +497,9 @@ public class InitialGameScreen extends AppCompatActivity {
         viewModel.updateSwordPos();
         swordSprite.setX(viewModel.getSword().getX());
         swordSprite.setY(viewModel.getSword().getY());
-
+        if (keyCode == KeyEvent.KEYCODE_SPACE) {
+            swordSlash();
+        }
         if (player.getHealthPoints() <= 0) {
             Intent intent = new Intent(InitialGameScreen.this, GameOverScreen.class);
             startActivity(intent);

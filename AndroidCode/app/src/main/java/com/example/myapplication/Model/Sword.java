@@ -4,6 +4,8 @@ public class Sword {
     private int x;
 
     private int y;
+    private int slashX;
+    private int slashY;
 
     public int getX() {
         return x;
@@ -22,6 +24,7 @@ public class Sword {
     }
 
     public void attack() {
-
+        slashX = this.x + 85;
+        slashY = this.y;
     }
 }
