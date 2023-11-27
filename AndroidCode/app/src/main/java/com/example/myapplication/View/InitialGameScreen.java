@@ -46,6 +46,10 @@ public class InitialGameScreen extends AppCompatActivity {
     private RoomManager roomManager;
 
     private ImageView playerSprite;
+    private ImageView redPower;
+    private ImageView bluePower;
+    private ImageView greenPower;
+    private String powerupType;
 
     protected void rebuildUi() {
         TextView playerName = findViewById(R.id.playerNameTextView);
@@ -194,6 +198,53 @@ public class InitialGameScreen extends AppCompatActivity {
         });
     }
 
+    //specifications for drawing powerup
+    protected ImageView instantiateImageViewForPowerup(int spriteId) {
+        RelativeLayout layout = findViewById(R.id.gameLayout);
+        ImageView imageView = new ImageView(this);
+        imageView.setImageResource(spriteId);
+        imageView.setAdjustViewBounds(true);
+        imageView.setMaxWidth(156);
+        imageView.setMaxHeight(156);
+        imageView.setX(500);
+        imageView.setY(500);
+        imageView.setTranslationZ(1f);
+        layout.addView(imageView);
+        return imageView;
+    }
+
+    //destroys powerup (must check for collision first then call powerup logic,
+    //not sure where to do that)
+    protected void destroyPowerup() {
+        RelativeLayout layout = findViewById(R.id.gameLayout);
+        if(powerupType == "red")
+            layout.removeView(redPower);
+        if(powerupType == "blue")
+            layout.removeView(bluePower);
+        if(powerupType == "green")
+            layout.removeView(greenPower);
+    }
+
+    //randomly picks powerup to draw
+    protected void instantiatePowerups() {
+        int rand = (int) Math.floor(Math.random() * 4);
+
+        if(rand == 0) {
+            redPower = instantiateImageViewForPowerup(R.drawable.red_pot);
+            powerupType = "red";
+        }
+        else if (rand == 1) {
+            bluePower = instantiateImageViewForPowerup(R.drawable.blue_pot);
+            powerupType = "blue";
+        }
+        else {
+            greenPower = instantiateImageViewForPowerup(R.drawable.green_pot);
+            powerupType = "green";
+        }
+
+    }
+
+
 
     /**
      * @noinspection checkstyle:OperatorWrap
@@ -246,6 +297,7 @@ public class InitialGameScreen extends AppCompatActivity {
         }
 
         instantiateEnemies();
+        instantiatePowerups();
 
         scoreTimer1 = new Timer();
         scoreTimer1.schedule(new TimerTask() {
@@ -306,6 +358,7 @@ public class InitialGameScreen extends AppCompatActivity {
                 player.setCoordinatesNoNotify(screenWidth / 2, screenHeight / 2);
                 player.setCoordinates(screenWidth / 2, screenHeight / 2);
                 instantiateEnemies();
+                instantiatePowerups();
                 rebuildUi();
             }
 
