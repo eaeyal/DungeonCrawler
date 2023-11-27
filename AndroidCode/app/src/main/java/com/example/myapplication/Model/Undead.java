@@ -5,7 +5,7 @@ public class Undead implements Enemy {
     private int x;
     private int y;
     private int healthPoints;
-    private int attackDamage;
+    private int attackDamage = 10;
     private int speed;
     private int direction;
     private boolean reverseDirection;
