@@ -37,6 +37,12 @@ public class InitialGameScreenViewModel {
     //PowerUpInterface playerWithSuperSpeed = new SuperSpeed(playerWithExtraHealth);
     //private PowerupsPlayerJumpEnemy playerJumpEnemy = new PowerupsPlayerJumpEnemy();
 
+    private Sword sword = new Sword();
+
+    public Sword getSword() {
+        return this.sword;
+    }
+
     public InitialGameScreenViewModel() {
         this.player = Player.getInstance();
         this.player.setScore(100);
@@ -232,8 +238,14 @@ public class InitialGameScreenViewModel {
     public int getPlayerJumpEnemyPositionY() {
         return playerJumpEnemy.getY();
     }
+    */
 
- */
+    public void updateSwordPos() {
+        sword.setX(player.getX() + 60);
+        sword.setY(player.getY() + 20);
+    }
+
+
     PowerUpInterface playerWithExtraHealth = new ExtraHealthPoints(new BasePowerUp());
 
     public void powerUps() {
