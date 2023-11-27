@@ -97,4 +97,9 @@ public class Undead implements Enemy {
             setX(getX() + 70);
         }
     }
+
+    @Override
+    public void noMovement() {
+        speed = 0; //ToDo
+    }
 }

@@ -18,6 +18,7 @@ public abstract class EnemyController {
     public void movement() {
         getEnemy().movement();
     }
+    public void noMovement() {getEnemy().noMovement();}
 
 
     public Enemy getEnemy() {

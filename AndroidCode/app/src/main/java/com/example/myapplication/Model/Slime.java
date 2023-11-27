@@ -87,4 +87,9 @@ public class Slime implements Enemy {
         }
     }
 
+    @Override
+    public void noMovement() {
+        speed = 0; //TODO
+    }
+
 }

@@ -110,5 +110,10 @@ public class Olaf implements Enemy {
 //            setY(getY() + 10);
 //        }
     }
+
+    @Override
+    public void noMovement() {
+        speed = 0;
+    }
 }
 

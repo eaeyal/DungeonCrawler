@@ -28,4 +28,6 @@ public interface Enemy {
     void attack();
 
     void movement();
+
+    void noMovement();
 }
