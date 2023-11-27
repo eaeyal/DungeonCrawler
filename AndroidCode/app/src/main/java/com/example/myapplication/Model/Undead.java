@@ -59,8 +59,8 @@ public class Undead implements Enemy {
     @Override
     public void startPos() {
         reverseDirection = false;
-        this.setX(600);
-        this.setY(950);
+        this.setX(590);
+        this.setY(960);
     }
 
     // Enemy's attack pattern

@@ -24,10 +24,10 @@ public class Score implements Comparable<Score> {
 
 
     @Override
-    public int compareTo(Score o) {
-        if (this.score > o.score) {
+    public int compareTo(Score currentScore) {
+        if (this.score > currentScore.score) {
             return -1;
-        } else if (this.score < o.score) {
+        } else if (this.score < currentScore.score) {
             return 1;
         } else {
             return 0;
