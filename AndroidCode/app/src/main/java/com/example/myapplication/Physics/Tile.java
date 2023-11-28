@@ -25,6 +25,7 @@ public class Tile {
         }
     }
 
+    //getters
     public ImageView getSprite() {
         return sprite;
     }
@@ -45,6 +46,7 @@ public class Tile {
         collisionResolutionStrategy.resolveCollision(collisionInfo);
     }
 
+    //creates tile based on instance variables
     public static Tile fromSpriteId(int id, int width, int height, TileType type,
                                     Activity context) {
         RelativeLayout.LayoutParams defaultParams = new RelativeLayout.LayoutParams(width, height);
