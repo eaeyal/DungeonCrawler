@@ -13,7 +13,6 @@ public class ExtraHealthPoints extends PowerUps {
 
     @Override
     public int powerUp() {
-        Player.getInstance().setSpeed(200);
         Player.getInstance().setHealthPoints(Player.getInstance().getHealthPoints() +
                 this.heathPoints);
         havePowerUp = true;
