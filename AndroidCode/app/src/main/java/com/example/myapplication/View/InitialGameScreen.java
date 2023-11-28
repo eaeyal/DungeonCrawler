@@ -376,7 +376,6 @@ public class InitialGameScreen extends AppCompatActivity {
         }
 
         instantiateEnemies();
-        //instantiatePowerups();
 
         scoreTimer1 = new Timer();
         scoreTimer1.schedule(new TimerTask() {
@@ -441,7 +440,6 @@ public class InitialGameScreen extends AppCompatActivity {
                 player.updateCoordinatesWithoutNotification(screenWidth / 2, screenHeight / 2);
                 player.setCoordinates(screenWidth / 2, screenHeight / 2);
                 instantiateEnemies();
-                //instantiatePowerups();
                 rebuildUi();
             }
 
