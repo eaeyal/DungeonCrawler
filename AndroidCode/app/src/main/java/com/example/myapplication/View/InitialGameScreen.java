@@ -518,10 +518,7 @@ public class InitialGameScreen extends AppCompatActivity {
         if (keyCode == KeyEvent.KEYCODE_SPACE) {
             swordSlash();
         }
-        if (player.getHealthPoints() <= 0) {
-            Intent intent = new Intent(InitialGameScreen.this, GameOverScreen.class);
-            startActivity(intent);
-        }
+        //Deleted death when hp reaches zero moved to collison if bugs happen will retype code.
         return super.onKeyDown(keyCode, event);
 
     }
