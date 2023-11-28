@@ -1,5 +1,8 @@
 package com.example.myapplication.Model;
 
+/*
+score class to keep track of player score based on time
+ */
 public class Score implements Comparable<Score> {
     private String player;
     private int score;
