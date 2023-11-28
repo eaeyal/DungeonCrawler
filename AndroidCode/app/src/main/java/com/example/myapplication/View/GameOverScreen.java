@@ -14,7 +14,6 @@ import com.example.myapplication.R;
 
 public class GameOverScreen extends AppCompatActivity {
     private Player player = Player.getInstance();
-    private ImageView lossByEnemy;
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

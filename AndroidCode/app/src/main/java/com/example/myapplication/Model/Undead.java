@@ -5,7 +5,7 @@ public class Undead implements Enemy {
     private int x;
     private int y;
     private int healthPoints;
-    private int attackDamage;
+    private int attackDamage = 10;
     private int speed;
     private int direction;
     private boolean reverseDirection;
@@ -59,8 +59,8 @@ public class Undead implements Enemy {
     @Override
     public void startPos() {
         reverseDirection = false;
-        this.setX(600);
-        this.setY(950);
+        this.setX(590);
+        this.setY(960);
     }
 
     // Enemy's attack pattern
@@ -96,5 +96,10 @@ public class Undead implements Enemy {
         } else {
             setX(getX() + 70);
         }
+    }
+
+    @Override
+    public void noMovement() {
+        speed = 0; //ToDo
     }
 }

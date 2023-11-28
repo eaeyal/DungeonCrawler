@@ -1,14 +1,34 @@
 package com.example.myapplication.Model;
 
-public abstract class PowerUps {
-    abstract void setX(int X);
-    abstract void setY(int Y);
-    abstract int getX();
-    abstract int getY();
+//player decorator
+public abstract class PowerUps implements PowerUpInterface {
+    boolean hasPowerUp;
+    protected PowerUpInterface decoratedPlayer;
+    public PowerUps(PowerUpInterface decoratedPlayer) {
+        this.decoratedPlayer = decoratedPlayer;
+    }
+    public void setXCoordinate(int x) {
+        decoratedPlayer.setXCoordinate(x);
+    }
+    public void setYCoordinate(int y) {
+        decoratedPlayer.setYCoordinate(y);
+    }
+    public int getXCoordinate() {
+        return decoratedPlayer.getXCoordinate();
+    }
+    public int getYCoordinate() {
+        return decoratedPlayer.getYCoordinate();
+    }
 
-    abstract void action();
+    public int powerUp() {
+        return 0;
+    }
 
-    abstract void setPowerUps(boolean havePowerUps);
+    public void setPowerUps(boolean havePowerUps) {
+        this.hasPowerUp = havePowerUps;
+    }
 
-    abstract boolean getPowerUps();
+    public boolean getPowerUps() {
+        return this.hasPowerUp;
+    }
 }
