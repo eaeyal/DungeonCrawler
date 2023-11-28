@@ -495,7 +495,6 @@ public class InitialGameScreen extends AppCompatActivity {
             if (isCollisionWithEnemy(slashSprite, imageView)) {
                 imageView.setVisibility(View.INVISIBLE);
                 enemyController.getEnemy().setAttackDamage(0);
-                scoreText.setText("Score: " + viewModel.getScore()+20);
             }
         });
 
