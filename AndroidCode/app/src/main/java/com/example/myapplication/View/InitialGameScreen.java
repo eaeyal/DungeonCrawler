@@ -504,7 +504,7 @@ public class InitialGameScreen extends AppCompatActivity {
         slashSprite.setY(viewModel.getSword().getY());
     }
 
-    }
+
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         // move player
