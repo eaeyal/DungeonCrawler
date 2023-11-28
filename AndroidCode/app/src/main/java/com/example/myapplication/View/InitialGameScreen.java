@@ -295,9 +295,7 @@ public class InitialGameScreen extends AppCompatActivity {
     protected void destroyPowerup() {
         RelativeLayout layout = findViewById(R.id.gameLayout);
         if(powerupType == "red")
-            layout.removeView(
-        
-        );
+            layout.removeView(redPower);
         if(powerupType == "blue")
             layout.removeView(bluePower);
         if(powerupType == "green")
