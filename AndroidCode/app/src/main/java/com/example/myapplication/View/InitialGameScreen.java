@@ -25,6 +25,7 @@ import com.example.myapplication.Physics.RoomMapTile;
 import com.example.myapplication.Physics.TileType;
 import com.example.myapplication.R;
 import com.example.myapplication.ViewModel.InitialGameScreenViewModel;
+import com.example.myapplication.Model.Score;
 
 import java.util.Calendar;
 import java.util.Hashtable;
@@ -489,10 +490,12 @@ public class InitialGameScreen extends AppCompatActivity {
     }
 
     public void checkCollisionWithSlash() {
+
         this.enemies.forEach((imageView, enemyController) -> {
             if (isCollisionWithEnemy(slashSprite, imageView)) {
                 imageView.setVisibility(View.INVISIBLE);
                 enemyController.getEnemy().setAttackDamage(0);
+                scoreText.setText("Score: " + viewModel.getScore()+20);
             }
         });
 
@@ -503,7 +506,6 @@ public class InitialGameScreen extends AppCompatActivity {
         slashSprite.setX(viewModel.getSword().getX() + 85);
         slashSprite.setY(viewModel.getSword().getY());
     }
-
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
