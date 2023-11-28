@@ -5,8 +5,10 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
+import com.example.myapplication.Model.BasePowerUp;
 import com.example.myapplication.Model.ExtraHealthPoints;
 import com.example.myapplication.Model.PowerUpInterface;
+import com.example.myapplication.Model.SuperSpeed;
 import com.example.myapplication.R;
 import android.view.KeyEvent;
 
@@ -326,9 +328,16 @@ public class PlayerTests {
 
     @Test
     public void testPlayerExtraHealthPoints() {
-        //PlayerInterface player = Player.getInstance();
-        //PlayerInterface playerWithExtraHealthPoints = new ExtraHealthPoints(player);
-        //assertEquals(115, playerWithExtraHealthPoints.getHealthPoints());
+        PowerUpInterface playerWithExtraHealth = new ExtraHealthPoints(new BasePowerUp());
+        Player.getInstance().setHealthPoints(Player.getInstance().getHealthPoints() + 50);
+        assertEquals(Player.getInstance().getHealthPoints(), playerWithExtraHealth.powerUp());
+    }
+
+    @Test
+    public void testPlayerWithSuperSpeed() {
+        PowerUpInterface playerWithSuperSpeed = new SuperSpeed(new BasePowerUp());
+        Player.getInstance().setSpeed(Player.getInstance().getSpeed() + 20);
+        assertEquals(Player.getInstance().getSpeed(), playerWithSuperSpeed.powerUp());
     }
 
 
