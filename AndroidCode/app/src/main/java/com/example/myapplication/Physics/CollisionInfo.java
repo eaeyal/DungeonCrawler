@@ -8,6 +8,7 @@ public class CollisionInfo {
     private int collisionPosX;
     private int collisionPosY;
 
+    //constructor
     public CollisionInfo(Tile tile, int tilePosX, int tilePosY,
                          int collisionPosX, int collisionPosY) {
         this.setTile(tile);
@@ -17,6 +18,7 @@ public class CollisionInfo {
         this.setCollisionPosY(collisionPosY);
     }
 
+    //getters and setters
     public Tile getTile() {
         return tile;
     }

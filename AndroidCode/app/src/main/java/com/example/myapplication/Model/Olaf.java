@@ -4,7 +4,7 @@ public class Olaf implements Enemy {
     private int x;
     private int y;
     private int healthPoints;
-    private int attackDamage;
+    private int attackDamage = 10;
     private int speed;
     private int direction;
 
@@ -109,6 +109,11 @@ public class Olaf implements Enemy {
 //            setX(getX() + 10);
 //            setY(getY() + 10);
 //        }
+    }
+
+    @Override
+    public void noMovement() {
+        speed = 0;
     }
 }
 

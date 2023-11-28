@@ -2,9 +2,14 @@ package com.example.myapplication.Model;
 
 public class SuperSpeed extends PowerUps{
 
+    public SuperSpeed(PowerUpInterface decoratedPlayer) {
+        super(decoratedPlayer);
+    }
+
     int X;
     int Y;
     boolean hasPowerUp = false;
+
     @Override
     public void setX(int X) {
         this.X = X;
@@ -27,8 +32,9 @@ public class SuperSpeed extends PowerUps{
 
     @Override
     public void action() {
-        Player.getInstance().setSpeed(15);
+        Player.getInstance().setSpeed(Player.getInstance().getSpeed() + 10);
     }
+
 
     @Override
     public void setPowerUps(boolean havePowerUps) {

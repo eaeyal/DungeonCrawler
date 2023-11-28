@@ -11,61 +11,59 @@ import java.util.List;
 
 public class Player implements CollisionResolutionStrategy {
     private String name;
-
     private ArrayList<String> roomsVisited;
-
     private boolean winner;
     private int healthPoints; // 75 for easy, 65 for medium, 55 for hard
     private int image; // 1 for sprite_1, 2 for sprite_2, 3 for sprite_3
-
     private int score;
-
     private int x = 0;
     private int y = 0;
-
     private int previousX = 0;
     private int previousY = 0;
-
     private int spriteId;
     private int speed;
-
-
     public String getName() {
         return name;
     }
-
     public int getHealthPoints() {
         return healthPoints;
     }
-
     private Player() {
         this.name = null;
         this.healthPoints = -1;
         this.image = -1;
-
     }
+    private static Player instance = null;
 
+    public static Player getInstance() {
+        if (instance == null) {
+            instance = new Player();
+        }
+        return instance;
+    }
     public void setImage(int image) {
         this.image = image;
     }
-
     public int getImage() {
         return image;
     }
 
+    public void setCoordinatesNoNotify(int x, int y) {
+
+    }
+
+
     public void updateCoordinatesWithoutNotification(int x, int y) {
+
         this.x = x;
         this.y = y;
     }
-
     public void setCoordinates(int x, int y) {
         savePrevCoord();
         this.x = x;
         this.y = y;
-
         notifySubscribers();
     }
-
     public void revertCoordinates() {
         this.setCoordinates(this.previousX, this.previousY);
     }
@@ -80,13 +78,11 @@ public class Player implements CollisionResolutionStrategy {
         this.x = x;
         notifySubscribers();
     }
-
     public void setYCoordinate(int y) {
         savePrevCoord();
         this.y = y;
         notifySubscribers();
     }
-
     public void addRoom(String... rooms) {
         if (roomsVisited == null) {
             roomsVisited = new ArrayList<String>();
@@ -95,30 +91,24 @@ public class Player implements CollisionResolutionStrategy {
             roomsVisited.add(room);
         }
     }
-
     public ArrayList<String> getRoomList() {
         if (roomsVisited == null) {
             roomsVisited = new ArrayList<String>();
         }
         return roomsVisited;
     }
-
     public void setName(String name) {
         this.name = name;
     }
-
     public void setHealthPoints(int healthPoints) {
         this.healthPoints = healthPoints;
     }
-
     public void setScore(int score) {
         this.score = score;
     }
-
     public int getScore() {
         return score;
     }
-
     public int getXCoordinate() {
         return x;
     }
@@ -127,25 +117,17 @@ public class Player implements CollisionResolutionStrategy {
         return y;
     }
 
+
+
     public void setSpeed(int speed) {
         this.speed = speed;
     }
     public int getSpeed() {
         return this.speed;
     }
-    private static Player instance = null;
-
-    public static Player getInstance() {
-        if (instance == null) {
-            instance = new Player();
-        }
-        return instance;
-    }
-
     public int getX() {
         return x;
     }
-
     public int getY() {
         return y;
     }
@@ -185,7 +167,6 @@ public class Player implements CollisionResolutionStrategy {
             subscriber.update(this); //update playerSprite
         }
     }
-
 
     @Override
     public void resolveCollision(CollisionInfo collision) {

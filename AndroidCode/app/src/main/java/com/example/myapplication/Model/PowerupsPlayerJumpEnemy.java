@@ -1,12 +1,12 @@
 package com.example.myapplication.Model;
 
-public class PowerupsEnemyFreeze extends PowerUps {
-    int X;
-    int Y;
+public class PowerupsPlayerJumpEnemy extends PowerUps {
+    int X = 0;
+    int Y = 0;
     boolean hasPowerUp;
 
-    public PowerupsEnemyFreeze(PowerUpInterface decoratedPlayer) {
-        super(decoratedPlayer);
+    public PowerupsPlayerJumpEnemy(PowerUpInterface decoratedPlayer) {
+       super(decoratedPlayer);
     }
 
 
@@ -19,4 +19,10 @@ public class PowerupsEnemyFreeze extends PowerUps {
     public boolean getPowerUps() {
         return hasPowerUp;
     }
+
+    @Override
+    public int powerUp() {
+        return 0;
+    }
 }
+

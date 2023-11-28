@@ -6,11 +6,13 @@ import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModel;
 
 import com.example.myapplication.GameContext;
 import com.example.myapplication.Leaderboard;
@@ -37,19 +39,15 @@ public class InitialGameScreen extends AppCompatActivity {
     private Timer scoreTimer1;
     private Timer scoreTimer2;
     private TextView scoreText;
-
     private int screenWidth;
     private int screenHeight;
-
     private InitialGameScreenViewModel viewModel;
-
     private RoomManager roomManager;
-
     private ImageView playerSprite;
-    private ImageView redPower;
-    private ImageView bluePower;
-    private ImageView greenPower;
-    private String powerupType;
+
+    private ImageView swordSprite;
+
+    private ImageView slashSprite;
 
     protected void rebuildUi() {
         TextView playerName = findViewById(R.id.playerNameTextView);
@@ -68,7 +66,6 @@ public class InitialGameScreen extends AppCompatActivity {
         RelativeLayout layout = findViewById(R.id.gameLayout);
 
         roomManager.drawRoom(layout);
-
     }
 
     protected void gotoEndScreen() {
@@ -109,6 +106,33 @@ public class InitialGameScreen extends AppCompatActivity {
         return imageView;
     }
 
+    protected ImageView instantiateImageViewForSword(int spriteId) {
+        RelativeLayout layout = findViewById(R.id.gameLayout);
+        ImageView imageView = new ImageView(this);
+
+        imageView.setImageResource(spriteId);
+        imageView.setAdjustViewBounds(true);
+        imageView.setMaxWidth(80);
+        imageView.setMaxHeight(80);
+        imageView.setTranslationZ(1f);
+        layout.addView(imageView);
+        return imageView;
+    }
+
+    protected ImageView instantiateImageViewForSlash(int spriteId) {
+        RelativeLayout layout = findViewById(R.id.gameLayout);
+        ImageView imageView = new ImageView(this);
+
+        imageView.setImageResource(spriteId);
+        imageView.setAdjustViewBounds(true);
+        imageView.setMaxWidth(80);
+        imageView.setMaxHeight(80);
+        imageView.setTranslationZ(1f);
+        imageView.setVisibility(View.INVISIBLE);
+        layout.addView(imageView);
+        return imageView;
+    }
+
     protected void instantiateEnemies() {
         // we already have enemies instantiated,
         // destroy them first (derender them)
@@ -122,50 +146,80 @@ public class InitialGameScreen extends AppCompatActivity {
             enemies.clear();
         }
 
-        ImageView extraHealthPointsImageView = null;
+
+        //extraHealthPointsImageView.setVisibility(View.INVISIBLE); //TODO Richard
+
+        //enemyFreezeImageView.setVisibility(View.INVISIBLE);
+
+
         // instantiate enemies based on the rooms we are currently in
         // (Can use factory method for this)
         switch (roomManager.getCurrentRoomIndex()) {
         case 0:
+            //creating slime
             ImageView slime = instantiateImageViewForEnemy(R.drawable.thumbnail_slime);
             viewModel.createSlime();
             enemies.put(slime, viewModel.getSlime());
 
+            //creating wizard
             ImageView wizard = instantiateImageViewForEnemy(R.drawable.thumbnail_wizard);
             viewModel.createWizard();
             enemies.put(wizard, viewModel.getWizard());
 
+            //extra health power up
             viewModel.setExtraHealthPointsXPosition(600); //setting position X
             viewModel.setExtraHealthPointsYPosition(500); //setting position Y
-            extraHealthPointsImageView = instantiateImageViewForPowerUp(R.drawable.powerup);
+            ImageView extraHealthPointsImageView = instantiateImageViewForPowerUp(R.drawable.powerup);
             extraHealthPointsImageView.setX(viewModel.getExtraHealthPointsX());
             extraHealthPointsImageView.setY(viewModel.getExtraHealthPointsY());
 
+            break;
+        case 1:
+            //creating olaf enemy
+            ImageView olaf = instantiateImageViewForEnemy(R.drawable.thumbnail_olaf);
+            viewModel.createOlaf();
+            enemies.put(olaf, viewModel.getOlaf());
+
+            //creating skeleton enemy
+            ImageView skeleton = instantiateImageViewForEnemy(R.drawable.thumbnail_skeleton);
+            viewModel.createSkeleton();
+            enemies.put(skeleton, viewModel.getSkeleton());
+
+            /*
+            //super speed power up
             viewModel.setSuperSpeedXPosition(500);
             viewModel.setSuperSpeedYPosition(1500);
             ImageView superSpeedImageView = instantiateImageViewForPowerUp(R.drawable.superspeed);
             superSpeedImageView.setX(viewModel.getSuperSpeedXPosition());
             superSpeedImageView.setY(viewModel.getSuperSpeedYPosition());
 
-            break;
-        case 1:
+             */
 
-            ImageView olaf = instantiateImageViewForEnemy(R.drawable.thumbnail_olaf);
-            viewModel.createOlaf();
-            enemies.put(olaf, viewModel.getOlaf());
-
-            ImageView skeleton = instantiateImageViewForEnemy(R.drawable.thumbnail_skeleton);
-            viewModel.createSkeleton();
-            enemies.put(skeleton, viewModel.getSkeleton());
-
-            viewModel.setEnemyFreezePositionX(600); //setting position X
-            viewModel.setEnemyFreezePositionY(500); //setting position Y
+            /*
+            //enemy freeze power up
+            viewModel.setEnemyFreezePositionX(822); //setting position X
+            viewModel.setEnemyFreezePositionY(1505); //setting position Y
             ImageView enemyFreezeImageView = instantiateImageViewForPowerUp(R.drawable.snowflake);
             enemyFreezeImageView.setX(viewModel.getEnemyFreezePositionX());
             enemyFreezeImageView.setY(viewModel.getEnemyFreezePositionY());
 
+            //TODO fix
+            //player jump over enemy
+            viewModel.setPlayerJumpEnemyPositionX(822);
+            viewModel.setPlayerJumpEnemyPositionY(1500);
+            ImageView playerJumpEnemyImageView = instantiateImageViewForPowerUp(R.drawable.snowflake);
+            playerJumpEnemyImageView.setX(viewModel.getPlayerJumpEnemyPositionX());
+            playerJumpEnemyImageView.setY(viewModel.getPlayerJumpEnemyPositionY());
+
+
+             */
+
+            //enemyFreezeImageView.setVisibility(View.VISIBLE);//?
+
+
             break;
         case 2:
+
             ImageView undead = instantiateImageViewForEnemy(R.drawable.undead);
             viewModel.createUndead();
             enemies.put(undead, viewModel.getUndead());
@@ -173,6 +227,26 @@ public class InitialGameScreen extends AppCompatActivity {
             ImageView boss = instantiateImageViewForEnemy(R.drawable.boss);
             viewModel.createBoss();
             enemies.put(boss, viewModel.getBoss());
+
+            //extraHealthPointsImageView.setVisibility(View.INVISIBLE);
+
+            /*
+            //player jump over enemy
+            viewModel.setPlayerJumpEnemyPositionX(1500);
+            viewModel.setPlayerJumpEnemyPositionY(500);
+            playerJumpEnemyImageView = instantiateImageViewForPowerUp(R.drawable.playerjumpenemy);
+            playerJumpEnemyImageView.setX(viewModel.getPlayerJumpEnemyPositionX());
+            playerJumpEnemyImageView.setY(viewModel.getPlayerJumpEnemyPositionY());
+
+
+             */
+            //extra health points
+            extraHealthPointsImageView = instantiateImageViewForPowerUp(R.drawable.powerup);
+            viewModel.setExtraHealthPointsXPosition(900); //setting position X
+            viewModel.setExtraHealthPointsYPosition(823); //setting position Y
+            extraHealthPointsImageView.setX(viewModel.getExtraHealthPointsX());
+            extraHealthPointsImageView.setY(viewModel.getExtraHealthPointsY());
+
             break;
         default:
             throw new RuntimeException("Invalid room index");
@@ -184,6 +258,7 @@ public class InitialGameScreen extends AppCompatActivity {
             enemyController.movement();
             imageView.setX(viewModel.getEnemyX(enemyController));
             imageView.setY(viewModel.getEnemyY(enemyController));
+
         });
     }
 
@@ -215,10 +290,13 @@ public class InitialGameScreen extends AppCompatActivity {
 
     //destroys powerup (must check for collision first then call powerup logic,
     //not sure where to do that)
+    /*
     protected void destroyPowerup() {
         RelativeLayout layout = findViewById(R.id.gameLayout);
         if(powerupType == "red")
-            layout.removeView(redPower);
+            layout.removeView(
+        
+        );
         if(powerupType == "blue")
             layout.removeView(bluePower);
         if(powerupType == "green")
@@ -243,6 +321,7 @@ public class InitialGameScreen extends AppCompatActivity {
         }
 
     }
+    /*
 
 
 
@@ -297,7 +376,6 @@ public class InitialGameScreen extends AppCompatActivity {
         }
 
         instantiateEnemies();
-        instantiatePowerups();
 
         scoreTimer1 = new Timer();
         scoreTimer1.schedule(new TimerTask() {
@@ -306,6 +384,10 @@ public class InitialGameScreen extends AppCompatActivity {
                 runOnUiThread(() -> viewModel.updateScore());
                 checkCollision();
                 moveEnemy();
+                checkCollisionWithSlash();
+                slashSprite.setVisibility(View.INVISIBLE);
+                slashSprite.setX(0);
+                slashSprite.setY(0);
             }
         }, 0, 1000); // Check every .5 seconds
 
@@ -358,7 +440,6 @@ public class InitialGameScreen extends AppCompatActivity {
                 player.updateCoordinatesWithoutNotification(screenWidth / 2, screenHeight / 2);
                 player.setCoordinates(screenWidth / 2, screenHeight / 2);
                 instantiateEnemies();
-                instantiatePowerups();
                 rebuildUi();
             }
 
@@ -373,7 +454,11 @@ public class InitialGameScreen extends AppCompatActivity {
         // initialize the player coordinate to the center of the screen
         player.setCoordinates(screenWidth / 2, screenHeight / 2);
 
-
+        swordSprite = instantiateImageViewForSword(R.drawable.sword);
+        viewModel.updateSwordPos();
+        swordSprite.setX(viewModel.getSword().getX());
+        swordSprite.setY(viewModel.getSword().getY());
+        slashSprite = instantiateImageViewForSlash(R.drawable.slash);
 
     }
 
@@ -392,7 +477,8 @@ public class InitialGameScreen extends AppCompatActivity {
             this.enemies.forEach((imageView, enemyController) -> {
                 if (isCollisionWithEnemy(playerSprite, imageView)) {
                     int diff = GameContext.getInstance().getDifficulty();
-                    player.setHealthPoints(player.getHealthPoints() - 10 * diff);
+                    player.setHealthPoints(player.getHealthPoints() -
+                            enemyController.getEnemy().getAttackDamage() * diff);
                 }
                 if (player.getHealthPoints() <= 0) {
                     Intent intent = new Intent(InitialGameScreen.this, GameOverScreen.class);
@@ -400,6 +486,23 @@ public class InitialGameScreen extends AppCompatActivity {
                 }
             });
         }
+    }
+
+    public void checkCollisionWithSlash() {
+        this.enemies.forEach((imageView, enemyController) -> {
+            if (isCollisionWithEnemy(slashSprite, imageView)) {
+                imageView.setVisibility(View.INVISIBLE);
+                enemyController.getEnemy().setAttackDamage(0);
+            }
+        });
+
+    }
+
+    public void swordSlash() {
+        slashSprite.setVisibility(View.VISIBLE);
+        slashSprite.setX(viewModel.getSword().getX() + 85);
+        slashSprite.setY(viewModel.getSword().getY());
+    }
 
     }
     @Override
@@ -407,7 +510,16 @@ public class InitialGameScreen extends AppCompatActivity {
         // move player
         viewModel.movePlayer(keyCode);
         viewModel.powerUps();
-
+        viewModel.updateSwordPos();
+        swordSprite.setX(viewModel.getSword().getX());
+        swordSprite.setY(viewModel.getSword().getY());
+        if (keyCode == KeyEvent.KEYCODE_SPACE) {
+            swordSlash();
+        }
+        if (player.getHealthPoints() <= 0) {
+            Intent intent = new Intent(InitialGameScreen.this, GameOverScreen.class);
+            startActivity(intent);
+        }
         return super.onKeyDown(keyCode, event);
 
     }

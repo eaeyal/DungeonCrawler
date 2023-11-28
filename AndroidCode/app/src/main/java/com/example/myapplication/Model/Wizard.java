@@ -5,7 +5,7 @@ public class Wizard implements Enemy {
     private int x;
     private int y;
     private int healthPoints;
-    private int attackDamage;
+    private int attackDamage = 10;
     private int speed;
     private boolean reverseDirection;
 
@@ -95,5 +95,10 @@ public class Wizard implements Enemy {
         } else {
             setY(getY() + 45);
         }
+    }
+
+    @Override
+    public void noMovement() {
+        speed = 0; //ToDo
     }
 }
