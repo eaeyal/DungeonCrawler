@@ -308,18 +308,6 @@ public class InitialGameScreenViewModel {
 
         }
 
-        /*if (Player.getInstance().getX() >= getPlayerJumpEnemyPositionX() &&
-                Player.getInstance().getX() <= getPlayerJumpEnemyPositionX() + 156 &&
-                Player.getInstance().getY() >= getPlayerJumpEnemyPositionY() &&
-                Player.getInstance().getY() <= getPlayerJumpEnemyPositionY() + 156) {
-            if (playerWithEnemyJump.getPowerUps() == false) {
-                getBoss().getEnemy().setAttackDamage(0);
-                getUndead().getEnemy().setAttackDamage(0);
-                playerWithEnemyJump.setPowerUps(true);
-            }
-        }
-
-         */
         if (Player.getInstance().getX() >= getEnemyFreezePositionX() &&
                 Player.getInstance().getX() <= getEnemyFreezePositionX() + 156 &&
                 Player.getInstance().getY() >= getEnemyFreezePositionY() &&

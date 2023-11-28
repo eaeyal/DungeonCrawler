@@ -6,6 +6,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import com.example.myapplication.Model.BasePowerUp;
+import com.example.myapplication.Model.BossController;
 import com.example.myapplication.Model.ExtraHealthPoints;
 import com.example.myapplication.Model.PowerUpInterface;
 import com.example.myapplication.Model.SuperSpeed;
@@ -329,16 +330,15 @@ public class PlayerTests {
     @Test
     public void testPlayerExtraHealthPoints() {
         PowerUpInterface playerWithExtraHealth = new ExtraHealthPoints(new BasePowerUp());
-        Player.getInstance().setHealthPoints(Player.getInstance().getHealthPoints() + 50);
-        assertEquals(Player.getInstance().getHealthPoints(), playerWithExtraHealth.powerUp());
+        assertEquals(Player.getInstance().getHealthPoints() + 50, playerWithExtraHealth.powerUp());
     }
 
     @Test
-    public void testPlayerWithSuperSpeed() {
+    public void testPlayerWgit addgit add. jnnithSuperSpeed() {
         PowerUpInterface playerWithSuperSpeed = new SuperSpeed(new BasePowerUp());
-        Player.getInstance().setSpeed(Player.getInstance().getSpeed() + 20);
-        assertEquals(Player.getInstance().getSpeed(), playerWithSuperSpeed.powerUp());
+        assertEquals(Player.getInstance().getSpeed() + 20, playerWithSuperSpeed.powerUp());
     }
+
 
 
 }

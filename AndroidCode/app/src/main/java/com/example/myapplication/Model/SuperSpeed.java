@@ -16,6 +16,6 @@ public class SuperSpeed extends PowerUps{
         Player.getInstance().setSpeed(Player.getInstance().getSpeed() +
                 this.speed);
         havePowerUp = true;
-        return Player.getInstance().getSpeed() + this.speed;
+        return Player.getInstance().getSpeed();
     }
 }
