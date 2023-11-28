@@ -6,7 +6,7 @@ public class Boss implements Enemy {
     private int y;
     private int healthPoints;
     private int attackDamage = 10;
-    private int speed;
+    private int speed = 100;
 
     private int direction;
 
@@ -93,9 +93,9 @@ public class Boss implements Enemy {
             reverseDirection = false;
         }
         if (reverseDirection) {
-            setX(getX() - 100);
+            setX(getX() - this.speed);
         } else {
-            setX(getX() + 100);
+            setX(getX() + this.speed);
         }
 
     }

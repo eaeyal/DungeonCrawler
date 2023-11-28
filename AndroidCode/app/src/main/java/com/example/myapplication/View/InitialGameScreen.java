@@ -225,7 +225,12 @@ public class InitialGameScreen extends AppCompatActivity {
             viewModel.createBoss();
             enemies.put(boss, viewModel.getBoss());
 
-            //extraHealthPointsImageView.setVisibility(View.INVISIBLE);
+            viewModel.setEnemyFreezePositionX(822);
+            viewModel.setEnemyFreezePositionY(1500);
+            powerUpImageView = instantiateImageViewForPowerUp(R.drawable.snowflake);
+            powerUpImageView.setX(viewModel.getEnemyFreezePositionX());
+            powerUpImageView.setY(viewModel.getEnemyFreezePositionY());
+
 
             break;
         default:
