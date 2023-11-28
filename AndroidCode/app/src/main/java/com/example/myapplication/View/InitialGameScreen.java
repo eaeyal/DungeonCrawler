@@ -38,7 +38,6 @@ import java.util.TimerTask;
 public class InitialGameScreen extends AppCompatActivity {
     private Player player = Player.getInstance();
     private Timer scoreTimer1;
-    private Timer scoreTimer2;
     private TextView scoreText;
     private int screenWidth;
     private int screenHeight;
