@@ -19,6 +19,7 @@ public class Score implements Comparable<Score> {
     }
 
     public void setScore(int score) { this.score = score;}
+
     public String getTime() {
         return time;
     }
