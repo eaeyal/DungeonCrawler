@@ -11,26 +11,25 @@ public class SuperSpeed extends PowerUps{
     boolean hasPowerUp = false;
 
     @Override
-    public void setX(int X) {
+    public void setXCoordinate(int x) {
         this.X = X;
     }
 
     @Override
-    public void setY(int Y) {
+    public void setYCoordinate(int y) {
         this.Y = Y;
     }
 
     @Override
-    public int getX() {
+    public int getXCoordinate() {
         return this.X;
     }
 
     @Override
-    public int getY() {
+    public int getYCoordinate() {
         return this.Y;
     }
 
-    @Override
     public void action() {
         Player.getInstance().setSpeed(Player.getInstance().getSpeed() + 10);
     }
@@ -45,4 +44,6 @@ public class SuperSpeed extends PowerUps{
     public boolean getPowerUps() {
         return hasPowerUp;
     }
+
+
 }
