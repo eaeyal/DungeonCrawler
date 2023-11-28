@@ -458,8 +458,8 @@ public class InitialGameScreen extends AppCompatActivity {
         viewModel.updateSwordPos();
         swordSprite.setX(viewModel.getSword().getX());
         swordSprite.setY(viewModel.getSword().getY());
-
         slashSprite = instantiateImageViewForSlash(R.drawable.slash);
+
     }
 
     public boolean isCollisionWithEnemy(ImageView player, ImageView enemy) {
@@ -479,6 +479,10 @@ public class InitialGameScreen extends AppCompatActivity {
                     int diff = GameContext.getInstance().getDifficulty();
                     player.setHealthPoints(player.getHealthPoints() -
                             enemyController.getEnemy().getAttackDamage() * diff);
+                }
+                if (player.getHealthPoints() <= 0) {
+                    Intent intent = new Intent(InitialGameScreen.this, GameOverScreen.class);
+                    startActivity(intent);
                 }
             });
         }
@@ -500,7 +504,7 @@ public class InitialGameScreen extends AppCompatActivity {
         slashSprite.setY(viewModel.getSword().getY());
     }
 
-
+    }
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
         // move player
