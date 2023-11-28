@@ -394,6 +394,10 @@ public class InitialGameScreen extends AppCompatActivity {
                     int diff = GameContext.getInstance().getDifficulty();
                     player.setHealthPoints(player.getHealthPoints() - 10 * diff);
                 }
+                if (player.getHealthPoints() <= 0) {
+                    Intent intent = new Intent(InitialGameScreen.this, GameOverScreen.class);
+                    startActivity(intent);
+                }
             });
         }
 
@@ -404,10 +408,6 @@ public class InitialGameScreen extends AppCompatActivity {
         viewModel.movePlayer(keyCode);
         viewModel.powerUps();
 
-        if (player.getHealthPoints() <= 0) {
-            Intent intent = new Intent(InitialGameScreen.this, GameOverScreen.class);
-            startActivity(intent);
-        }
         return super.onKeyDown(keyCode, event);
 
     }
