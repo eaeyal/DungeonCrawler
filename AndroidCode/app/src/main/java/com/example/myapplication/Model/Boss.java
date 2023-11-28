@@ -75,6 +75,7 @@ public class Boss implements Enemy {
     @Override
     public void movement() {
         //300 should be replaced with the value that prevents it from going offscreen
+        //A faster moving enemy that moves left to right similar to slime.
         /* if (this.getX() < 50 ) {
             this.setX(this.getX() + 10);
             this.setY(this.getY() + 10);
