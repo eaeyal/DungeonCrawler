@@ -72,6 +72,7 @@ public class Slime implements Enemy {
 
     @Override
     public void movement() {
+        //Moves the slime from left to right opposite of the other movements.
         if (getX() >= 210 && getX() <= 600 && getY() == 634) {
             if (getX() == 600) {
                 reverseDirection = true;
