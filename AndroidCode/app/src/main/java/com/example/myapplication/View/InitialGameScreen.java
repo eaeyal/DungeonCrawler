@@ -48,6 +48,7 @@ public class InitialGameScreen extends AppCompatActivity {
     private ImageView swordSprite;
 
     private ImageView slashSprite;
+    private ImageView powerUpImageView;
 
     protected void rebuildUi() {
         TextView playerName = findViewById(R.id.playerNameTextView);
@@ -169,9 +170,9 @@ public class InitialGameScreen extends AppCompatActivity {
             //extra health power up
             viewModel.setExtraHealthPointsXPosition(600); //setting position X
             viewModel.setExtraHealthPointsYPosition(500); //setting position Y
-            ImageView extraHealthPointsImageView = instantiateImageViewForPowerUp(R.drawable.powerup);
-            extraHealthPointsImageView.setX(viewModel.getExtraHealthPointsX());
-            extraHealthPointsImageView.setY(viewModel.getExtraHealthPointsY());
+            powerUpImageView = instantiateImageViewForPowerUp(R.drawable.powerup);
+            powerUpImageView.setX(viewModel.getExtraHealthPointsX());
+            powerUpImageView.setY(viewModel.getExtraHealthPointsY());
 
             break;
         case 1:
@@ -185,15 +186,11 @@ public class InitialGameScreen extends AppCompatActivity {
             viewModel.createSkeleton();
             enemies.put(skeleton, viewModel.getSkeleton());
 
-            /*
-            //super speed power up
             viewModel.setSuperSpeedXPosition(500);
             viewModel.setSuperSpeedYPosition(1500);
-            ImageView superSpeedImageView = instantiateImageViewForPowerUp(R.drawable.superspeed);
-            superSpeedImageView.setX(viewModel.getSuperSpeedXPosition());
-            superSpeedImageView.setY(viewModel.getSuperSpeedYPosition());
-
-             */
+            powerUpImageView = instantiateImageViewForPowerUp(R.drawable.superspeed);
+            powerUpImageView.setX(viewModel.getSuperSpeedXPosition());
+            powerUpImageView.setY(viewModel.getSuperSpeedYPosition());
 
             /*
             //enemy freeze power up
@@ -229,23 +226,6 @@ public class InitialGameScreen extends AppCompatActivity {
             enemies.put(boss, viewModel.getBoss());
 
             //extraHealthPointsImageView.setVisibility(View.INVISIBLE);
-
-            /*
-            //player jump over enemy
-            viewModel.setPlayerJumpEnemyPositionX(1500);
-            viewModel.setPlayerJumpEnemyPositionY(500);
-            playerJumpEnemyImageView = instantiateImageViewForPowerUp(R.drawable.playerjumpenemy);
-            playerJumpEnemyImageView.setX(viewModel.getPlayerJumpEnemyPositionX());
-            playerJumpEnemyImageView.setY(viewModel.getPlayerJumpEnemyPositionY());
-
-
-             */
-            //extra health points
-            extraHealthPointsImageView = instantiateImageViewForPowerUp(R.drawable.powerup);
-            viewModel.setExtraHealthPointsXPosition(900); //setting position X
-            viewModel.setExtraHealthPointsYPosition(823); //setting position Y
-            extraHealthPointsImageView.setX(viewModel.getExtraHealthPointsX());
-            extraHealthPointsImageView.setY(viewModel.getExtraHealthPointsY());
 
             break;
         default:

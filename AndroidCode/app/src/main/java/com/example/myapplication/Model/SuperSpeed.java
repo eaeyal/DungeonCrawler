@@ -2,48 +2,20 @@ package com.example.myapplication.Model;
 
 public class SuperSpeed extends PowerUps{
 
+    private final int speed = 20;
+    int X = 0;
+    int Y = 0;
+    boolean havePowerUp = false;
     public SuperSpeed(PowerUpInterface decoratedPlayer) {
         super(decoratedPlayer);
     }
 
-    int X;
-    int Y;
-    boolean hasPowerUp = false;
 
     @Override
-    public void setXCoordinate(int x) {
-        this.X = X;
+    public int powerUp() {
+        Player.getInstance().setSpeed(Player.getInstance().getSpeed() +
+                this.speed);
+        havePowerUp = true;
+        return Player.getInstance().getSpeed() + this.speed;
     }
-
-    @Override
-    public void setYCoordinate(int y) {
-        this.Y = Y;
-    }
-
-    @Override
-    public int getXCoordinate() {
-        return this.X;
-    }
-
-    @Override
-    public int getYCoordinate() {
-        return this.Y;
-    }
-
-    public void action() {
-        Player.getInstance().setSpeed(Player.getInstance().getSpeed() + 10);
-    }
-
-
-    @Override
-    public void setPowerUps(boolean havePowerUps) {
-        this.hasPowerUp = havePowerUps;
-    }
-
-    @Override
-    public boolean getPowerUps() {
-        return hasPowerUp;
-    }
-
-
 }

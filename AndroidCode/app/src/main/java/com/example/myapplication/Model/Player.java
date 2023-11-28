@@ -21,7 +21,7 @@ public class Player implements CollisionResolutionStrategy {
     private int previousX = 0;
     private int previousY = 0;
     private int spriteId;
-    private int speed;
+    private int speed = 5;
     public String getName() {
         return name;
     }

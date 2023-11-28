@@ -73,7 +73,6 @@ public class InitialGameScreenViewModel {
 
     public void movePlayer(int keyCode) {
         // prospect player coordinates
-        player.setSpeed(5); //TODO put an if/else statement if player has power up
         int speed = player.getSpeed();
 
         int playerX = player.getXCoordinate();
@@ -245,9 +244,36 @@ public class InitialGameScreenViewModel {
         sword.setY(player.getY() + 20);
     }
 
+    public void setSuperSpeedXPosition(int X) {
+        playerWithSuperSpeed.setXCoordinate(X);
+    }
+    public int getSuperSpeedXPosition() {
+        return playerWithSuperSpeed.getXCoordinate();
+    }
+    public void setSuperSpeedYPosition(int Y) {
+        playerWithSuperSpeed.setYCoordinate(Y);
+    }
+    public int getSuperSpeedYPosition() {
+        return playerWithSuperSpeed.getYCoordinate();
+    }
+
+    public void setPlayerJumpEnemyPositionX(int X) { playerWithEnemyJump.setXCoordinate(X); }
+    public int getPlayerJumpEnemyPositionX() {
+        return playerWithEnemyJump.getXCoordinate();
+    }
+    public void setPlayerJumpEnemyPositionY(int Y) {
+        playerWithEnemyJump.setYCoordinate(Y);
+    }
+    public int getPlayerJumpEnemyPositionY() {
+        return playerWithEnemyJump.getYCoordinate();
+    }
+
+
 
     PowerUpInterface playerWithExtraHealth = new ExtraHealthPoints(new BasePowerUp());
+    PowerUpInterface playerWithSuperSpeed = new SuperSpeed(new BasePowerUp());
 
+    PowerUpInterface playerWithEnemyJump = new PowerupsPlayerJumpEnemy(new BasePowerUp());
     public void powerUps() {
         if (Player.getInstance().getX() >= getExtraHealthPointsX() &&
                 Player.getInstance().getX() <= getExtraHealthPointsX() + 156 &&
@@ -258,6 +284,27 @@ public class InitialGameScreenViewModel {
                 playerWithExtraHealth.setPowerUps(true);
             }
 
+        }
+        if (Player.getInstance().getX() >= getSuperSpeedXPosition() &&
+                Player.getInstance().getX() <= getSuperSpeedXPosition() + 156 &&
+                Player.getInstance().getY() >= getSuperSpeedYPosition() &&
+                Player.getInstance().getY() <= getSuperSpeedYPosition() + 156) {
+            if (playerWithSuperSpeed.getPowerUps() == false) {
+                playerWithSuperSpeed.powerUp();
+                playerWithSuperSpeed.setPowerUps(true);
+            }
+
+        }
+
+        if (Player.getInstance().getX() >= getPlayerJumpEnemyPositionX() &&
+                Player.getInstance().getX() <= getPlayerJumpEnemyPositionX() + 156 &&
+                Player.getInstance().getY() >= getPlayerJumpEnemyPositionY() &&
+                Player.getInstance().getY() <= getPlayerJumpEnemyPositionY() + 156) {
+            if (playerWithEnemyJump.getPowerUps() == false) {
+                getBoss().getEnemy().setAttackDamage(0);
+                getUndead().getEnemy().setAttackDamage(0);
+                playerWithEnemyJump.setPowerUps(true);
+            }
         }
     }
 }
