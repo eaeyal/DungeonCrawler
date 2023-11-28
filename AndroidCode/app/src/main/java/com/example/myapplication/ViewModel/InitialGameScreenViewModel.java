@@ -256,7 +256,7 @@ public class InitialGameScreenViewModel {
     public int getSuperSpeedYPosition() {
         return playerWithSuperSpeed.getYCoordinate();
     }
-
+    /*
     public void setPlayerJumpEnemyPositionX(int X) { playerWithEnemyJump.setXCoordinate(X); }
     public int getPlayerJumpEnemyPositionX() {
         return playerWithEnemyJump.getXCoordinate();
@@ -268,12 +268,24 @@ public class InitialGameScreenViewModel {
         return playerWithEnemyJump.getYCoordinate();
     }
 
+     */
 
+    public void setEnemyFreezePositionX(int X) { playerWithEnemyFreeze.setXCoordinate(X); }
+    public int getEnemyFreezePositionX() {
+        return playerWithEnemyFreeze.getXCoordinate();
+    }
+    public void setEnemyFreezePositionY(int Y) {
+        playerWithEnemyFreeze.setYCoordinate(Y);
+    }
+    public int getEnemyFreezePositionY() {
+        return playerWithEnemyFreeze.getYCoordinate();
+    }
 
+    PowerUpInterface playerWithEnemyFreeze = new PowerupsEnemyFreeze(new BasePowerUp());
     PowerUpInterface playerWithExtraHealth = new ExtraHealthPoints(new BasePowerUp());
     PowerUpInterface playerWithSuperSpeed = new SuperSpeed(new BasePowerUp());
 
-    PowerUpInterface playerWithEnemyJump = new PowerupsPlayerJumpEnemy(new BasePowerUp());
+    //PowerUpInterface playerWithEnemyJump = new PowerupsPlayerJumpEnemy(new BasePowerUp());
     public void powerUps() {
         if (Player.getInstance().getX() >= getExtraHealthPointsX() &&
                 Player.getInstance().getX() <= getExtraHealthPointsX() + 156 &&
@@ -296,7 +308,7 @@ public class InitialGameScreenViewModel {
 
         }
 
-        if (Player.getInstance().getX() >= getPlayerJumpEnemyPositionX() &&
+        /*if (Player.getInstance().getX() >= getPlayerJumpEnemyPositionX() &&
                 Player.getInstance().getX() <= getPlayerJumpEnemyPositionX() + 156 &&
                 Player.getInstance().getY() >= getPlayerJumpEnemyPositionY() &&
                 Player.getInstance().getY() <= getPlayerJumpEnemyPositionY() + 156) {
@@ -306,5 +318,18 @@ public class InitialGameScreenViewModel {
                 playerWithEnemyJump.setPowerUps(true);
             }
         }
+
+         */
+        if (Player.getInstance().getX() >= getEnemyFreezePositionX() &&
+                Player.getInstance().getX() <= getEnemyFreezePositionX() + 156 &&
+                Player.getInstance().getY() >= getEnemyFreezePositionY() &&
+                Player.getInstance().getY() <= getEnemyFreezePositionY() + 156) {
+            if (playerWithEnemyFreeze.getPowerUps() == false) {
+                getBoss().getEnemy().setSpeed(0);
+                getUndead().getEnemy().setSpeed(0);
+                playerWithEnemyFreeze.setPowerUps(true);
+            }
+        }
+
     }
 }

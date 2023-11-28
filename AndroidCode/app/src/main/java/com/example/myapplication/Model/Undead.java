@@ -6,7 +6,7 @@ public class Undead implements Enemy {
     private int y;
     private int healthPoints;
     private int attackDamage = 10;
-    private int speed;
+    private int speed = 70;
     private int direction;
     private boolean reverseDirection;
 
@@ -92,9 +92,9 @@ public class Undead implements Enemy {
             reverseDirection = false;
         }
         if (reverseDirection) {
-            setX(getX() - 70);
+            setX(getX() - this.speed);
         } else {
-            setX(getX() + 70);
+            setX(getX() + this.speed);
         }
     }
 
