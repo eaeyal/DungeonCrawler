@@ -477,7 +477,7 @@ public class InitialGameScreen extends AppCompatActivity {
             if (isCollisionWithEnemy(slashSprite, imageView)) {
                 imageView.setVisibility(View.INVISIBLE);
                 enemyController.getEnemy().setAttackDamage(0);
-                //When added score bugs game out removed will fix later
+                player.setScore(player.getScore() + 50);
             }
         });
 

@@ -6,6 +6,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import com.example.myapplication.Model.BasePowerUp;
+import com.example.myapplication.Model.BossController;
 import com.example.myapplication.Model.ExtraHealthPoints;
 import com.example.myapplication.Model.PowerUpInterface;
 import com.example.myapplication.Model.SuperSpeed;
@@ -338,6 +339,7 @@ public class PlayerTests {
         PowerUpInterface playerWithSuperSpeed = new SuperSpeed(new BasePowerUp());
         assertEquals(Player.getInstance().getSpeed() + 40, playerWithSuperSpeed.powerUp());
     }
+
 
 
 }

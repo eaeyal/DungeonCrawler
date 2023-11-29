@@ -16,6 +16,6 @@ public class ExtraHealthPoints extends PowerUps {
         Player.getInstance().setHealthPoints(Player.getInstance().getHealthPoints() +
                 this.heathPoints);
         havePowerUp = true;
-        return Player.getInstance().getHealthPoints() + this.heathPoints;
+        return Player.getInstance().getHealthPoints();
     }
 }
