@@ -330,13 +330,14 @@ public class PlayerTests {
     @Test
     public void testPlayerExtraHealthPoints() {
         PowerUpInterface playerWithExtraHealth = new ExtraHealthPoints(new BasePowerUp());
-        assertEquals(Player.getInstance().getHealthPoints() + 50, playerWithExtraHealth.powerUp());
+        Player.getInstance().setHealthPoints(10);
+        assertEquals(Player.getInstance().getHealthPoints() + 100, playerWithExtraHealth.powerUp());
     }
 
     @Test
-    public void testPlayerWgit addgit add. jnnithSuperSpeed() {
+    public void testPlayerWithSuperSpeed() {
         PowerUpInterface playerWithSuperSpeed = new SuperSpeed(new BasePowerUp());
-        assertEquals(Player.getInstance().getSpeed() + 20, playerWithSuperSpeed.powerUp());
+        assertEquals(Player.getInstance().getSpeed() + 40, playerWithSuperSpeed.powerUp());
     }
 
 
